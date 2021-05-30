@@ -35,5 +35,5 @@ sudo chmod +x tg
 lua WaTaN.lua
 sudo chmod +x WaTaN
 sudo chmod +x ./WN
-./DRG
+./WN
 fi
