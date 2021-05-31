@@ -21,8 +21,8 @@ sudo apt-get install libnotify-dev -y
 sudo chmod +x tg
 lua WaTaN.lua
 sudo chmod +x WaTaN
-sudo chmod +x ./WN
-./WN
+sudo chmod +x ./WtN
+./WtN
 }
 if [ "$1" = "install" ]; then
 install
@@ -34,6 +34,6 @@ fi
 sudo chmod +x tg
 lua WaTaN.lua
 sudo chmod +x WaTaN
-sudo chmod +x ./WN
-./WN
+sudo chmod +x ./WtN
+./WtN
 fi
