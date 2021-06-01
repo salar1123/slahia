@@ -8500,15 +8500,15 @@ database:setex(bot_id.."CHENG:ID"..msg.chat_id_..""..msg.sender_user_id_,240,tru
 local Text= [[
  ℘︙ ارسل الان النص
  ℘︙ يمكنك اضافه :
- ℘︙ `#rdphoto` ~⪼ تعليق الصوره
- ℘︙ `#username` ~⪼ اسم 
- ℘︙ `#msgs` ~⪼ عدد رسائل 
- ℘︙ `#photos` ~⪼ عدد صور 
- ℘︙ `#id` ~⪼ ايدي 
- ℘︙ `#auto` ~⪼ تفاعل 
- ℘︙ `#stast` ~⪼ موقع  
- ℘︙ `#edit` ~⪼ السحكات
- ℘︙ `#game` ~⪼ النقاط
+ ℘︙ `#rdphoto` ➸ تعليق الصوره
+ ℘︙ `#username` ➸ اسم 
+ ℘︙ `#msgs` ➸ عدد رسائل 
+ ℘︙ `#photos` ➸ عدد صور 
+ ℘︙ `#id` ➸ ايدي 
+ ℘︙ `#auto` ➸ تفاعل 
+ ℘︙ `#stast` ➸ موقع  
+ ℘︙ `#edit` ➸ السحكات
+ ℘︙ `#game` ➸ النقاط
 ]]
 send(msg.chat_id_, msg.id_,Text)
 return false  
@@ -10356,7 +10356,7 @@ local edit = tonumber(database:get(bot_id..'edits'..msg.chat_id_..result.sender_
 local rtp = Rutba(result.sender_user_id_,msg.chat_id_)
 local username = ('[@'..data.username_..']' or 'لا يوجد')
 local iduser = result.sender_user_id_
-send(msg.chat_id_, msg.id_,' ℘︙ ايديه ~⪼ '..iduser..'\n ℘︙ معرفه ~⪼ '..username..'\n ℘︙ رتبته ~⪼ '..rtp..'\n ℘︙ تعديلاته ~⪼ '..edit..'\n ℘︙ نقاطه ~⪼ '..NUMPGAME..'\n ℘︙ جهاته ~⪼ '..Contact..'\n ℘︙ رسائله ~⪼ '..Msguser..'')
+send(msg.chat_id_, msg.id_,' ℘︙ ايديه ➸ '..iduser..'\n ℘︙ معرفه ➸ '..username..'\n ℘︙ رتبته ➸ '..rtp..'\n ℘︙ تعديلاته ➸ '..edit..'\n ℘︙ نقاطه ➸ '..NUMPGAME..'\n ℘︙ جهاته ➸ '..Contact..'\n ℘︙ رسائله ➸ '..Msguser..'')
 end,nil)
 end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
@@ -10382,7 +10382,7 @@ local edit = tonumber(database:get(bot_id..'edits'..msg.chat_id_..result.id_) or
 local rtp = Rutba(result.id_,msg.chat_id_)
 local username = ('[@'..data.username_..']' or 'لا يوجد')
 local iduser = result.id_
-send(msg.chat_id_, msg.id_,' ℘︙ ايديه ~⪼('..iduser..')\n ℘︙ معرفه ~⪼('..username..')\n ℘︙ رتبته ~⪼('..rtp..')\n ℘︙ تعديلاته ~⪼('..edit..')\n ℘︙ نقاطه ~⪼('..NUMPGAME..')\n ℘︙ جهاته ~⪼('..Contact..')\n ℘︙ رسائله ~⪼('..Msguser..')')
+send(msg.chat_id_, msg.id_,' ℘︙ ايديه ➸('..iduser..')\n ℘︙ معرفه ➸('..username..')\n ℘︙ رتبته ➸('..rtp..')\n ℘︙ تعديلاته ➸('..edit..')\n ℘︙ نقاطه ➸('..NUMPGAME..')\n ℘︙ جهاته ➸('..Contact..')\n ℘︙ رسائله ➸('..Msguser..')')
 end,nil)
 else
 send(msg.chat_id_, msg.id_,' ℘︙ المعرف غير صحيح ')
@@ -10637,7 +10637,7 @@ return false
 end
 local function getpro(extra, result, success)
 if result.photos_[0] then
-sendPhoto(msg.chat_id_, msg.id_, 0, 1, nil, result.photos_[0].sizes_[1].photo_.persistent_id_," ℘︙ عدد صورك ~⪼ "..result.total_count_.." صوره‌‏", msg.id_, msg.id_, "md")
+sendPhoto(msg.chat_id_, msg.id_, 0, 1, nil, result.photos_[0].sizes_[1].photo_.persistent_id_," ℘︙ عدد صورك ➸ "..result.total_count_.." صوره‌‏", msg.id_, msg.id_, "md")
 else
 send(msg.chat_id_, msg.id_,'لا تمتلك صوره في حسابك', 1, 'md')
   end end
@@ -10809,12 +10809,12 @@ else
 username = 'لا يوجد '
 end
 if result.status_.ID == "UserStatusRecently" and result.profile_photo_ ~= false then
-sendPhoto(msg.chat_id_, msg.id_, 0, 1, nil, WaTaN.photos_[0].sizes_[1].photo_.persistent_id_,''..rdphoto..'\n ℘︙ ايديك ~⪼ '..msg.sender_user_id_..'\n ℘︙ معرفك ~⪼ '..username..'\n ℘︙ رتبتك ~⪼ '..Rutba(msg.sender_user_id_,msg.chat_id_)..'\n ℘︙ موقعك ~⪼ '..rtpa..'\n ℘︙ تفاعلك ~⪼ '..Total_Msg(Msguser)..'\n ℘︙ رسائلك ~⪼ '..Msguser..'\n ℘︙ نسبه تفاعلك ~⪼ '..string.sub(nspatfa, 1,5)..' %\n ℘︙ السحكات ~⪼ '..edit..'\n ℘︙ نقاطك ~⪼ '..NUMPGAME..'\n')
+sendPhoto(msg.chat_id_, msg.id_, 0, 1, nil, WaTaN.photos_[0].sizes_[1].photo_.persistent_id_,''..rdphoto..'\n ℘︙ ايديك ➸ '..msg.sender_user_id_..'\n ℘︙ معرفك ➸ '..username..'\n ℘︙ رتبتك ➸ '..Rutba(msg.sender_user_id_,msg.chat_id_)..'\n ℘︙ موقعك ➸ '..rtpa..'\n ℘︙ تفاعلك ➸ '..Total_Msg(Msguser)..'\n ℘︙ رسائلك ➸ '..Msguser..'\n ℘︙ نسبه تفاعلك ➸ '..string.sub(nspatfa, 1,5)..' %\n ℘︙ السحكات ➸ '..edit..'\n ℘︙ نقاطك ➸ '..NUMPGAME..'\n')
 else 
 if result.status_.ID == "UserStatusEmpty" and result.profile_photo_ == false then
-send(msg.chat_id_, msg.id_,'[\n ℘︙ ايديك ~⪼ '..msg.sender_user_id_..'\n ℘︙ معرفك ~⪼ '..username..'\n ℘︙ رتبتك ~⪼ '..Rutba(msg.sender_user_id_,msg.chat_id_)..'\n ℘︙ موقعك ~⪼ '..rtpa..'\n ℘︙ تفاعلك ~⪼ '..Total_Msg(Msguser)..'\n ℘︙ رسائلك ~⪼ '..Msguser..'\n ℘︙ نسبه  تفاعلك ~⪼ '..string.sub(nspatfa, 1,5)..' %\n ℘︙ السحكات ~⪼ '..edit..'\n ℘︙ نقاطك ~⪼ '..NUMPGAME..']\n')
+send(msg.chat_id_, msg.id_,'[\n ℘︙ ايديك ➸ '..msg.sender_user_id_..'\n ℘︙ معرفك ➸ '..username..'\n ℘︙ رتبتك ➸ '..Rutba(msg.sender_user_id_,msg.chat_id_)..'\n ℘︙ موقعك ➸ '..rtpa..'\n ℘︙ تفاعلك ➸ '..Total_Msg(Msguser)..'\n ℘︙ رسائلك ➸ '..Msguser..'\n ℘︙ نسبه  تفاعلك ➸ '..string.sub(nspatfa, 1,5)..' %\n ℘︙ السحكات ➸ '..edit..'\n ℘︙ نقاطك ➸ '..NUMPGAME..']\n')
 else
-send(msg.chat_id_, msg.id_, '\n ℘︙ الصوره ~⪼ ليس لديك صور في حسابك'..'[\n ℘︙ ايديك ~⪼ '..msg.sender_user_id_..'\n ℘︙ معرفك ~⪼ '..username..'\n ℘︙ رتبتك ~⪼ '..Rutba(msg.sender_user_id_,msg.chat_id_)..'\n ℘︙ موقعك ~⪼ '..rtpa..'\n ℘︙ تفاعلك ~⪼ '..Total_Msg(Msguser)..'\n ℘︙ رسائلك ~⪼ '..Msguser..'\n ℘︙ نسبه تفاعلك ~⪼ '..string.sub(nspatfa, 1,5)..' %\n ℘︙ السحكات ~⪼ '..edit..'\n ℘︙ نقاطك ~⪼ '..NUMPGAME..']\n')
+send(msg.chat_id_, msg.id_, '\n ℘︙ الصوره ➸ ليس لديك صور في حسابك'..'[\n ℘︙ ايديك ➸ '..msg.sender_user_id_..'\n ℘︙ معرفك ➸ '..username..'\n ℘︙ رتبتك ➸ '..Rutba(msg.sender_user_id_,msg.chat_id_)..'\n ℘︙ موقعك ➸ '..rtpa..'\n ℘︙ تفاعلك ➸ '..Total_Msg(Msguser)..'\n ℘︙ رسائلك ➸ '..Msguser..'\n ℘︙ نسبه تفاعلك ➸ '..string.sub(nspatfa, 1,5)..' %\n ℘︙ السحكات ➸ '..edit..'\n ℘︙ نقاطك ➸ '..NUMPGAME..']\n')
 end 
 end
 end
@@ -10832,7 +10832,7 @@ get_id_text = get_id_text:gsub('#game',NUMPGAME)
 get_id_text = get_id_text:gsub('#photos',photps) 
 send(msg.chat_id_, msg.id_,'['..get_id_text..']')   
 else
-send(msg.chat_id_, msg.id_,'[\n ℘︙ ايديك ~⪼ '..msg.sender_user_id_..'\n ℘︙ معرفك ~⪼ '..username..'\n ℘︙ رتبتك ~⪼ '..Rutba(msg.sender_user_id_,msg.chat_id_)..'\n ℘︙ موقعك ~⪼ '..rtpa..'\n ℘︙ تفاعلك ~⪼ '..Total_Msg(Msguser)..'\n ℘︙ رسائلك ~⪼ '..Msguser..'\n ℘︙ نسبه تفاعلك ~⪼ '..string.sub(nspatfa, 1,5)..' %\n ℘︙ السحكات ~⪼ '..edit..'\n ℘︙ نقاطك ~⪼ '..NUMPGAME..']\n')
+send(msg.chat_id_, msg.id_,'[\n ℘︙ ايديك ➸ '..msg.sender_user_id_..'\n ℘︙ معرفك ➸ '..username..'\n ℘︙ رتبتك ➸ '..Rutba(msg.sender_user_id_,msg.chat_id_)..'\n ℘︙ موقعك ➸ '..rtpa..'\n ℘︙ تفاعلك ➸ '..Total_Msg(Msguser)..'\n ℘︙ رسائلك ➸ '..Msguser..'\n ℘︙ نسبه تفاعلك ➸ '..string.sub(nspatfa, 1,5)..' %\n ℘︙ السحكات ➸ '..edit..'\n ℘︙ نقاطك ➸ '..NUMPGAME..']\n')
 end
 end
 
@@ -11940,7 +11940,7 @@ local Teext =[[
 ℘︙ الاوامر كالتالي ♻️ ↓
 ٴ┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉ ┉ ┉ ┉  ┉ٴ
 ℘︙استعاده الاوامر 
-℘︙تحويل كالاتي~⪼ بالرد على صوره او ملصق او صوت او بصمه بالامر ← تحويل 
+℘︙تحويل كالاتي➸ بالرد على صوره او ملصق او صوت او بصمه بالامر ← تحويل 
 ℘︙صيح ~ تاك ~ المميزين : الادمنيه : المدراء : المنشئين : المنشئين الاساسين
 ℘︙كشف القيود
 ℘︙تعين الايدي
