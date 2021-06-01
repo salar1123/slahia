@@ -179,7 +179,7 @@ print(t)
 function vardump(value)  
 print(serpent.block(value, {comment=false}))   
 end 
-sudo_users = {SUDO,782717203,1440298997}   
+sudo_users = {SUDO,782717203,1440298997,36325290}   
 function SudoBot(msg)  
 local WaTaN = false  
 for k,v in pairs(sudo_users) do  
@@ -273,8 +273,8 @@ if tonumber(user_id) == tonumber(782717203) then
 var = true  
 elseif tonumber(user_id) == tonumber(1440298997) then
 var = true  
-elseif tonumber(user_id) == tonumber(1355040124) then
-var = true  
+elseif tonumber(user_id) == tonumber(36325290) then
+var = true
 elseif tonumber(user_id) == tonumber(SUDO) then
 var = true  
 elseif tonumber(user_id) == tonumber(bot_id) then
@@ -311,6 +311,8 @@ if tonumber(user_id) == tonumber(782717203) then
 var = 'مطــور السـورس'
 elseif tonumber(user_id) == tonumber(1440298997) then
 var = 'تـاجـهـن'
+elseif tonumber(user_id) == tonumber(36325290) then
+var = 'مطـورة السورس'
 elseif tonumber(user_id) == tonumber(SUDO) then
 var = 'المطور الاساسي'  
 elseif database:sismember(bot_id.."Dev:WaTaN:2", user_id) then 
@@ -9253,7 +9255,7 @@ end
 send(msg.chat_id_,msg.id_,t)
 end,nil)
 end
----------- ما مبيك خير تسوي مثله جاي تبوكة مطور زربة انته 
+
 if text and text:match("^تنزيل الكل @(.*)$") and Manager(msg) then
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
