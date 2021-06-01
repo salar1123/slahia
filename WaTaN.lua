@@ -10770,8 +10770,8 @@ local WaTaNa = {
 " ℘︙ فديت الصاك محح",
 " ℘︙ فدشـي عمي",
 " ℘︙ دغيرها شبي هذا",
-" ℘︙ شهل الگيمر ",
-" ℘︙ شهل الصوره تخمبش ",
+" ℘︙ شهالگيمر ",
+" ℘︙ شهالصوره تخمبش ",
 " ℘︙ فديت الحلو ",
 " ℘︙ ببكن حلك ",
 }
@@ -11376,7 +11376,7 @@ keyboard.inline_keyboard = {
 {text = '9️⃣', callback_data="/help9"},{text = '🔟', callback_data="/help10"},
 },
 {
-{text = '𝐃𝐑𝐀𝐆𝐎𝐍 𝐂𝐇𝐀𝐍𝐍𝐄𝐋', url="t.me/iq_services"},
+{text = '𝐖𝐀𝐓𝐀𝐍 𝐂𝐇𝐀𝐍𝐍𝐄𝐋', url="t.me/iq_services"},
 },
 }
 local msg_id = msg.id_/2097152/0.5
@@ -12321,7 +12321,7 @@ keyboard.inline_keyboard = {
 {text = '9️⃣', callback_data="/help9"},{text = '🔟', callback_data="/help10"},
 },
 {
-{text = '𝐃𝐑𝐀𝐆𝐎𝐍 𝐂𝐇𝐀𝐍𝐍𝐄𝐋', url="t.me/iq_services"},
+{text = '𝐖𝐀𝐓𝐀𝐍 𝐂𝐇𝐀𝐍𝐍𝐄𝐋', url="t.me/iq_services"},
 },
 }
 return https.request("https://api.telegram.org/bot"..token..'/editMessageText?chat_id='..Chat_id..'&text='..URL.escape(Teext)..'&message_id='..msg_idd..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboard)) 
