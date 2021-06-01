@@ -8544,7 +8544,7 @@ database:set(bot_id.."KLISH:ID"..msg.chat_id_,CHENGER_ID)
 send(msg.chat_id_, msg.id_,' ℘︙ تم تعين الايدي')    
 end
 
-if text == 'طرد البوتات' and Mod(msg) then 
+if text == 'طرد البوتات' or text == 'مسح البوتات' and Mod(msg) then 
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
 if textchuser then
