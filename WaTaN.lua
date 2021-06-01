@@ -1075,12 +1075,12 @@ end
 if text == 'تحديث السورس ℘' and DevWaTaN(msg) then 
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,' ℘︙ تم تحديث السورس \n ℘︙ لديك اخر اصدار لسورس وطن\n ℘︙ الاصدار » { v 1.6 }')
+send(msg.chat_id_, msg.id_,' ℘︙ تم تحديث السورس \n ℘︙ لديك اخر اصدار لسورس وطن\n ℘︙ الاصدار » { v 1.7 }')
 dofile('WaTaN.lua')  
 end
 if text == 'الاصدار ℘' and DevWaTaN(msg) then 
 database:del(bot_id..'Srt:Bot') 
-send(msg.chat_id_, msg.id_,' ℘︙ اصدار سورس وطن \n ℘︙ الاصدار »{ v 1.6 }')
+send(msg.chat_id_, msg.id_,' ℘︙ اصدار سورس وطن \n ℘︙ الاصدار »{ v 1.7 }')
 end
 if text == "ضع اسم للبوت ℘" and DevWaTaN(msg) then  
 database:setex(bot_id..'Set:Name:Bot'..msg.sender_user_id_,300,true) 
@@ -2354,7 +2354,7 @@ return false
 end
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,' ℘︙ تم تحديث السورس \n ℘︙ لديك اخر اصدار لسورس وطن\n ℘︙ الاصدار » { v 1.6 }')
+send(msg.chat_id_, msg.id_,' ℘︙ تم تحديث السورس \n ℘︙ لديك اخر اصدار لسورس وطن\n ℘︙ الاصدار » { v 1.7 }')
 dofile('WaTaN.lua')  
 end
 
