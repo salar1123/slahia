@@ -7541,15 +7541,15 @@ send(msg.chat_id_, msg.id_,Textt)
 end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
 end
-if text == ("رفع مشرف") and msg.reply_to_message_id_ ~= 0 and Constructor(msg) then
+if text == ("رفع ادمن بالكروب") and msg.reply_to_message_id_ ~= 0 and Constructor(msg) then
 function start_function(extra, result, success)
 if msg.can_be_deleted_ == false then 
-send(msg.chat_id_, msg.id_,' ℘︙ البوت ليس ادمن يرجى ترقيتي !') 
+send(msg.chat_id_, msg.id_,' ❃∫ لا امتلك صلاحية اضافة مشرفين يرجى ترقيتي !') 
 return false  
 end
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
-usertext = '\n ℘︙  العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'iq_services')..')'
-status  = '\n ℘︙  الايدي » `'..result.sender_user_id_..'`\n ℘︙  تم رفعه مشرف '
+usertext = '\n ❃∫  العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'BO6OK')..')'
+status  = '\n ❃∫  الايدي » `'..result.sender_user_id_..'`\n ❃∫  تم رفعه ادمن بالكروب '
 send(msg.chat_id_, msg.id_, usertext..status)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.sender_user_id_.."&can_change_info=false&can_delete_messages=false&can_invite_users=True&can_restrict_members=false&can_pin_messages=True&can_promote_members=false")
 end,nil)
@@ -7557,39 +7557,39 @@ end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
 return false
 end
-if text and text:match("^رفع مشرف @(.*)$") and Constructor(msg) then
-local username = text:match("^رفع مشرف @(.*)$")
+if text and text:match("^رفع ادمن بالكروب @(.*)$") and Constructor(msg) then
+local username = text:match("^رفع ادمن بالكروب @(.*)$")
 if msg.can_be_deleted_ == false then 
-send(msg.chat_id_, msg.id_,' ℘︙ البوت ليس ادمن يرجى ترقيتي !') 
+send(msg.chat_id_, msg.id_,' ❃∫ لا امتلك صلاحية اضافة مشرفين يرجى ترقيتي !') 
 return false  
 end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ℘︙  عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ❃∫  عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
-usertext = '\n ℘︙ العضو » ['..result.title_..'](t.me/'..(username or 'iq_services')..')'
-status  = '\n ℘︙  تم رفعه مشرف '
+usertext = '\n ❃∫ العضو » ['..result.title_..'](t.me/'..(username or 'BO6OK')..')'
+status  = '\n ❃∫  تم رفعه ادمن بالكروب '
 texts = usertext..status
 send(msg.chat_id_, msg.id_, texts)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.id_.."&can_change_info=false&can_delete_messages=false&can_invite_users=True&can_restrict_members=false&can_pin_messages=True&can_promote_members=false")
 else
-send(msg.chat_id_, msg.id_, ' ℘︙  لا يوجد حساب بهاذا المعرف')
+send(msg.chat_id_, msg.id_, ' ❃∫  لا يوجد حساب بهذا المعرف')
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
 return false
 end
-if text == ("تنزيل مشرف") and msg.reply_to_message_id_ ~= 0 and Constructor(msg) then
+if text == ("تنزيل ادمن بالكروب") and msg.reply_to_message_id_ ~= 0 and Constructor(msg) then
 function start_function(extra, result, success)
 if msg.can_be_deleted_ == false then 
-send(msg.chat_id_, msg.id_,' ℘︙ البوت ليس ادمن يرجى ترقيتي !') 
+send(msg.chat_id_, msg.id_,' ❃∫ لا امتلك صلاحية ازالة مشرفين يرجى ترقيتي !') 
 return false  
 end
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
-usertext = '\n ℘︙  العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'iq_services')..')'
-status  = '\n ℘︙  الايدي » `'..result.sender_user_id_..'`\n ℘︙  تم تنزيله ادمن من الكروب'
+usertext = '\n ❃∫  العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'BO6OK')..')'
+status  = '\n ❃∫  الايدي » `'..result.sender_user_id_..'`\n ❃∫  تم تنزيله ادمن من الكروب'
 send(msg.chat_id_, msg.id_, usertext..status)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.sender_user_id_.."&can_change_info=false&can_delete_messages=false&can_invite_users=false&can_restrict_members=false&can_pin_messages=false&can_promote_members=false")
 end,nil)
@@ -7597,25 +7597,25 @@ end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
 return false
 end
-if text and text:match("^تنزيل مشرف @(.*)$") and Constructor(msg) then
-local username = text:match("^تنزيل مشرف @(.*)$")
+if text and text:match("^تنزيل ادمن بالكروب @(.*)$") and Constructor(msg) then
+local username = text:match("^تنزيل ادمن بالكروب @(.*)$")
 if msg.can_be_deleted_ == false then 
-send(msg.chat_id_, msg.id_,' ℘︙ البوت ليس ادمن يرجى ترقيتي !') 
+send(msg.chat_id_, msg.id_,' ❃∫ لا امتلك صلاحية ازالة مشرفين يرجى ترقيتي !') 
 return false  
 end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ℘︙  عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ❃∫  عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
-usertext = '\n ℘︙  العضو » ['..result.title_..'](t.me/'..(username or 'iq_services')..')'
-status  = '\n ℘︙  تم تنزيله ادمن من الكروب'
+usertext = '\n ❃∫  العضو » ['..result.title_..'](t.me/'..(username or 'BO6OK')..')'
+status  = '\n ❃∫  تم تنزيله ادمن من الكروب'
 texts = usertext..status
 send(msg.chat_id_, msg.id_, texts)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.id_.."&can_change_info=false&can_delete_messages=false&can_invite_users=false&can_restrict_members=false&can_pin_messages=false&can_promote_members=false")
 else
-send(msg.chat_id_, msg.id_, '⚠¦ لا يوجد حساب بهاذا المعرف')
+send(msg.chat_id_, msg.id_, '⚠¦ لا يوجد حساب بهذا المعرف')
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
@@ -7623,15 +7623,15 @@ return false
 end
 
 
-if text == ("رفع مشرف") and msg.reply_to_message_id_ ~= 0 and BasicConstructor(msg) then
+if text == ("رفع منشئ بالكروب") and msg.reply_to_message_id_ ~= 0 and BasicConstructor(msg) then
 function start_function(extra, result, success)
 if msg.can_be_deleted_ == false then 
-send(msg.chat_id_, msg.id_,' ℘︙ البوت ليس ادمن يرجى ترقيتي !') 
+send(msg.chat_id_, msg.id_,' ❃∫ لا امتلك صلاحية اضافة مشرفين يرجى ترقيتي !') 
 return false  
 end
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
-usertext = '\n ℘︙  العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'iq_services')..')'
-status  = '\n ​℘︙ الايدي » `'..result.sender_user_id_..'`\n ℘︙  تم رفعه مشرف بكل الصلاحيات'
+usertext = '\n ❃∫  العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WviivW')..')'
+status  = '\n ​❃∫ الايدي » '..result.sender_user_id_..'\n ❃∫  تم رفعه منشئ بالكروب'
 send(msg.chat_id_, msg.id_, usertext..status)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.sender_user_id_.."&can_change_info=True&can_delete_messages=True&can_invite_users=True&can_restrict_members=True&can_pin_messages=True&can_promote_members=True")
 end,nil)
@@ -7639,39 +7639,39 @@ end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
 return false
 end
-if text and text:match("^رفع مشرف @(.*)$") and BasicConstructor(msg) then
-local username = text:match("^رفع مشرف @(.*)$")
+if text and text:match("^رفع منشئ بالكروب @(.*)$") and BasicConstructor(msg) then
+local username = text:match("^رفع منشئ بالكروب @(.*)$")
 if msg.can_be_deleted_ == false then 
-send(msg.chat_id_, msg.id_,' ℘︙ البوت ليس ادمن يرجى ترقيتي !') 
+send(msg.chat_id_, msg.id_,' ❃∫ لا امتلك صلاحية اضافة مشرفين يرجى ترقيتي !') 
 return false  
 end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ℘︙  عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ❃∫  عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
-usertext = '\n ℘︙  العضو » ['..result.title_..'](t.me/'..(username or 'iq_services')..')'
-status  = '\n ℘︙  تم رفعه مشرف بكل الصلاحيات'
+usertext = '\n ❃∫  العضو » ['..result.title_..'](t.me/'..(username or 'WviivW')..')'
+status  = '\n ❃∫  تم رفعه منشئ بالكروب'
 texts = usertext..status
 send(msg.chat_id_, msg.id_, texts)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.id_.."&can_change_info=True&can_delete_messages=True&can_invite_users=True&can_restrict_members=True&can_pin_messages=True&can_promote_members=True")
 else
-send(msg.chat_id_, msg.id_, ' ℘︙  لا يوجد حساب بهاذا المعرف')
+send(msg.chat_id_, msg.id_, ' ❃∫  لا يوجد حساب بهاذا المعرف')
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
 return false
 end
-if text == ("تنزيل مشرف") and msg.reply_to_message_id_ ~= 0 and BasicConstructor(msg) then
+if text == ("تنزيل منشئ بالكروب") and msg.reply_to_message_id_ ~= 0 and BasicConstructor(msg) then
 function start_function(extra, result, success)
 if msg.can_be_deleted_ == false then 
-send(msg.chat_id_, msg.id_,' ℘︙ البوت ليس ادمن يرجى ترقيتي !') 
+send(msg.chat_id_, msg.id_,' ❃∫ لا امتلك صلاحية ازالة مشرفين يرجى ترقيتي !') 
 return false  
 end
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
-usertext = '\n ℘︙  العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'iq_services')..')'
-status  = '\n ℘︙  الايدي » `'..result.sender_user_id_..'`\n ℘︙  تم تنزيله ادمن من الكروب بكل الصلاحيات'
+usertext = '\n ❃∫  العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WviivW')..')'
+status  = '\n ❃∫  الايدي » '..result.sender_user_id_..'\n ❃∫  تم تنزيله ادمن من الكروب بكل الصلاحيات'
 send(msg.chat_id_, msg.id_, usertext..status)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.sender_user_id_.."&can_change_info=false&can_delete_messages=false&can_invite_users=false&can_restrict_members=false&can_pin_messages=false&can_promote_members=false")
 end,nil)
@@ -7679,25 +7679,25 @@ end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
 return false
 end
-if text and text:match("^تنزيل مشرف @(.*)$") and BasicConstructor(msg) then
-local username = text:match("^تنزيل مشرف @(.*)$")
+if text and text:match("^تنزيل منشئ بالكروب @(.*)$") and BasicConstructor(msg) then
+local username = text:match("^تنزيل منشئ بالكروب @(.*)$")
 if msg.can_be_deleted_ == false then 
-send(msg.chat_id_, msg.id_,' ℘︙ البوت ليس ادمن يرجى ترقيتي !') 
+send(msg.chat_id_, msg.id_,' ❃∫ لا امتلك صلاحية ازالة مشرفين يرجى ترقيتي !') 
 return false  
 end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_,"⚠¦ عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_,"⚠¦ عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
-usertext = '\n ℘︙  العضو » ['..result.title_..'](t.me/'..(username or 'iq_services')..')'
-status  = '\n ℘︙  تم تنزيله ادمن من الكروب بكل الصلاحيات'
+usertext = '\n ❃∫  العضو » ['..result.title_..'](t.me/'..(username or 'WviivW')..')'
+status  = '\n ❃∫  تم تنزيله من المنشئ بالكروب'
 texts = usertext..status
 send(msg.chat_id_, msg.id_, texts)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.id_.."&can_change_info=false&can_delete_messages=false&can_invite_users=false&can_restrict_members=false&can_pin_messages=false&can_promote_members=false")
 else
-send(msg.chat_id_, msg.id_, ' ℘︙  لا يوجد حساب بهاذا المعرف')
+send(msg.chat_id_, msg.id_, ' ❃∫  لا يوجد حساب بهذا المعرف')
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
@@ -7706,7 +7706,7 @@ end
 ---------------------- بداء كشف المجموعة
 
 ----------------------------------------- انتهاء كشف المجموعة
-if text == 'اعدادات الكروب' and Mod(msg) then    
+if text == 'الاعدادات' or text == 'اعدادات الكروب' and Mod(msg) then    
 if database:get(bot_id..'lockpin'..msg.chat_id_) then    
 lock_pin = '🔓'
 else 
