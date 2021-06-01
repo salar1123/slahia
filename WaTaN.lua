@@ -3962,7 +3962,7 @@ t = " ℘︙ بالتاكيد تم تفعيل ملف → "..file.." \n"
 else
 t = " ℘︙ الملف » "..file.."\n ℘︙ تم تفعيل ملف \n"
 end
-local json_file, res = https.request("https://raw.githubusercontent.com/WaTaNtEaM/Files_Wtan/main/File_Bot/"..file)
+local json_file, res = https.request("https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/"..file)
 if res == 200 then
 local chek = io.open("File_Bot/"..file,'w+')
 chek:write(json_file)
