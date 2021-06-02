@@ -1143,7 +1143,7 @@ end
 send(msg.chat_id_, msg.id_, t)
 end
 -------------
-if text == "🐉 حصريات و تحديثات دراكـون 🐉" and DevWaTaN(msg) then  
+if text == "🐉 حصريات و تحديثات وطـــن 🐉" and DevWaTaN(msg) then  
 local updatech =[[
 *يجب عليك الاشتراك في قناة*
 *تحديثات وشروحات سورس وطن*
@@ -1151,7 +1151,7 @@ local updatech =[[
 ]]
 keyboard = {} 
 keyboard.inline_keyboard = {
-{{text = '📂┇𝚆𝙰𝚃𝙰𝙽 𝚄𝙿𝙳𝙰𝚃𝙴𝚂.', url="t.me/FIDRG"}},
+{{text = '📂┇𝚆𝙰𝚃𝙰𝙽 𝚄𝙿𝙳𝙰𝚃𝙴𝚂.', url="t.me/iq_services"}},
 }
 local msg_id = msg.id_/2097152/0.5
 https.request("https://api.telegram.org/bot"..token..'/sendMessage?chat_id=' .. msg.chat_id_ .. '&text=' .. URL.escape(updatech).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
