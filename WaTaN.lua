@@ -903,6 +903,7 @@ local keyboard = {
 {'تنظيف الكروبات ℘','تنظيف المشتركين ℘'},
 {'جلب نسخه الاحتياطيه ℘'},
 {'تحديث السورس ℘','الاصدار ℘'},
+{'تحديث ℘'},
 {'معلومات السيرفر ℘'},
 {'الغاء ℘'},
 }
@@ -1079,6 +1080,10 @@ os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
 send(msg.chat_id_, msg.id_,' ℘︙ تم تحديث السورس \n ℘︙ لديك اخر اصدار لسورس وطن\n ℘︙ الاصدار » { v 1.7 }')
 dofile('WaTaN.lua')  
+end
+if text == "تحديث ℘" then
+dofile("WaTaN.lua")  
+send(msg.chat_id_, msg.id_, "℘︙تم تحديث الملفات")
 end
 if text == 'الاصدار ℘' and DevWaTaN(msg) then 
 database:del(bot_id..'Srt:Bot') 
