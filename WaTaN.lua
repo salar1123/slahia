@@ -3052,7 +3052,7 @@ Text = '\n ℘︙ بالتاكيد تم تعطيل نسبه الانوثه'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
-if text == 'تفعيل all' and CoSu(msg) then   
+if text == 'تفعيل all' or text == 'تفعيل @all' and CoSu(msg) then   
 if database:get(bot_id..'Cick:all'..msg.chat_id_) then
 Text = ' ℘︙ تم تفعيل امر @all'
 database:del(bot_id..'Cick:all'..msg.chat_id_)  
@@ -3061,12 +3061,30 @@ Text = ' ℘︙ بالتاكيد تم تفعيل امر @all'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
-if text == 'تعطيل all' and CoSu(msg) then  
+if text == 'تفعيل تاك للكل' or text == 'تفعيل التاك' or text == 'تفعيل تاك' and CoSu(msg) then   
+if database:get(bot_id..'Cick:all'..msg.chat_id_) then
+Text = ' ℘︙ تم تفعيل امر تاك للكل'
+database:del(bot_id..'Cick:all'..msg.chat_id_)  
+else
+Text = ' ℘︙ بالتاكيد تم تفعيل امر تاك للكل'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+if text == 'تعطيل all' or text == 'تعطيل @all' and CoSu(msg) then  
 if not database:get(bot_id..'Cick:all'..msg.chat_id_) then
 database:set(bot_id..'Cick:all'..msg.chat_id_,true)  
 Text = '\n ℘︙ تم تعطيل امر @all'
 else
 Text = '\n ℘︙ بالتاكيد تم تعطيل امر @all'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+if text == 'تعطيل تاك للكل' or text == 'تعطيل التاك' or text == 'تعطيل تاك' and CoSu(msg) then  
+if not database:get(bot_id..'Cick:all'..msg.chat_id_) then
+database:set(bot_id..'Cick:all'..msg.chat_id_,true)  
+Text = '\n ℘︙ تم تعطيل امر تاك للكل'
+else
+Text = '\n ℘︙ بالتاكيد تم تعطيل امر تاك للكل'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
@@ -3862,11 +3880,11 @@ send(msg.chat_id_, msg.id_, t)
 end
 
 
-if text == "all" or text == "@all" and CoSu(msg) then
+if text == "all" or text == "@all" or text == 'تاك للكل' and CoSu(msg) then
 if not database:get(bot_id..'Cick:all'..msg.chat_id_) then
 if database:get(bot_id.."abbas:all:Time"..msg.chat_id_..':'..msg.sender_user_id_) then  
 return 
-send(msg.chat_id_, msg.id_,"انتظر دقيقه من فضلك")
+send(msg.chat_id_, msg.id_,"انتظر 5 دقائق من فضل\nثم حاول مره اخرى")
 end
 database:setex(bot_id..'abbas:all:Time'..msg.chat_id_..':'..msg.sender_user_id_,300,true)
 tdcli_function({ID="GetChannelFull",channel_id_ = msg.chat_id_:gsub('-100','')},function(argg,dataa) 
@@ -9234,7 +9252,7 @@ sebd(msg.chat_id_,msg.id_,' ℘︙ تم تغيير اسم الكروب الى {[
 end
 end,nil) 
 end
-if text == "تاك للكل" and Mod(msg) then
+if text == "امر معطل" and Mod(msg) then
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
 if textchuser then
