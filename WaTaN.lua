@@ -3884,9 +3884,9 @@ if text == "all" or text == "@all" or text == 'تاك للكل' and CoSu(msg) th
 if not database:get(bot_id..'Cick:all'..msg.chat_id_) then
 if database:get(bot_id.."abbas:all:Time"..msg.chat_id_..':'..msg.sender_user_id_) then  
 return 
-send(msg.chat_id_, msg.id_,"انتظر 5 دقائق من فضلك\nثم حاول مره اخرى")
+send(msg.chat_id_, msg.id_,"انتظر 7 دقائق من فضلك\nثم حاول مره اخرى")
 end
-database:setex(bot_id..'abbas:all:Time'..msg.chat_id_..':'..msg.sender_user_id_,300,true)
+database:setex(bot_id..'abbas:all:Time'..msg.chat_id_..':'..msg.sender_user_id_,420,true)
 tdcli_function({ID="GetChannelFull",channel_id_ = msg.chat_id_:gsub('-100','')},function(argg,dataa) 
 tdcli_function({ID = "GetChannelMembers",channel_id_ = msg.chat_id_:gsub('-100',''), offset_ = 0,limit_ = dataa.member_count_},function(ta,WaTaN)
 x = 0
