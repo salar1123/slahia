@@ -308,7 +308,7 @@ return var
 end 
 function Rutba(user_id,chat_id)
 if tonumber(user_id) == tonumber(782717203) then  
-var = 'مطــور السـورس'
+var = 'مطــور السـورس 𖦴'
 elseif tonumber(user_id) == tonumber(1440298997) then
 var = 'تـاجـهـن'
 elseif tonumber(user_id) == tonumber(36325290) then
