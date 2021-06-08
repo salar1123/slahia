@@ -2,17 +2,6 @@
 cd $HOME/WaTaN
 install() {
 rm -rf $HOME/.telegram-cli
-sudo chmod +x tg
-chmod +x WaTaN
-chmod +x WtN
-./WtN
-}
-get() {
-rm -fr WaTaN.lua
-rm -fr Info.lua
-wget "https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua"
-}
-installall(){
 apt update
 apt upgrade
 sudo apt-get update
