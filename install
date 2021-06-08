@@ -50,5 +50,4 @@ cd ..
 rm -rf luarocks*
 cd WaTaN
 rm -rf luarocks*
-lua start.lua
 
