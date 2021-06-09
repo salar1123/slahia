@@ -48,4 +48,9 @@ cd ..
 rm -rf luarocks*
 cd WaTaN
 rm -rf luarocks*
+sudo chmod +x tg
 lua WaTaN.lua
+sudo chmod +x WaTaN
+sudo chmod +x ./WtN
+./WtN
+fi
