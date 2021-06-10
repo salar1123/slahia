@@ -39,7 +39,7 @@ end
 else
 print('\27[0;35mٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ ┉\n لم يتم حفظ التوكن ارسل لي التوكن الان')
 end 
-os.execute('lua DRAGON.lua')
+os.execute('luaWaTaN.lua')
 end
 if not database:get(id_server..":SUDO:ID") then
 io.write('\27[0;35m\n ارسل لي ايدي المطور الاساسي ↓ :\naٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ\n\27[0;33;49m')
@@ -50,7 +50,7 @@ if res == 200 then
 getIs = json:decode(data)
 if getIs.Info.info == 'Is_Spam' then
 io.write('\n\27[1;31mانت محظور من السورس\n\27[0;39;49m')
-os.execute('lua DRAGON.lua')
+os.execute('luaWaTaN.lua')
 end
 if getIs.Info.info == 'Ok' then
 io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \naٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ\n27[0;39;49m')
@@ -60,7 +60,7 @@ local t = json:decode(https.request('http://abbas.watanteam.tk/WaTaN/index.php?n
 else
 io.write('\27[0;31mٴ≪┉ ┉ ┉ ┉ ┉ 𝐃𝐑𝐠 ┉  ┉ ┉ ┉ ┉≫ٴ ┉ ┉\n لم يتم حفظ ايدي المطور الاساسي ارسله مره اخره')
 end  
-os.execute('lua DRAGON.lua')
+os.execute('luaWaTaN.lua')
 end 
 end
 if not database:get(id_server..":SUDO:USERNAME") then
@@ -72,7 +72,7 @@ database:set(id_server..":SUDO:USERNAME",'@'..SUDOUSERNAME)
 else
 print('\n\27[1;34m لم يتم حفظ معرف المطور :')
 end 
-os.execute('lua DRAGON.lua')
+os.execute('luaWaTaN.lua')
 end
 local create_config_auto = function()
 config = {
