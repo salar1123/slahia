@@ -86,15 +86,15 @@ token="]]..database:get(id_server..":token")..[["
 while(true) do
 rm -fr ../.telegram-cli
 if [ ! -f ./tg ]; then
-echo "ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉"
+echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉"
 echo "TG IS NOT FIND IN FILES BOT"
-echo "ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ┉"
+echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉"
 exit 1
 fi
 if [ ! $token ]; then
-echo "ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ┉ ┉"
+echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉"
 echo -e "\e[1;36mTOKEN IS NOT FIND IN FILE INFO.LUA \e[0m"
-echo "ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉"
+echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉"
 exit 1
 fi
 echo -e "\033[38;5;208m"
@@ -141,7 +141,7 @@ end
 local config = loadfile("./Info.lua")() 
 return config 
 end 
-_redis = load_redis()
+_redis = load_redis()  
 --------------------------------------------------------------------------------------------------------------
 print([[
 ╔╗╔╗╔╗     ╔════╗     ╔═╗ ╔╗
