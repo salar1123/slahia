@@ -872,14 +872,11 @@ end
 --------------------------------------------------------------------------------------------------------------
 if Chat_Type == 'UserBot' then
 if text == '/start' then  
-if AddChannel(msg.sender_user_id_) == false then
-local textchuser = database:get(bot_id..'text:ch:user')
-if textchuser then
-send(msg.chat_id_, msg.id_,'['..textchuser..']')
-else
-send(msg.chat_id_, msg.id_,' ✯︙ لا تستطيع استخدام البوت يرجى الاشتراك في القناة حتى تتمكن من استخدام الاوامر \n  ✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
-end
-return false
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙عليك الاشتراك بقناة السورس\n✯︙لتصلك جميع المعلومات عن السورس\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
 end
 if DevWaTaN(msg) then
 local bl = ' ✯︙ اهلا عزيزي آلمـطـور\n ✯︙ آنت آلمـطـور آلآسـآسـي للبوت\n┉  ┉  ┉  ┉  ┉  ┉  ┉  ┉ء\n ✯︙ تسـتطـيع‌‏ آلتحگم باوامر البوت\n ✯︙ من خلاال الكيبورد خاص بك\n ✯︙ قناة سورس البوت [اضغط هنا](t.me/WaTaNTeaM)'
@@ -1001,6 +998,12 @@ end,nil)
 end,nil)
 end 
 if text == 'تفعيل التواصل ✯' and DevWaTaN(msg) then  
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 if database:get(bot_id..'Tuasl:Bots') then
 database:del(bot_id..'Tuasl:Bots') 
 Text = '\n ✯︙ تم تفعيل التواصل ' 
@@ -1010,6 +1013,12 @@ end
 send(msg.chat_id_, msg.id_,Text) 
 end
 if text == 'تعطيل التواصل ✯' and DevWaTaN(msg) then  
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 if not database:get(bot_id..'Tuasl:Bots') then
 database:set(bot_id..'Tuasl:Bots',true) 
 Text = '\n ✯︙ تم تعطيل التواصل' 
@@ -1019,6 +1028,12 @@ end
 send(msg.chat_id_, msg.id_,Text) 
 end
 if text == 'تفعيل البوت الخدمي ✯' and DevWaTaN(msg) then  
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 if database:get(bot_id..'Free:Bots') then
 database:del(bot_id..'Free:Bots') 
 Text = '\n ✯︙ تم تفعيل البوت الخدمي ' 
@@ -1028,6 +1043,12 @@ end
 send(msg.chat_id_, msg.id_,Text) 
 end
 if text == 'تعطيل البوت الخدمي ✯' and DevWaTaN(msg) then  
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 if not database:get(bot_id..'Free:Bots') then
 database:set(bot_id..'Free:Bots',true) 
 Text = '\n ✯︙ تم تعطيل البوت الخدمي' 
@@ -1048,15 +1069,33 @@ database:del(bot_id..'Start:Bots')
 return false
 end
 if text == 'ضع كليشه ستارت ✯' and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 database:set(bot_id..'Start:Bots',true) 
 send(msg.chat_id_, msg.id_,' ✯︙ ارسل لي الكليشه الان')
 return false
 end
 if text == 'حذف كليشه ستارت ✯' and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 database:del(bot_id..'Start:Bot') 
 send(msg.chat_id_, msg.id_,' ✯︙ تم حذف كليشه ستارت')
 end
 if text == 'معلومات السيرفر ✯' and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 send(msg.chat_id_, msg.id_, io.popen([[
 linux_version=`lsb_release -ds`
 memUsedPrc=`free -m | awk 'NR==2{printf "%sMB/%sMB {%.2f%}\n", $3,$2,$3*100/$2 }'`
@@ -1073,25 +1112,55 @@ echo '*———————————~*\n✯✔{ مـده تـشغيـل ال
 end
 
 if text == 'تحديث السورس ✯' and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
 send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث السورس \n ✯︙ لديك اخر اصدار لسورس وطن\n ✯︙ الاصدار » { v 1.7 }')
 dofile('WaTaN.lua')  
 end
 if text == "تحديث ✯" then
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 dofile("WaTaN.lua")  
 send(msg.chat_id_, msg.id_, "✯︙تم تحديث الملفات")
 end
 if text == 'الاصدار ✯' and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 database:del(bot_id..'Srt:Bot') 
 send(msg.chat_id_, msg.id_,' ✯︙ اصدار سورس وطن \n ✯︙ الاصدار »{ v 1.7 }')
 end
 if text == "ضع اسم للبوت ✯" and DevWaTaN(msg) then  
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 database:setex(bot_id..'Set:Name:Bot'..msg.sender_user_id_,300,true) 
 send(msg.chat_id_, msg.id_," ✯︙ ارسل اليه الاسم الان ")
 return false
 end
 if text == 'الاحصائيات ✯' and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 local Groups = database:scard(bot_id..'Chek:Groups')  
 local Users = database:scard(bot_id..'User_Bot')  
 Text = ' الاحصائيات ✯ \n'..' ✯︙ عدد الكروبات » {'..Groups..'}'..'\n ✯︙  عدد المشتركين » {'..Users..'}'
@@ -1099,6 +1168,12 @@ send(msg.chat_id_, msg.id_,Text)
 return false
 end
 if text == 'المشتركين ✯' and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 local Groups = database:scard(bot_id..'Chek:Groups')  
 local Users = database:scard(bot_id..'User_Bot')  
 Text = '\n ✯︙ المشتركين»{`'..Users..'`}'
@@ -1106,6 +1181,12 @@ send(msg.chat_id_, msg.id_,Text)
 return false
 end
 if text == 'الكروبات ✯' and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 local Groups = database:scard(bot_id..'Chek:Groups')  
 local Users = database:scard(bot_id..'User_Bot')  
 Text = '\n ✯︙ الكروبات»{`'..Groups..'`}'
@@ -1113,6 +1194,12 @@ send(msg.chat_id_, msg.id_,Text)
 return false
 end
 if text == ("المطورين ✯") and DevWaTaN(msg) then
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 local list = database:smembers(bot_id..'Sudo:User')
 t = "\n ✯︙ قائمة المطورين \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
 for k,v in pairs(list) do
@@ -1129,6 +1216,12 @@ end
 send(msg.chat_id_, msg.id_, t)
 end
 if text == ("الثانويين ✯") and DevWaTaN(msg) then
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 local list = database:smembers(bot_id..'Dev:WaTaN:2')
 t = "\n ✯︙ قائمة الثانويين \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
 for k,v in pairs(list) do
@@ -1161,6 +1254,12 @@ return false
 end
 -----------
 if text == ("قائمه العام ✯") and DevWaTaN(msg) then
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 local list = database:smembers(bot_id..'GBan:User')
 t = "\n ✯︙ قائمه المحظورين عام \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
 for k,v in pairs(list) do
@@ -1178,6 +1277,12 @@ send(msg.chat_id_, msg.id_, t)
 return false
 end
 if text == ("قائمه الكتم العام ✯") and DevWaTaN(msg) then
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 local list = database:smembers(bot_id..'Gmute:User')
 t = "\n ✯︙ قائمة المكتومين عام \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
 for k,v in pairs(list) do
@@ -1195,26 +1300,56 @@ send(msg.chat_id_, msg.id_, t)
 return false
 end
 if text=="اذاعه خاص ✯" and msg.reply_to_message_id_ == 0 and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 database:setex(bot_id.."Send:Bc:Pv" .. msg.chat_id_ .. ":" .. msg.sender_user_id_, 600, true) 
 send(msg.chat_id_, msg.id_," ✯︙ ارسل الان اذاعتك؟ \n ✯︙ للخروج ارسل الغاء ")
 return false
 end 
 if text=="اذاعه ✯" and msg.reply_to_message_id_ == 0 and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 database:setex(bot_id.."Send:Bc:Grops" .. msg.chat_id_ .. ":" .. msg.sender_user_id_, 600, true) 
 send(msg.chat_id_, msg.id_," ✯︙ ارسل الان اذاعتك؟ \n ✯︙ للخروج ارسل الغاء ")
 return false
 end  
 if text=="اذاعه بالتثبيت ✯" and msg.reply_to_message_id_ == 0 and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 database:setex(bot_id.."Bc:Grops:Pin" .. msg.chat_id_ .. ":" .. msg.sender_user_id_, 600, true) 
 send(msg.chat_id_, msg.id_," ✯︙ ارسل الان اذاعتك؟ \n ✯︙ للخروج ارسل الغاء ")
 return false
 end 
 if text=="اذاعه بالتوجيه ✯" and msg.reply_to_message_id_ == 0  and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 database:setex(bot_id.."Send:Fwd:Grops" .. msg.chat_id_ .. ":" .. msg.sender_user_id_, 600, true) 
 send(msg.chat_id_, msg.id_," ✯︙ ارسل لي التوجيه الان")
 return false
 end 
 if text=="اذاعه بالتوجيه خاص ✯" and msg.reply_to_message_id_ == 0  and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 database:setex(bot_id.."Send:Fwd:Pv" .. msg.chat_id_ .. ":" .. msg.sender_user_id_, 600, true) 
 send(msg.chat_id_, msg.id_," ✯︙ ارسل لي التوجيه الان")
 return false
@@ -1223,6 +1358,12 @@ if text == 'جلب نسخه الاحتياطيه ✯' and DevWaTaN(msg) then
 GetFile_Bot(msg)
 end
 if text == "تنظيف المشتركين ✯" and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
 if textchuser then
@@ -1259,6 +1400,12 @@ end
 return false
 end
 if text == "تنظيف الكروبات ✯" and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
 if textchuser then
@@ -2347,14 +2494,11 @@ database:set(bot_id..'Num:Add:Bot',Num)
 send(msg.chat_id_, msg.id_,' ✯︙ تم تعيين عدد الاعضاء سيتم تفعيل الكروبات التي اعضائها اكثر من  >> {'..Num..'} عضو')
 end
 if text == 'تحديث السورس' and DevWaTaN(msg) then 
-if AddChannel(msg.sender_user_id_) == false then
-local textchuser = database:get(bot_id..'text:ch:user')
-if textchuser then
-send(msg.chat_id_, msg.id_,'['..textchuser..']')
-else
-send(msg.chat_id_, msg.id_,' ✯︙ لا تستطيع استخدام البوت \n  ✯︙ يرجى الاشتراك بالقناه اولا \n  ✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
-end
-return false
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
 end
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
@@ -2639,14 +2783,11 @@ end
 end,nil)  
 end
 if text == 'السورس' or text == 'سورس' or text == 'يا سورس' then
-if AddChannel(msg.sender_user_id_) == false then
-local textchuser = database:get(bot_id..'text:ch:user')
-if textchuser then
-send(msg.chat_id_, msg.id_,'['..textchuser..']')
-else
-send(msg.chat_id_, msg.id_,' ✯︙ لا تستطيع استخدام البوت \n  ✯︙ يرجى الاشتراك بالقناه اولا \n  ✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
-end
-return false
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
 end
 Text = [[
 ⦑ Welcome to Source ⦒
