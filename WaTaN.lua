@@ -8404,7 +8404,7 @@ end,nil)
 end
 end
 
-if text == 'مطور السورس' or text == 'مطور سورس' then
+if text == 'مطور السورس' or text == 'مطور سورس' or text == 'مطور وطن' or text == 'مبرمج السورس' or text == 'مبرمج وطن' then
 database:del(bot_id..'Srt:Bot') 
 send(msg.chat_id_, msg.id_,'✯︙اهلا بك عزيزي\n✯︙ان كان لديك استفسار او اي مشكلة\n✯︙يمكنك مراسلة مطور السورس\n✯︙ حساب مطور السورس @abbasfadhil')
 end
