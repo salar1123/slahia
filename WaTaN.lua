@@ -1131,9 +1131,7 @@ end
 
 if text == 'تحديث المتجر ✯' and DevWaTaN(msg) then 
 io.popen("mkdir File_Bot")
-io.popen("cd File_Bot && rm -rf commands.lua.1") 
-io.popen("cd File_Bot && rm -rf commands.lua.2") 
-io.popen("cd File_Bot && rm -rf commands.lua.3") 
+os.execute("rm -fr File_Bot/*") 
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua")  
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/Reply.lua")  
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/games.lua") 
@@ -2522,7 +2520,21 @@ os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lu
 send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث السورس \n ✯︙ لديك اخر اصدار لسورس وطن\n ✯︙ الاصدار » { v 1.8 }')
 dofile('WaTaN.lua')  
 end
-
+if text == 'تحديث المتجر' and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
+io.popen("mkdir File_Bot")
+os.execute("rm -fr File_Bot/*")
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua")  
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/Reply.lua")  
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/games.lua") 
+send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث المتجر \n ✯︙ لديك اخر اصدار للمتجر')
+dofile('WaTaN.lua')
+end
 if text and text:match("^تغير الاشتراك$") and DevWaTaN(msg) then  
 database:setex(bot_id.."add:ch:jm" .. msg.chat_id_ .. "" .. msg.sender_user_id_, 360, true)  
 send(msg.chat_id_, msg.id_, ' ✯︙ حسنآ ارسل لي معرف القناة')
@@ -2799,6 +2811,9 @@ end
 end
 end,nil)  
 end
+
+
+
 if text == 'السورس' or text == 'سورس' or text == 'يا سورس' then
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
@@ -2810,7 +2825,8 @@ Text = [[
 ⦑ Welcome to Source ⦒
 ✯ ⦑ SOURCE WaTaN ⦒ 
 ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉
-✯︙ [Source Channel](t.me/WaTaNTeaM)   
+✯︙ [Channel Source](t.me/WaTaNTeaM)
+✯︙ [UpDaTe Soucre](t.me/watanupdate)  
 ✯︙ [Devloper one](t.me/Abbasfadhil)     
 ✯︙ [Devloper two](t.me/i_0_4) 
 ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉
@@ -8386,6 +8402,11 @@ local Name = '['..result.first_name_..'](tg://user?id='..result.id_..')'
 sendText(msg.chat_id_,Name,msg.id_/2097152/0.5,'md')
 end,nil)
 end
+end
+
+if text == 'مطور السورس' or text == 'مطور سورس' then
+database:del(bot_id..'Srt:Bot') 
+send(msg.chat_id_, msg.id_,'✯︙اهلا بك عزيزي\n✯︙ان كان لديك استفسار او اي مشكلة\n✯︙يمكنك مراسلة مطور السورس\n✯︙ حساب مطور السورس @abbasfadhil')
 end
 ---------------------
 
