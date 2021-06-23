@@ -871,7 +871,7 @@ return false
 end
 --------------------------------------------------------------------------------------------------------------
 if Chat_Type == 'UserBot' then
-if text == '/start' then  
+if text == '/start' or text == '✯ /start ✯' then  
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
 if data.Ch_Member.Info_WaTaNTeaM ~= true then
@@ -881,6 +881,7 @@ end
 if DevWaTaN(msg) then
 local bl = ' ✯︙ اهلا عزيزي آلمـطـور\n ✯︙ آنت آلمـطـور آلآسـآسـي للبوت\n┉  ┉  ┉  ┉  ┉  ┉  ┉  ┉ء\n ✯︙ تسـتطـيع‌‏ آلتحگم باوامر البوت\n ✯︙ من خلاال الكيبورد خاص بك\n ✯︙ قناة سورس البوت [اضغط هنا](t.me/WaTaNTeaM)'
 local keyboard = {
+{'✯ /start ✯'},
 {'الاحصائيات ✯'},
 {'تعطيل التواصل ✯','تفعيل التواصل ✯'},
 {'ضع اسم للبوت ✯','قائمه العام ✯','قائمه الكتم العام ✯'},
