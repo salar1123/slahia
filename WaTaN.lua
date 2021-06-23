@@ -895,10 +895,11 @@ local keyboard = {
 {'الاشتراك الاجباري ✯','وضع قناة الاشتراك ✯'},
 {'تفعيل البوت الخدمي ✯','تعطيل البوت الخدمي ✯'},
 {'تنظيف الكروبات ✯','تنظيف المشتركين ✯'},
+{'تحديث السورس ✯','تحديث المتجر ✯'},
+{'الاصـدار ✯','تـحــديـث ✯'},
 {'جلب نسخه الاحتياطيه ✯'},
-{'تحديث السورس ✯','الاصدار ✯'},
-{'تحديث ✯'},
 {'معلومات السيرفر ✯'},
+{'مطور السورس ✯'},
 {'الغاء ✯'},
 }
 send_inline_key(msg.chat_id_,bl,keyboard)
@@ -1110,7 +1111,6 @@ echo '*———————————~*\n✯✔{ الــدخــول } ⇎\n
 echo '*———————————~*\n✯✔{ مـده تـشغيـل الـسـيـرفـر }⇎\n*»» '"$uptime"'*'
 ]]):read('*all'))  
 end
-
 if text == 'تحديث السورس ✯' and DevWaTaN(msg) then 
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
@@ -1123,7 +1123,24 @@ os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lu
 send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث السورس \n ✯︙ لديك اخر اصدار لسورس وطن\n ✯︙ الاصدار » { v 1.8 }')
 dofile('WaTaN.lua')  
 end
-if text == "تحديث ✯" then
+
+if text == 'مطور السورس ✯' and DevWaTaN(msg) then 
+database:del(bot_id..'Srt:Bot') 
+send(msg.chat_id_, msg.id_,'✯︙اهلا بك عزيزي\n✯︙ان كان لديك استفسار او اي مشكلة\n✯︙يمكنك مراسلة مطور السورس\n✯︙ حساب مطور السورس @abbasfadhil')
+end
+
+if text == 'تحديث المتجر ✯' and DevWaTaN(msg) then 
+io.popen("mkdir File_Bot")
+io.popen("cd File_Bot && rm -rf commands.lua.1") 
+io.popen("cd File_Bot && rm -rf commands.lua.2") 
+io.popen("cd File_Bot && rm -rf commands.lua.3") 
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua")  
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/Reply.lua")  
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/games.lua") 
+send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث المتجر \n ✯︙ لديك اخر اصدار للمتجر')
+dofile('WaTaN.lua')  
+end
+if text == "تـحــديـث ✯" then
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
 if data.Ch_Member.Info_WaTaNTeaM ~= true then
@@ -1133,7 +1150,7 @@ end
 dofile("WaTaN.lua")  
 send(msg.chat_id_, msg.id_, "✯︙تم تحديث الملفات")
 end
-if text == 'الاصدار ✯' and DevWaTaN(msg) then 
+if text == 'الاصـدار ✯' and DevWaTaN(msg) then 
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
 if data.Ch_Member.Info_WaTaNTeaM ~= true then
@@ -10186,7 +10203,7 @@ end
 if text and text:match("^معلومات (.*)$") and database:get(bot_id.."WaTaNTeaM:insta_bot"..msg.chat_id_) == "open" then
 local Textni = text:match("^معلومات (.*)$")
 data,res = https.request('https://forhassan.ml/Black/insta.php?username='..URL.escape(Textni)..'')
-if res == 200 then
+if res == 200 then 
 muaed = json:decode(data)
 if muaed.Info == true then
 local filee = download_to_file(muaed.ph,msg.sender_user_id_..'.jpg')
