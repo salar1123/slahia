@@ -3188,7 +3188,7 @@ Text = ' ✯︙ بالتاكيد تم تفعيل الرجوله'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
-if text == 'تعطيل نسبه الرجوله' or text == 'تعطيل نسبة الرجولة' or text == 'تعطيل نسبه الرجولة' or text == 'تعطيل نسبة الرجوله'
+if text == 'تعطيل نسبه الرجوله' or text == 'تعطيل نسبة الرجولة' or text == 'تعطيل نسبه الرجولة' or text == 'تعطيل نسبة الرجوله' and Manager(msg) then 
 if not database:get(bot_id..'Cick:rjo'..msg.chat_id_) then
 database:set(bot_id..'Cick:rjo'..msg.chat_id_,true)  
 Text = '\n ✯︙ تم تعطيل نسبه الرجوله'
@@ -3224,7 +3224,7 @@ Text = ' ✯︙ بالتاكيد تم تفعيل الانوثه'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
-if text == 'تعطيل نسبه الانوثه' or text == 'تعطيل نسبة الانوثة' or text == 'تعطيل نسبه الانوثة' or text == 'تعطيل نسبة الانوثه' and Manager(msg) then   
+if text == 'تفعيل نسبه الانوثه' or text == 'تفعيل نسبة الانوثة' or text == 'تفعيل نسبه الانوثة' or text == 'تعطيل نسبة الانوثه' and Manager(msg) then   
 if not database:get(bot_id..'Cick:ano'..msg.chat_id_) then
 database:set(bot_id..'Cick:ano'..msg.chat_id_,true)  
 Text = '\n ✯︙ تم تعطيل نسبه الانوثه'
@@ -12159,8 +12159,6 @@ local Teext =[[
 ✯︙تنظيف + العدد
 ✯︙تنظيف الميديا ← لمسح جميع الميديا
 ✯︙امسح ← لمسح عدد من الوسائط الموجوده
-✯︙تنزيل الكل
-✯︙تنزيل جميع الرتب
 ✯︙منع + برد
 ✯︙~ الصور + متحركه + ملصق ~
 ✯︙حظر ~ كتم ~ تقيد ~ طرد
