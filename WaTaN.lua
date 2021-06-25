@@ -4328,13 +4328,13 @@ send(msg.chat_id_, msg.id_, usertext..status)
 end;end,nil)
 return false 
 end
-if text == ("مسح قائمه المالك") and Sudo(msg) then
+if text == ("مسح المالكين") and Sudo(msg) then
 database:del(bot_id..'CoSu'..msg.chat_id_)
 send(msg.chat_id_, msg.id_, '\n ✯︙ تم مسح قائمه المالك')
 return false
 end
 
-if text == 'قائمه المالك' and Sudo(msg) then
+if text == 'قائمه المالك' or text == 'المالكين' and Sudo(msg) then
 local list = database:smembers(bot_id..'CoSu'..msg.chat_id_)
 t = "\n ✯︙ قائمه المالك \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
 for k,v in pairs(list) do
@@ -4350,6 +4350,22 @@ t = " ✯︙ لا يوجد احد في قائمه المالك"
 end
 send(msg.chat_id_, msg.id_, t)
 return false
+end
+if text == ("صيح للمالكين") or text == ("تاك للمالكين") then
+local list = database:smembers(bot_id..'CoSu'..msg.chat_id_)
+t = "\n ✯︙ وينكم تعالو يريدوكم بالكروب \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
+for k,v in pairs(list) do
+local username = database:get(bot_id.."user:Name" .. v)
+if username then
+t = t..""..k.."- {[@"..username.."]}\n"
+else
+t = t..""..k.."- {"..v.."}\n"
+end
+end
+if #list == 0 then
+t = " ✯︙ لا يوجد احد في قائمه المالك"
+end
+send(msg.chat_id_, msg.id_, t)
 end
 if text == ("صيح للمالك") or text == ("تاك للمالك") then
 local list = database:smembers(bot_id..'CoSu'..msg.chat_id_)
@@ -4512,6 +4528,7 @@ send(msg.chat_id_, msg.id_, usertext..status)
 end;end,nil)
 return false
 end
+
 ------------------------------------------------------------------------
 
 if (msg.content_.sticker_)  and msg.reply_to_message_id_ == 0 and database:get(bot_id.."lock:Lock:Sexy"..msg.chat_id_)=="del" then      
@@ -10806,12 +10823,13 @@ Text = ' ✯︙ بالتاكيد تم تفعيل امر صيح'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
-if text == 'تنزيل جميع الرتب' and BasicConstructor(msg) then  
+if text == 'تنزيل جميع الرتب' and CoSu(msg) then  
+database:del(bot_id..'Basic:Constructor'..msg.chat_id_)
 database:del(bot_id..'Constructor'..msg.chat_id_)
 database:del(bot_id..'Manager'..msg.chat_id_)
 database:del(bot_id..'Mod:User'..msg.chat_id_)
 database:del(bot_id..'Special:User'..msg.chat_id_)
-send(msg.chat_id_, msg.id_, '\n ✯︙ تم تنزيل الكل من الرتب الاتيه \n ✯︙ المميزين ، الادمنيه ، المدراء ، المنشئين \n')
+send(msg.chat_id_, msg.id_, '\n ✯︙ تم تنزيل الكل من الرتب الاتيه \n ✯︙ المميزين ، الادمنيه ، المدراء ، المنشئين ، الاساسيين \n')
 end
 if text == 'تعطيل صيح' and Manager(msg) then  
 if not database:get(bot_id..'Seh:User'..msg.chat_id_) then
