@@ -1132,11 +1132,12 @@ end
 
 if text == 'تحديث المتجر ✯' and DevWaTaN(msg) then 
 io.popen("mkdir File_Bot")
-os.execute("rm -fr File_Bot/*") 
-io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua")  
+os.execute("rm -fr File_Bot/*")
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua")
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/all.lua") 
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/Reply.lua")  
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/games.lua") 
-send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث المتجر \n ✯︙ لديك اخر اصدار للمتجر')
+send(msg.chat_id_, msg.id_,'✯︙اهلا بك عزيزي\n✯︙تم تنزيل جميع الملفات  المتجر وتحديثه الى اخر اصدار\n✯︙تابعنا لتصلك اخر التحديثات\n✯︙[قناة السورس](t.me/WaTaNTeaM)')
 dofile('WaTaN.lua')  
 end
 if text == "تـحــديـث ✯" then
@@ -2530,11 +2531,12 @@ return false
 end
 io.popen("mkdir File_Bot")
 os.execute("rm -fr File_Bot/*")
-io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua")  
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua")
+io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/all.lua") 
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/Reply.lua")  
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/games.lua") 
-send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث المتجر \n ✯︙ لديك اخر اصدار للمتجر')
-dofile('WaTaN.lua')
+send(msg.chat_id_, msg.id_,'✯︙اهلا بك عزيزي\n✯︙تم تنزيل جميع الملفات  المتجر وتحديثه الى اخر اصدار\n✯︙تابعنا لتصلك اخر التحديثات\n✯︙[قناة السورس](t.me/WaTaNTeaM)')
+dofile('WaTaN.lua') 
 end
 if text and text:match("^تغير الاشتراك$") and DevWaTaN(msg) then  
 database:setex(bot_id.."add:ch:jm" .. msg.chat_id_ .. "" .. msg.sender_user_id_, 360, true)  
@@ -3224,48 +3226,12 @@ Text = ' ✯︙ بالتاكيد تم تفعيل الانوثه'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
-if text == 'تفعيل نسبه الانوثه' or text == 'تفعيل نسبة الانوثة' or text == 'تفعيل نسبه الانوثة' or text == 'تعطيل نسبة الانوثه' and Manager(msg) then   
+if text == 'تعطيل نسبه الانوثه' or text == 'تعطيل نسبة الانوثة' or text == 'تعطيل نسبه الانوثة' or text == 'تعطيل نسبة الانوثه' and Manager(msg) then   
 if not database:get(bot_id..'Cick:ano'..msg.chat_id_) then
 database:set(bot_id..'Cick:ano'..msg.chat_id_,true)  
 Text = '\n ✯︙ تم تعطيل نسبه الانوثه'
 else
 Text = '\n ✯︙ بالتاكيد تم تعطيل نسبه الانوثه'
-end
-send(msg.chat_id_, msg.id_,Text) 
-end
-if text == 'تفعيل all' or text == 'تفعيل @all' and Constructor(msg) then   
-if database:get(bot_id..'Cick:all'..msg.chat_id_) then
-Text = ' ✯︙ تم تفعيل امر @all'
-database:del(bot_id..'Cick:all'..msg.chat_id_)  
-else
-Text = ' ✯︙ بالتاكيد تم تفعيل امر @all'
-end
-send(msg.chat_id_, msg.id_,Text) 
-end
-if text == 'تفعيل تاك للكل' or text == 'تفعيل التاك' or text == 'تفعيل تاك' and Constructor(msg) then   
-if database:get(bot_id..'Cick:all'..msg.chat_id_) then
-Text = ' ✯︙ تم تفعيل امر تاك للكل'
-database:del(bot_id..'Cick:all'..msg.chat_id_)  
-else
-Text = ' ✯︙ بالتاكيد تم تفعيل امر تاك للكل'
-end
-send(msg.chat_id_, msg.id_,Text) 
-end
-if text == 'تعطيل all' or text == 'تعطيل @all' and Constructor(msg) then  
-if not database:get(bot_id..'Cick:all'..msg.chat_id_) then
-database:set(bot_id..'Cick:all'..msg.chat_id_,true)  
-Text = '\n ✯︙ تم تعطيل امر @all'
-else
-Text = '\n ✯︙ بالتاكيد تم تعطيل امر @all'
-end
-send(msg.chat_id_, msg.id_,Text) 
-end
-if text == 'تعطيل تاك للكل' or text == 'تعطيل التاك' or text == 'تعطيل تاك' and Constructor(msg) then  
-if not database:get(bot_id..'Cick:all'..msg.chat_id_) then
-database:set(bot_id..'Cick:all'..msg.chat_id_,true)  
-Text = '\n ✯︙ تم تعطيل امر تاك للكل'
-else
-Text = '\n ✯︙ بالتاكيد تم تعطيل امر تاك للكل'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
@@ -4058,41 +4024,6 @@ if #list == 0 then
 t = " ✯︙ لا يوجد مطورين"
 end
 send(msg.chat_id_, msg.id_, t)
-end
-
-
-if text == "all" or text == "@all" or text == 'تاك للكل' and Constructor(msg) then
-if not database:get(bot_id..'Cick:all'..msg.chat_id_) then
-if database:get(bot_id.."abbas:all:Time"..msg.chat_id_..':'..msg.sender_user_id_) then  
-return 
-send(msg.chat_id_, msg.id_,"انتظر 7 دقائق من فضلك\nثم حاول مره اخرى")
-end
-database:setex(bot_id..'abbas:all:Time'..msg.chat_id_..':'..msg.sender_user_id_,420,true)
-tdcli_function({ID="GetChannelFull",channel_id_ = msg.chat_id_:gsub('-100','')},function(argg,dataa) 
-tdcli_function({ID = "GetChannelMembers",channel_id_ = msg.chat_id_:gsub('-100',''), offset_ = 0,limit_ = dataa.member_count_},function(ta,WaTaN)
-x = 0
-tags = 0
-local list = WaTaN.members_
-for k, v in pairs(list) do
-tdcli_function({ID="GetUser",user_id_ = v.user_id_},function(arg,data)
-if x == 5 or x == tags or k == 0 then
-tags = x + 5
-t = "#all"
-end
-x = x + 1
-tagname = data.first_name_
-tagname = tagname:gsub("]","")
-tagname = tagname:gsub("[[]","")
-t = t..", ["..tagname.."](tg://user?id="..v.user_id_..")"
-if x == 5 or x == tags or k == 0 then
-local Text = t:gsub('#all,','#all\n')
-sendText(msg.chat_id_,Text,0,'md')
-end
-end,nil)
-end
-end,nil)
-end,nil)
-end
 end
 
 if text == 'الملفات' and DevWaTaN(msg) then
@@ -12857,7 +12788,7 @@ end
 if text and text ~="نسبه الانوثه" and database:get(bot_id..":"..msg.sender_user_id_..":ano_Bots"..msg.chat_id_) == "sendanoe" then
 numj = {"10","20","30","35","75","34","66","82","23","19","55","80","63","32","27","89","99","98","79","100","8","3","6","0",};
 sendnuj = numj[math.random(#numj)]
-xl = 'نسبه الانوثه '..text..' هي : \n '..sendnuj..'%'
+xl = 'نسبه الانوثه لـ'..text..' هي : \n '..sendnuj..'%'
 send(msg.chat_id_, msg.id_,xl) 
 database:del(bot_id..":"..msg.sender_user_id_..":ano_Bots"..msg.chat_id_)
 end
