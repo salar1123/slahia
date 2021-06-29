@@ -915,7 +915,7 @@ end
 send(msg.chat_id_, msg.id_, SourceWaTaNr) 
 end
 end
-database:setex(bot_id..'Start:Time'..msg.sender_user_id_,300,true)
+database:setex(bot_id..'Start:Time'..msg.sender_user_id_,60,true)
 return false
 end
 if not DevWaTaN(msg) and not database:sismember(bot_id..'Ban:User_Bot',msg.sender_user_id_) and not database:get(bot_id..'Tuasl:Bots') then
