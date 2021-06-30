@@ -869,7 +869,7 @@ send(msg.chat_id_, msg.id_," ✯︙ تمت الاذاعه الى *~ "..#list.." 
 database:del(bot_id.."Bc:Grops:Pin" .. msg.chat_id_ .. ":" .. msg.sender_user_id_) 
 return false
 end
---------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 if Chat_Type == 'UserBot' then
 if text == '/start' or text == '✯ /start ✯' then  
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
@@ -1138,7 +1138,7 @@ io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/all.lua") 
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/Reply.lua")  
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/games.lua") 
-send(msg.chat_id_, msg.id_,'✯︙اهلا بك عزيزي\n✯︙تم تنزيل جميع الملفات  المتجر وتحديثه الى اخر اصدار\n✯︙تابعنا لتصلك اخر التحديثات\n✯︙[قناة السورس](t.me/WaTaNTeaM)')
+send(msg.chat_id_, msg.id_,'✯︙اهلا بك عزيزي\n✯︙تم تنزيل جميع ملفات المتجر وتحديثه الى اخر اصدار\n✯︙تابعنا لتصلك اخر التحديثات\n✯︙[قناة السورس](t.me/WaTaNTeaM)')
 dofile('WaTaN.lua')  
 end
 if text == "تـحــديـث ✯" then
@@ -2537,7 +2537,7 @@ io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/all.lua") 
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/Reply.lua")  
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/games.lua") 
-send(msg.chat_id_, msg.id_,'✯︙اهلا بك عزيزي\n✯︙تم تنزيل جميع الملفات  المتجر وتحديثه الى اخر اصدار\n✯︙تابعنا لتصلك اخر التحديثات\n✯︙[قناة السورس](t.me/WaTaNTeaM)')
+send(msg.chat_id_, msg.id_,'✯︙اهلا بك عزيزي\n✯︙تم تنزيل جميع ملفات المتجر وتحديثه الى اخر اصدار\n✯︙تابعنا لتصلك اخر التحديثات\n✯︙[قناة السورس](t.me/WaTaNTeaM)')
 dofile('WaTaN.lua') 
 end
 if text and text:match("^تغير الاشتراك$") and DevWaTaN(msg) then  
@@ -2817,9 +2817,19 @@ end
 end,nil)  
 end
 
+if text == '/start' then
+Text = [[
+✯︙اهلا بك عزيزي في بوت حماية المجموعات 
+✯︙انا اسمي '..Namebot..'
+✯︙وظيفتي حماية المجموعات من السبام والتفليش
+✯︙اضفني الى مجموعتك ثم ارفعني مشرف 
+✯︙ثم ارسل تفعيل داخل المجموعه
+]]
+send(msg.chat_id_, msg.id_,Text)
+return false
+end
 
-
-if text == 'السورس' or text == 'سورس' or text == 'يا سورس' then
+if text == 'السورس' or text == 'سورس' or text == 'يا سورس' or text == 'ياسورس' then
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
 if data.Ch_Member.Info_WaTaNTeaM ~= true then
