@@ -9924,7 +9924,7 @@ send(msg.chat_id_, msg.id_,"✯︙تم حفظ الرد بنجاح")
 return false  
 end  
 end
-if text == "اضف رد" and Manager(msg) then
+if text == "اضف رد" and Mod(msg) then
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
 if textchuser then
@@ -9938,7 +9938,7 @@ send(msg.chat_id_, msg.id_,"✯︙ارسل الكلمه التي تريد اضا
 database:set(bot_id.."Set:Manager:rd"..msg.sender_user_id_..":"..msg.chat_id_,true)
 return false 
 end
-if text == "حذف رد" and Manager(msg) then
+if text == "حذف رد" and Mod(msg) then
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
 if textchuser then
@@ -10264,7 +10264,7 @@ text = "لا توجد ردود متعدده"
 end
 send(msg.chat_id_, msg.id_,"["..text.."]")
 end
-if text == "اضف رد متعدد" and CoSu(msg) then
+if text == "اضف رد متعدد" and Constructor(msg) then
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
 if textchuser then
@@ -10277,7 +10277,7 @@ end
 database:set(bot_id.."botss:WaTaN:Set:Rd"..msg.sender_user_id_..":"..msg.chat_id_,true)
 return send(msg.chat_id_, msg.id_,"✯︙ارسل الرد الذي اريد اضافته")
 end
-if text == "حذف رد متعدد" and CoSu(msg) then
+if text == "حذف رد متعدد" and Constructor(msg) then
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
 if textchuser then
