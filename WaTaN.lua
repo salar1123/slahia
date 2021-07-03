@@ -26,12 +26,12 @@ file:write(serialized)
 file:close()  
 end  
 if not database:get(id_server..":token") then
-io.write('\27[0;31m\n ارسل لي توكن البوت الان ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27')
+io.write('\27[0;31m\n ارسل الان توكن البوت ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27')
 local token = io.read()
 if token ~= '' then
 local url , res = https.request('https://api.telegram.org/bot'..token..'/getMe')
 if res ~= 200 then
-print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n التوكن غير صحيح تاكد منه ثم ارسله')
+print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n التوكن غير صحيح تاكد منه ثم اعد المحاوله')
 else
 io.write('\27[0;31m تم حفظ التوكن بنجاح \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m')
 local json = JSON.decode(url)
@@ -39,23 +39,23 @@ database:set(id_server..":token_username","@"..json.result.username)
 database:set(id_server..":token",token)
 end 
 else
-print('\27[0;35m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ التوكن ارسل لي التوكن الان')
+print('\27[0;35m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ التوكن ارسل التوكن مره اخرى')
 end 
 os.execute('lua WaTaN.lua')
 end
 if not database:get(id_server..":SUDO:ID") then 
-io.write('\27[0;35m\n ارسل لي ايدي المطور الاساسي ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;33;49m') 
+io.write('\27[0;35m\n ارسل الان ايدي المطور الاساسي ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;33;49m') 
 local SUDOID = io.read() 
 if SUDOID ~= '' then 
 io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m') 
 database:set(id_server..":SUDO:ID",SUDOID) 
 else 
-print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ ايدي المطور الاساسي ارسله مره اخره') 
+print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ ايدي المطور الاساسي ارسله مره اخرى') 
 end  
 os.execute('lua WaTaN.lua') 
 end
 if not database:get(id_server..":SUDO:USERNAME") then
-io.write('\27[1;31m ↓ ارسل معرف المطور الاساسي :\n SEND ID FOR SIDO : \27[0;39;49m')
+io.write('\27[1;31m ↓ ارسل معرف المطور الاساسي :\n SEND USERNAME FOR DEV BOT : \27[0;39;49m')
 local SUDOUSERNAME = io.read():gsub('@','')
 if SUDOUSERNAME ~= '' then
 io.write('\n\27[1;34m تم حفظ معرف المطور :\n\27[0;39;49m')
@@ -872,11 +872,14 @@ end
 -------------------------------------------------------------------------------------------------------------
 if Chat_Type == 'UserBot' then
 if text == '/start' or text == '✯ /start ✯' then  
-local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
-data = JSON.decode(url)
-if data.Ch_Member.Info_WaTaNTeaM ~= true then
-send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙عليك الاشتراك بقناة السورس\n✯︙لتصلك جميع المعلومات عن السورس\n✯︙ قناة السورس @WaTaNTeaM')   
-return false 
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,' ✯︙ لا تستطيع استخدام البوت \n  ✯︙ يرجى الاشتراك بالقناه اولا \n  ✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
 end
 if DevWaTaN(msg) then
 local bl = ' ✯︙ اهلا عزيزي آلمـطـور\n ✯︙ آنت آلمـطـور آلآسـآسـي للبوت\n┉  ┉  ┉  ┉  ┉  ┉  ┉  ┉ء\n ✯︙ تسـتطـيع‌‏ آلتحگم باوامر البوت\n ✯︙ من خلاال الكيبورد خاص بك\n ✯︙ قناة سورس البوت [اضغط هنا](t.me/WaTaNTeaM)'
@@ -888,6 +891,9 @@ local keyboard = {
 {'🐉 حصريات و تحديثات وطـــن 🐉'},
 {'المطورين ✯','الثانويين ✯'},
 {'المشتركين ✯','الكروبات ✯'},
+{'ردود المطور ✯'},
+{'اضف رد للكل ✯','حذف رد للكل ✯'},
+{'مسح ردود المطور ✯'},
 {'تغير رساله الاشتراك','حذف رساله الاشتراك ✯','تغير الاشتراك'},
 {'ضع كليشه ستارت ✯','حذف كليشه ستارت ✯'},
 {'اذاعه ✯','اذاعه خاص ✯','اذاعه بالتثبيت ✯'},
@@ -1122,7 +1128,7 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث السورس \n ✯︙ لديك اخر اصدار لسورس وطن\n ✯︙ الاصدار » { v 2.0 }')
+send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث السورس \n ✯︙ لديك اخر اصدار لسورس وطن\n ✯︙ الاصدار » { v 2.1 }')
 dofile('WaTaN.lua')  
 end
 
@@ -1151,6 +1157,71 @@ end
 dofile("WaTaN.lua")  
 send(msg.chat_id_, msg.id_, "✯︙تم تحديث الملفات")
 end
+if text == "اضف رد للكل ✯" and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
+send(msg.chat_id_, msg.id_,"✯︙ ارسل الكلمه التي تريد اضافتها")
+database:set(bot_id.."Set:Rd"..msg.sender_user_id_..":"..msg.chat_id_,true)
+return false 
+end
+if text == "حذف رد للكل ✯" and DevWaTaN(msg) then 
+local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
+data = JSON.decode(url)
+if data.Ch_Member.Info_WaTaNTeaM ~= true then
+send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
+return false 
+end
+send(msg.chat_id_, msg.id_,"✯︙ ارسل الكلمه التي تريد حذفها")
+database:set(bot_id.."Set:On"..msg.sender_user_id_..":"..msg.chat_id_,true)
+return false 
+end
+if text == ("مسح ردود المطور ✯") and DevWaTaN(msg) then 
+local list = database:smembers(bot_id.."List:Rd:Sudo")
+for k,v in pairs(list) do
+database:del(bot_id.."Add:Rd:Sudo:Gif"..v)   
+database:del(bot_id.."Add:Rd:Sudo:vico"..v)   
+database:del(bot_id.."Add:Rd:Sudo:stekr"..v)     
+database:del(bot_id.."Add:Rd:Sudo:Text"..v)   
+database:del(bot_id.."Add:Rd:Sudo:Photo"..v)
+database:del(bot_id.."Add:Rd:Sudo:Video"..v)
+database:del(bot_id.."Add:Rd:Sudo:File"..v)
+database:del(bot_id.."Add:Rd:Sudo:Audio"..v)
+database:del(bot_id.."List:Rd:Sudo")
+end
+send(msg.chat_id_, msg.id_,"✯︙تم مسح ردود المطور")
+end
+if text == ("ردود المطور ✯") and DevWaTaN(msg) then 
+local list = database:smembers(bot_id.."List:Rd:Sudo")
+text = "\n✯︙قائمة ردود المطور \n — — — — — — — — —\n"
+for k,v in pairs(list) do
+if database:get(bot_id.."Add:Rd:Sudo:Gif"..v) then
+db = "متحركه 🎭"
+elseif database:get(bot_id.."Add:Rd:Sudo:vico"..v) then
+db = "بصمه 📢"
+elseif database:get(bot_id.."Add:Rd:Sudo:stekr"..v) then
+db = "ملصق 🏷"
+elseif database:get(bot_id.."Add:Rd:Sudo:Text"..v) then
+db = "رساله ✉"
+elseif database:get(bot_id.."Add:Rd:Sudo:Photo"..v) then
+db = "صوره 👤"
+elseif database:get(bot_id.."Add:Rd:Sudo:Video"..v) then
+db = "فيديو 📹"
+elseif database:get(bot_id.."Add:Rd:Sudo:File"..v) then
+db = "ملف 📁"
+elseif database:get(bot_id.."Add:Rd:Sudo:Audio"..v) then
+db = "اغنيه 🎵"
+end
+text = text..""..k.." >> ("..v..") -› {"..db.."}\n"
+end
+if #list == 0 then
+text = "✯︙لا يوجد ردود للمطور"
+end
+send(msg.chat_id_, msg.id_,"["..text.."]")
+end
 if text == 'الاصـدار ✯' and DevWaTaN(msg) then 
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
@@ -1159,7 +1230,7 @@ send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك �
 return false 
 end
 database:del(bot_id..'Srt:Bot') 
-send(msg.chat_id_, msg.id_,' ✯︙ اصدار سورس وطن \n ✯︙ الاصدار »{ v 2.0 }')
+send(msg.chat_id_, msg.id_,' ✯︙ اصدار سورس وطن \n ✯︙ الاصدار »{ v 2.1 }')
 end
 if text == "ضع اسم للبوت ✯" and DevWaTaN(msg) then  
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
@@ -1382,15 +1453,6 @@ if data.Ch_Member.Info_WaTaNTeaM ~= true then
 send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
 return false 
 end
-if AddChannel(msg.sender_user_id_) == false then
-local textchuser = database:get(bot_id..'text:ch:user')
-if textchuser then
-send(msg.chat_id_, msg.id_,'['..textchuser..']')
-else
-send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي ✯︙ •\n• لايمكنك استخدام البوت ✯︙ •\n• عليك الاشتراك في القناة ✯︙ •\n• اشترك اولا ['..database:get(bot_id..'add:ch:username')..']')
-end
-return false
-end
 local pv = database:smembers(bot_id.."User_Bot")
 local sendok = 0
 for i = 1, #pv do
@@ -1423,15 +1485,6 @@ data = JSON.decode(url)
 if data.Ch_Member.Info_WaTaNTeaM ~= true then
 send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙ قناة السورس @WaTaNTeaM')   
 return false 
-end
-if AddChannel(msg.sender_user_id_) == false then
-local textchuser = database:get(bot_id..'text:ch:user')
-if textchuser then
-send(msg.chat_id_, msg.id_,'['..textchuser..']')
-else
-send(msg.chat_id_, msg.id_,'• اهلا بك عزيزي ✯︙ •\n• لايمكنك استخدام البوت ✯︙ •\n• عليك الاشتراك في القناة ✯︙ •\n• اشترك اولا ['..database:get(bot_id..'add:ch:username')..']')
-end
-return false
 end
 local group = database:smembers(bot_id..'Chek:Groups') 
 local w = 0
@@ -2521,7 +2574,7 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث السورس \n ✯︙ لديك اخر اصدار لسورس وطن\n ✯︙ الاصدار » { v 2.0 }')
+send(msg.chat_id_, msg.id_,' ✯︙ تم تحديث السورس \n ✯︙ لديك اخر اصدار لسورس وطن\n ✯︙ الاصدار » { v 2.1 }')
 dofile('WaTaN.lua')  
 end
 if text == 'تحديث المتجر' and DevWaTaN(msg) then 
@@ -2566,7 +2619,7 @@ local addchusername = database:get(bot_id..'add:ch:username')
 send(msg.chat_id_, msg.id_," ✯︙ الاشتراك الاجباري مفعل \n ✯︙ على القناة » ["..addchusername.."]")
 else
 database:setex(bot_id.."add:ch:jm" .. msg.chat_id_ .. "" .. msg.sender_user_id_, 360, true)  
-send(msg.chat_id_, msg.id_," ✯︙ اهلا عزيزي المطور \n ✯︙ ارسل الان معرف قناتك")
+send(msg.chat_id_, msg.id_,"✯︙اهلا عزيزي المطور \n✯︙ارفع البوت مشرف في قناتك \n✯︙ثم ارسل معرف قناتك\n✯︙مثال على معرف القناة @watanteam")
 end
 return false  
 end
@@ -2816,19 +2869,6 @@ end
 end
 end,nil)  
 end
-
-if text == '/start' then
-Text = [[
-✯︙اهلا بك عزيزي في بوت حماية المجموعات 
-✯︙انا اسمي '..Namebot..'
-✯︙وظيفتي حماية المجموعات من السبام والتفليش
-✯︙اضفني الى مجموعتك ثم ارفعني مشرف 
-✯︙ثم ارسل تفعيل داخل المجموعه
-]]
-send(msg.chat_id_, msg.id_,Text)
-return false
-end
-
 if text == 'السورس' or text == 'سورس' or text == 'يا سورس' or text == 'ياسورس' then
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
@@ -9398,7 +9438,7 @@ sebd(msg.chat_id_,msg.id_,' ✯︙ تم تغيير اسم الكروب الى {[
 end
 end,nil) 
 end
-if text == "امر معطل" and Mod(msg) then
+if text == "تاك للكل" and Mod(msg) then
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
 if textchuser then
@@ -9698,7 +9738,7 @@ send(msg.chat_id_, msg.id_,' ✯︙ لا تستطيع استخدام البوت 
 end
 return false
 end
-send(msg.chat_id_, msg.id_,"✯︙ ارسل الكلمه التري تريد اضافتها")
+send(msg.chat_id_, msg.id_,"✯︙ ارسل الكلمه التي تريد اضافتها")
 database:set(bot_id.."Set:Rd"..msg.sender_user_id_..":"..msg.chat_id_,true)
 return false 
 end
@@ -9712,7 +9752,7 @@ send(msg.chat_id_, msg.id_,' ✯︙ لا تستطيع استخدام البوت 
 end
 return false
 end
-send(msg.chat_id_, msg.id_,"✯︙ ارسل الكلمه التري تريد حذفها")
+send(msg.chat_id_, msg.id_,"✯︙ ارسل الكلمه التي تريد حذفها")
 database:set(bot_id.."Set:On"..msg.sender_user_id_..":"..msg.chat_id_,true)
 return false 
 end
@@ -9796,7 +9836,7 @@ end
 ------------------------------------------------------------------------
 if text and text:match("^(.*)$") then
 if database:get(bot_id.."botss:WaTaN:Set:Rd"..msg.sender_user_id_..":"..msg.chat_id_) == "true" then
-send(msg.chat_id_, msg.id_, '\n ✯︙ ارسل الكلمه تريد اضافتها')
+send(msg.chat_id_, msg.id_, '\n ✯︙ ارسل الكلمه التي تريد اضافتها')
 database:set(bot_id.."botss:WaTaN:Set:Rd"..msg.sender_user_id_..":"..msg.chat_id_, "true1")
 database:set(bot_id.."botss:WaTaN:Text:Sudo:Bot"..msg.sender_user_id_..":"..msg.chat_id_, text)
 database:sadd(bot_id.."botss:WaTaN:List:Rd:Sudo", text)
@@ -9830,7 +9870,7 @@ database:del(bot_id.."botss:WaTaN:Add:Rd:Sudo:Text1"..v)
 database:del(bot_id.."botss:WaTaN:Add:Rd:Sudo:Text2"..v)   
 database:del(bot_id.."botss:WaTaN:List:Rd:Sudo")
 end
-send(msg.chat_id_, msg.id_,"✯︙تم حذف ردود المتعدده")
+send(msg.chat_id_, msg.id_,"✯︙تم حذف الردود المتعدده")
 end
 ------------------------------------------------------------------------
 if text == ("مسح ردود المدير") and Manager(msg) then
