@@ -380,10 +380,14 @@ end
 function AddChannel(User)
 local var = true
 if database:get(bot_id..'add:ch:id') then
+if database:sismember(bot_id..'WaTaN:ProGroups',msg.chat_id_) then
+var = true
+else
 local url , res = https.request("https://api.telegram.org/bot"..token.."/getchatmember?chat_id="..database:get(bot_id..'add:ch:id').."&user_id="..User);
 data = json:decode(url)
 if res ~= 200 or data.result.status == "left" or data.result.status == "kicked" then
 var = false
+end
 end
 end
 return var
@@ -581,6 +585,7 @@ Send(chat,msg.id_,'\n- الرتبة : مشرف  '..'\n- والصلاحيات ه�
 end
 end
 end
+
 function GetFile_Bot(msg)
 local list = database:smembers(bot_id..'Chek:Groups') 
 local t = '{"BOT_ID": '..bot_id..',"GP_BOT":{'  
@@ -647,6 +652,73 @@ local File = io.open('./'..bot_id..'.json', "w")
 File:write(t)
 File:close()
 sendDocument(msg.chat_id_, msg.id_,0, 1, nil, './'..bot_id..'.json', '- عدد كروبات التي في البوت { '..#list..'}')
+end
+function GetFile_Bot1(msg)
+local list = database:smembers(bot_id..'Chek:Groups') 
+local t = '{"BOT_ID": '..bot_id..',"GP_BOT":{'  
+for k,v in pairs(list) do   
+NAME = 'WaTaN Chat'
+link = database:get(bot_id.."Private:Group:Link"..msg.chat_id_) or ''
+ASAS = database:smembers(bot_id..'Basic:Constructor'..v)
+MNSH = database:smembers(bot_id..'Constructor'..v)
+MDER = database:smembers(bot_id..'Manager'..v)
+MOD = database:smembers(bot_id..'Mod:User'..v)
+if k == 1 then
+t = t..'"'..v..'":{"WaTaN":"'..NAME..'",'
+else
+t = t..',"'..v..'":{"WaTaN":"'..NAME..'",'
+end
+if #ASAS ~= 0 then 
+t = t..'"ASAS":['
+for k,v in pairs(ASAS) do
+if k == 1 then
+t =  t..'"'..v..'"'
+else
+t =  t..',"'..v..'"'
+end
+end   
+t = t..'],'
+end
+if #MOD ~= 0 then
+t = t..'"MOD":['
+for k,v in pairs(MOD) do
+if k == 1 then
+t =  t..'"'..v..'"'
+else
+t =  t..',"'..v..'"'
+end
+end   
+t = t..'],'
+end
+if #MDER ~= 0 then
+t = t..'"MDER":['
+for k,v in pairs(MDER) do
+if k == 1 then
+t =  t..'"'..v..'"'
+else
+t =  t..',"'..v..'"'
+end
+end   
+t = t..'],'
+end
+if #MNSH ~= 0 then
+t = t..'"MNSH":['
+for k,v in pairs(MNSH) do
+if k == 1 then
+t =  t..'"'..v..'"'
+else
+t =  t..',"'..v..'"'
+end
+end   
+t = t..'],'
+end
+t = t..'"linkgroup":"'..link..'"}' or ''
+end
+t = t..'}}'
+local File = io.open('./'..bot_id..'.json', "w")
+File:write(t)
+File:close()
+sendDocument(SUDO, 0,0, 1, nil, './'..bot_id..'.json', '- عدد كروبات التي في البوت { '..#list..'}')
 end
 function download_to_file(url, file_path) 
 local respbody = {} 
@@ -894,12 +966,13 @@ local keyboard = {
 {'ردود المطور ✯'},
 {'اضف رد للكل ✯','حذف رد للكل ✯'},
 {'مسح ردود المطور ✯'},
-{'تغير رساله الاشتراك','حذف رساله الاشتراك ✯','تغير الاشتراك'},
+{'المجموعات المدفوعه ✯'},
 {'ضع كليشه ستارت ✯','حذف كليشه ستارت ✯'},
 {'اذاعه ✯','اذاعه خاص ✯','اذاعه بالتثبيت ✯'},
 {'اذاعه بالتوجيه ✯','اذاعه بالتوجيه خاص ✯'},
 {'تفعيل الاشتراك الاجباري ✯','تعطيل الاشتراك الاجباري ✯'},
 {'الاشتراك الاجباري ✯','وضع قناة الاشتراك ✯'},
+{'تغير رساله الاشتراك','حذف رساله الاشتراك ✯','تغير الاشتراك'},
 {'تفعيل البوت الخدمي ✯','تعطيل البوت الخدمي ✯'},
 {'تنظيف الكروبات ✯','تنظيف المشتركين ✯'},
 {'تحديث السورس ✯','تحديث المتجر ✯'},
@@ -1221,6 +1294,23 @@ if #list == 0 then
 text = "✯︙لا يوجد ردود للمطور"
 end
 send(msg.chat_id_, msg.id_,"["..text.."]")
+end
+if text == 'المجموعات المدفوعه ✯' and DevWaTaN(msg) then
+local List = database:smembers(bot_id.."WaTaN:ProGroups")
+local WaTaN = '✯︙ المجموعات المدفوعه \n✯︙تاريخ اليوم '..os.date("%Y/%m/%d")..' \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n'
+for k,v in pairs(List) do
+local WaTaNgetlink = json:decode(https.request('https://api.telegram.org/bot'..token..'/exportChatInviteLink?chat_id='..v))
+if WaTaNgetlink.ok == true then 
+link_WaTaN = '['..WaTaNgetlink.result..']'
+else
+link_WaTaN = 'ليست لدي صلاحية الدعوه لهذه المجموعه'
+end
+WaTaN = WaTaN..k.."- (`"..v.."`) ~ (`"..database:get(bot_id.."WaTaN:ProGroups:Time"..v).."`) \n- "..link_WaTaN.." \n" 
+end
+if #List == 0 then
+WaTaN = '✯︙ لاتوجد مجموعات مدفوعه'
+end
+send(msg.chat_id_, msg.id_,WaTaN) 
 end
 if text == 'الاصـدار ✯' and DevWaTaN(msg) then 
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
@@ -1702,7 +1792,9 @@ end
 local list = database:smembers(bot_id..'Chek:Groups') 
 if msg.content_.text_ then
 for k,v in pairs(list) do 
+if not database:sismember(bot_id..'WaTaN:ProGroups',v) then
 send(v, 0,'['..msg.content_.text_..']')  
+end
 end
 elseif msg.content_.photo_ then
 if msg.content_.photo_.sizes_[0] then
@@ -1711,15 +1803,21 @@ elseif msg.content_.photo_.sizes_[1] then
 photo = msg.content_.photo_.sizes_[1].photo_.persistent_id_
 end
 for k,v in pairs(list) do 
+if not database:sismember(bot_id..'WaTaN:ProGroups',v) then
 sendPhoto(v, 0, 0, 1, nil, photo,(msg.content_.caption_ or ''))
+end
 end 
 elseif msg.content_.animation_ then
 for k,v in pairs(list) do 
+if not database:sismember(bot_id..'WaTaN:ProGroups',v) then
 sendDocument(v, 0, 0, 1,nil, msg.content_.animation_.animation_.persistent_id_,(msg.content_.caption_ or ''))    
+end
 end 
 elseif msg.content_.sticker_ then
 for k,v in pairs(list) do 
+if not database:sismember(bot_id..'WaTaN:ProGroups',v) then
 sendSticker(v, 0, 0, 1, nil, msg.content_.sticker_.sticker_.persistent_id_)   
+end
 end 
 end
 send(msg.chat_id_, msg.id_," ✯︙ تمت الاذاعه الى >>{"..#list.."} كروب في البوت ")
@@ -1735,12 +1833,14 @@ end
 if msg.forward_info_ then 
 local list = database:smembers(bot_id..'Chek:Groups')   
 for k,v in pairs(list) do  
+if not database:sismember(bot_id..'WaTaN:ProGroups',v) then
 tdcli_function({ID="ForwardMessages",
 chat_id_ = v,
 from_chat_id_ = msg.chat_id_,
 message_ids_ = {[0] = msg.id_},
 disable_notification_ = 0,
 from_background_ = 1},function(a,t) end,nil) 
+end
 end   
 send(msg.chat_id_, msg.id_," ✯︙ تمت الاذاعه الى >>{"..#list.."} كروبات في البوت ")
 database:del(bot_id.."Send:Fwd:Grops" .. msg.chat_id_ .. ":" .. msg.sender_user_id_) 
@@ -1936,6 +2036,15 @@ end
 end
 if text and database:get(bot_id..'lock:Fars'..msg.chat_id_) and not Special(msg) then 
 list = {"ڄ","گ","که","پی","خسته","برم","راحتی","بیام","بپوشم","گرمه","چه","چ","ڬ","ٺ","چ","ڇ","ڿ","ڀ","ڎ","ݫ","ژ","ڟ","ݜ","ڸ","پ","۴","زدن","دخترا","دیوث","مک","زدن", "خالی بند","عزیزم خوبی","سلامت باشی","میخوام","خوببی","ميدم","کی اومدی","خوابیدین"}
+for k,v in pairs(list) do
+if string.find(text,v) ~= nil then
+DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
+return false
+end
+end
+end
+if text and database:get(bot_id..'lock:asiaoi'..msg.chat_id_) and not Special(msg) then 
+list = {"鯿","闦","闪","鰳","輏","軰","輄輍","竦","㈣㊣","穙轪"}
 for k,v in pairs(list) do
 if string.find(text,v) ~= nil then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
@@ -2640,14 +2749,14 @@ return false
 end
 if text == "تفعيل الاضافات" and SudoBot(msg) then
 send(msg.chat_id_, msg.id_, '✯︙ تم تفعيل الاضافات')
-database:set(bot_id.."AL:AddS0FI:stats","✔")
+database:set(bot_id.."AL:AddWaTaN:stats","✔")
 end
 if text == "تعطيل الاضافات" and SudoBot(msg) then
 send(msg.chat_id_, msg.id_, '✯︙ تم تعطيل الاضافات')
-database:set(bot_id.."AL:AddS0FI:stats","✖")
+database:set(bot_id.."AL:AddWaTaN:stats","✖")
 end
 if text == "حاله الاضافات" and Constructor(msg) then
-local MRWaTaN = database:get(bot_id.."AL:AddS0FI:stats") or "لم يتم التحديد"
+local MRWaTaN = database:get(bot_id.."AL:AddWaTaN:stats") or "لم يتم التحديد"
 send(msg.chat_id_, msg.id_,"حاله الاضافات هي : {"..MRWaTaN.."}\nاذا كانت {✔} الاضافات مفعله\nاذا كانت {✖} الاضافات معطله")
 end
 function bnnaGet(user_id, cb)
@@ -2687,11 +2796,11 @@ end
 send(msg.chat_id_, msg.id_, t)
 end
 end
-if text == "تفعيل كتم الاسم" and Constructor(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تفعيل كتم الاسم" and Constructor(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم التفعيل الاسماء المكتومه')
 database:set(bot_id.."block:name:stats"..msg.chat_id_,"open")
 end
-if text == "تعطيل كتم الاسم" and Constructor(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تعطيل كتم الاسم" and Constructor(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم تعطيل الاسماء المكتومه')
 database:set(bot_id.."block:name:stats"..msg.chat_id_,"close")
 end
@@ -2730,11 +2839,11 @@ local s2 = database:get(bot_id.."WaTaN:nump"..msg.chat_id_) or 5
 send(msg.chat_id_, msg.id_,'✯︙ التوحيد '..s1..'\n ✯︙ عدد الكتم  : '..s2)
 end
 end
-if text == "تفعيل التوحيد" and Constructor(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تفعيل التوحيد" and Constructor(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم تفعيل التوحيد')
 database:set(bot_id.."kt:twh:stats"..msg.chat_id_,"open")
 end
-if text == "تعطيل التوحيد" and Constructor(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تعطيل التوحيد" and Constructor(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم تعطيل التوحيد')
 database:set(bot_id.."kt:twh:stats"..msg.chat_id_,"close")
 end
@@ -2760,15 +2869,15 @@ end
 bnnaGet(id, WaTaN_mrWaTaN_new)
 end
 end
-if text == "تفعيل تنبيه الاسماء" and Manager(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تفعيل تنبيه الاسماء" and Manager(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم تفعيل تنبيه الاسماء')
-database:set(bot_id.."Ttn:DRG:stats"..msg.chat_id_,"open")
+database:set(bot_id.."Ttn:WtN:stats"..msg.chat_id_,"open")
 end
-if text == "تعطيل تنبيه الاسماء" and Manager(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تعطيل تنبيه الاسماء" and Manager(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم تعطيل تنبيه الاسماء')
-database:set(bot_id.."Ttn:DRG:stats"..msg.chat_id_,"close")
+database:set(bot_id.."Ttn:WtN:stats"..msg.chat_id_,"close")
 end
-if text and database:get(bot_id.."Ttn:DRG:stats"..msg.chat_id_) == "open" then 
+if text and database:get(bot_id.."Ttn:WtN:stats"..msg.chat_id_) == "open" then 
 tdcli_function({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data)
 if data.id_ then 
 if data.id_ ~= bot_id then
@@ -2794,11 +2903,11 @@ end
 end
 end,nil)   
 end
-if text == "تفعيل تنبيه المعرف" and Constructor(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تفعيل تنبيه المعرف" and Constructor(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم تفعيل تنبيه المعرف')
 database:set(bot_id.."Ttn:Userr:stats"..msg.chat_id_,"open")
 end
-if text == "تعطيل تنبيه المعرف" and Constructor(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تعطيل تنبيه المعرف" and Constructor(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم تعطيل تنبيه المعرف')
 database:set(bot_id.."Ttn:Userr:stats"..msg.chat_id_,"close")
 end
@@ -2832,11 +2941,11 @@ end
 end
 end,nil)   
 end
-if text == "تفعيل تنبيه الصور" and Manager(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تفعيل تنبيه الصور" and Manager(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم تفعيل تنبيه الصور')
 database:set(bot_id.."Ttn:Ph:stats"..msg.chat_id_,"open")
 end
-if text == "تعطيل تنبيه الصور" and Manager(msg) and database:get(bot_id.."AL:AddS0FI:stats") == "✔" then
+if text == "تعطيل تنبيه الصور" and Manager(msg) and database:get(bot_id.."AL:AddWaTaN:stats") == "✔" then
 send(msg.chat_id_, msg.id_, '✯︙ تم تعطيل تنبيه الصور')
 database:set(bot_id.."Ttn:Ph:stats"..msg.chat_id_,"close")
 end
@@ -2924,6 +3033,22 @@ end
 return false
 end
 GetFile_Bot(msg)
+end
+if text == 'تفعيل الجلب التلقائي' and DevWaTaN(msg) then  
+database:setex(bot_id.."send:file:Groups1",18000,true) 
+send(msg.chat_id_, msg.id_,'✯︙تم تفعيل الجلب التلقائي للنسخه الاحتياطيه')
+return false
+end
+
+if text == 'تعطيل الجلب التلقائي' and DevWaTaN(msg) then  
+database:del(bot_id.."send:file:Groups") 
+send(msg.chat_id_, msg.id_,'✯︙تم تعطيل الجلب التلقائي للنسخه الاحتياطيه')
+return false
+end
+
+if tonumber(database:ttl(bot_id.."send:file:Groups1")) <= 1 then
+GetFile_Bot1(msg)
+database:setex(bot_id.."send:file:Groups1",18000,true) 
 end
 if text == 'الاوامر المضافه' and Constructor(msg) then
 local list = database:smembers(bot_id..'List:Cmd:Group:New'..msg.chat_id_..'')
@@ -3050,6 +3175,11 @@ database:set(bot_id..'lock:Fars'..msg.chat_id_,true)
 tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
 send(msg.chat_id_, msg.id_,' ✯︙ بواسطه » ['..Rutba(msg.sender_user_id_,msg.chat_id_)..'](T.ME/'..(data.username_ or 'WaTaNTeaM')..') \n ✯︙ تـم قفـل الفارسيه ')
 end,nil)   
+elseif text == 'قفل الاسيويه' and msg.reply_to_message_id_ == 0 and Manager(msg) then 
+database:set(bot_id..'lock:asiaoi'..msg.chat_id_,true) 
+tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
+send(msg.chat_id_, msg.id_,' ✯︙ بواسطه » ['..Rutba(msg.sender_user_id_,msg.chat_id_)..'](T.ME/'..(data.username_ or 'WaTaNTeaM')..') \n ✯︙ تـم قفـل الفارسيه ')
+end,nil) 
 elseif text == 'قفل الانكليزيه' and msg.reply_to_message_id_ == 0 and Manager(msg) then 
 database:set(bot_id..'lock:Engilsh'..msg.chat_id_,true) 
 tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
@@ -3142,6 +3272,11 @@ database:del(bot_id..'lock:Fars'..msg.chat_id_)
 tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
 send(msg.chat_id_, msg.id_,' ✯︙ بواسطه » ['..Rutba(msg.sender_user_id_,msg.chat_id_)..'](T.ME/'..(data.username_ or 'WaTaNTeaM')..') \n ✯︙ تـم فـتح الفارسيه ')
 end,nil)   
+elseif text == 'فتح الاسيويه' and msg.reply_to_message_id_ == 0 and Manager(msg) then 
+database:del(bot_id..'lock:asiaoi'..msg.chat_id_) 
+tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
+send(msg.chat_id_, msg.id_,' ✯︙ بواسطه » ['..Rutba(msg.sender_user_id_,msg.chat_id_)..'](T.ME/'..(data.username_ or 'WaTaNTeaM')..') \n ✯︙ تـم فـتح الفارسيه ')
+end,nil) 
 elseif text == 'فتح الانكليزيه' and msg.reply_to_message_id_ == 0 and Manager(msg) then 
 database:del(bot_id..'lock:Engilsh'..msg.chat_id_) 
 tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
@@ -8867,7 +9002,7 @@ end
 end
 if text == 'قفل التفليش' and msg.reply_to_message_id_ == 0 and Mod(msg) then 
 database:set(bot_id..'lock:tagrvrbot'..msg.chat_id_,true)   
-list ={"lock:Bot:kick","lock:user:name","lock:Link","lock:forward","lock:Sticker","lock:Animation","lock:Video","lock:Fshar","lock:Fars","Bot:Id:Photo","lock:Audio","lock:vico","lock:Document","lock:Unsupported","lock:Markdaun","lock:Contact","lock:Spam"}
+list ={"lock:Bot:kick","lock:asiaoi","lock:user:name","lock:Link","lock:forward","lock:Sticker","lock:Animation","lock:Video","lock:Fshar","lock:Fars","Bot:Id:Photo","lock:Audio","lock:vico","lock:Document","lock:Unsupported","lock:Markdaun","lock:Contact","lock:Spam"}
 for i,lock in pairs(list) do 
 database:set(bot_id..lock..msg.chat_id_,'del')    
 end
@@ -8877,7 +9012,7 @@ end,nil)
 end
 if text == 'فتح التفليش' and msg.reply_to_message_id_ == 0 and Mod(msg) then 
 database:del(bot_id..'lock:tagrvrbot'..msg.chat_id_)   
-list ={"lock:Bot:kick","lock:user:name","lock:Link","lock:forward","lock:Sticker","lock:Animation","lock:Video","lock:Fshar","lock:Fars","Bot:Id:Photo","lock:Audio","lock:vico","lock:Document","lock:Unsupported","lock:Markdaun","lock:Contact","lock:Spam"}
+list ={"lock:Bot:kick","lock:asiaoi","lock:user:name","lock:Link","lock:forward","lock:Sticker","lock:Animation","lock:Video","lock:Fshar","lock:Fars","Bot:Id:Photo","lock:Audio","lock:vico","lock:Document","lock:Unsupported","lock:Markdaun","lock:Contact","lock:Spam"}
 for i,lock in pairs(list) do 
 database:del(bot_id..lock..msg.chat_id_)    
 end
@@ -9158,6 +9293,47 @@ Text = '\n ✯︙  بالتاكيد تم تعطيل الاذاعه'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
+if text == 'تفعيل الوضع المدفوع' and DevWaTaN(msg) then  
+tdcli_function({ID ="GetChat",chat_id_=msg.chat_id_},function(arg,WaTaN) 
+if not database:sismember(bot_id..'WaTaN:ProGroups',msg.chat_id_) then
+database:sadd(bot_id..'WaTaN:ProGroups',msg.chat_id_) 
+database:set(bot_id.."WaTaN:ProGroups:Time"..msg.chat_id_,os.date("%Y/%m/%d"))
+WaTaN = '\n ✯︙ المجموعه ['..WaTaN.title_..'] \n✯︙ تم تفعيل الوضع المدفوع بتاريخ '..os.date("%Y/%m/%d")..' \n✯︙ سينتهي الوضع المدفوع بعد 30 يوم من الان'
+else
+WaTaN = '\n ✯︙ المجموعه ['..WaTaN.title_..'] \n✯︙ بالفعل في الوضع المدفوع'
+end
+send(msg.chat_id_, msg.id_,WaTaN) 
+end,nil) 
+end
+if text == 'تعطيل الوضع المدفوع' and DevWaTaN(msg) then  
+tdcli_function({ID ="GetChat",chat_id_=msg.chat_id_},function(arg,WaTaN) 
+if database:sismember(bot_id..'WaTaN:ProGroups',msg.chat_id_) then
+database:srem(bot_id..'WaTaN:ProGroups',msg.chat_id_) 
+database:del(bot_id.."WaTaN:ProGroups:Time"..msg.chat_id_)
+WaTaN = '\n ✯︙ المجموعه ['..WaTaN.title_..'] \n✯︙ تم حذفها من الوضع المدفوع'
+else
+WaTaN = '\n ✯︙ المجموعه ['..WaTaN.title_..'] \n✯︙ بالفعل ليست من الوضع المدفوع'
+end
+send(msg.chat_id_, msg.id_,WaTaN) 
+end,nil) 
+end
+if text == 'المجموعات المدفوعه' or text == 'الكروبات المدفوعه' and DevWaTaN(msg) then
+local List = database:smembers(bot_id.."WaTaN:ProGroups")
+local WaTaN = '✯︙ المجموعات المدفوعه \n✯︙ تاريخ اليوم'..os.date("%Y/%m/%d")..' \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n'
+for k,v in pairs(List) do
+local WaTaNgetlink = json:decode(https.request('https://api.telegram.org/bot'..token..'/exportChatInviteLink?chat_id='..v))
+if WaTaNgetlink.ok == true then 
+link_WaTaN = '['..WaTaNgetlink.result..']'
+else
+link_WaTaN = 'ليست لدي صلاحية الدعوه لهذه المجموعه'
+end
+WaTaN = WaTaN..k.."- (`"..v.."`) ~ (`"..database:get(bot_id.."WaTaN:ProGroups:Time"..v).."`) \n- "..link_WaTaN.." \n" 
+end
+if #List == 0 then
+WaTaN = '✯︙ لاتوجد مجموعات مدفوعه'
+end
+send(msg.chat_id_, msg.id_,WaTaN) 
+end
 if text == 'تفعيل التواصل' and DevWaTaN(msg) then  
 if database:get(bot_id..'Tuasl:Bots') then
 database:del(bot_id..'Tuasl:Bots') 
@@ -9225,7 +9401,7 @@ end
 return false
 end
 if num > 1000 then 
-send(msg.chat_id_, msg.id_,'✯︙تستطيع التنظيف 1000 رساله كحد اقصى') 
+send(msg.chat_id_, msg.id_,'✯︙تستطيع تنظيف 1000 رساله كحد اقصى') 
 return false  
 end  
 local msgm = msg.id_
@@ -9233,7 +9409,32 @@ for i=1,tonumber(num) do
 DeleteMessage(msg.chat_id_, {[0] = msgm})
 msgm = msgm - 1048576
 end
-send(msg.chat_id_,msg.id_,'✯︙ تم حذف {'..num..'}')  
+send(msg.chat_id_,msg.id_,'✯︙ تم تنظيف {'..num..'}')  
+database:setex(bot_id..'abbas:Delete:Time'..msg.chat_id_..':'..msg.sender_user_id_,300,true)
+end
+end
+if text and text:match('^مسح (%d+)$') and Manager(msg) then
+if not database:get(bot_id..'abbas:Delete:Time'..msg.chat_id_..':'..msg.sender_user_id_) then           
+local num = tonumber(text:match('^مسح (%d+)$')) 
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,' ✯︙ لا تستطيع استخدام البوت \n  ✯︙ يرجى الاشتراك بالقناه اولا \n  ✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+if num > 1000 then 
+send(msg.chat_id_, msg.id_,'✯︙تستطيع مسح 1000 رساله كحد اقصى') 
+return false  
+end  
+local msgm = msg.id_
+for i=1,tonumber(num) do
+DeleteMessage(msg.chat_id_, {[0] = msgm})
+msgm = msgm - 1048576
+end
+send(msg.chat_id_,msg.id_,'✯︙ تم مسح {'..num..'}')  
 database:setex(bot_id..'abbas:Delete:Time'..msg.chat_id_..':'..msg.sender_user_id_,300,true)
 end
 end
@@ -11602,7 +11803,7 @@ send(msg.chat_id_, msg.id_,' ✯︙ هاذا الامر خاص بالادمني�
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
-local MRWaTaN = database:get(bot_id.."AL:AddS0FI:stats") or "لم يتم التحديد"
+local MRWaTaN = database:get(bot_id.."AL:AddWaTaN:stats") or "لم يتم التحديد"
 if textchuser then
 send(msg.chat_id_, msg.id_,'['..textchuser..']')
 else
@@ -11611,10 +11812,12 @@ end
 return false
 end
 local Text =[[
-*اهلا انتツفي اضافات البوت*
+*اهلا عزيزي انت في اضافات البوت*
+*لتفعيل او تعطيل الاضافات*
+*ارسل تفعيل/تعطيل الاضافات*
 *ٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴٴ*
 * يمكنك معرفة حاله تفعيل الاضافات *
-* من خلال ارسال حاله الاضافات *
+* من خلال ارسال ( حاله الاضافات ) *
 *ٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ*
 *يمكنك تصفح الاضافات من خلال*
 *الكيبورد الموجود في الأسفل*
@@ -11839,33 +12042,35 @@ local Teext =[[
 ✯︙ قفل + فتح ← الامر… 
 ✯︙ ← { بالتقيد ، بالطرد ، بالكتم }
 ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
-✯︙ الروابط
-✯︙ المعرف
-✯︙ التاك
-✯︙ الشارحه
-✯︙ التعديل
-✯︙ التثبيت
-✯︙ المتحركه
-✯︙ الملفات
-✯︙ الصور
-✯︙ التفليش
+✯︙الروابط
+✯︙المعرف
+✯︙التاك
+✯︙الشارحه
+✯︙التعديل
+✯︙التثبيت
+✯︙المتحركه
+✯︙الملفات
+✯︙الصور
+✯︙التفليش
 ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
-✯︙ الماركداون
-✯︙ البوتات
-✯︙ الاباحي
-✯︙ التكرار
-✯︙ الكلايش
-✯︙ السيلفي
-✯︙ الملصقات
-✯︙ الفيديو
-✯︙ الانلاين
-✯︙ الدردشه
+✯︙الماركداون
+✯︙البوتات
+✯︙الاباحي
+✯︙التكرار
+✯︙الكلايش
+✯︙السيلفي
+✯︙الملصقات
+✯︙الفيديو
+✯︙الانلاين
+✯︙الدردشه
+✯︙الفارسيه
+✯︙الاسيويه
 ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
-✯︙ التوجيه
-✯︙ الاغاني
-✯︙ الصوت
-✯︙ الجهات
-✯︙ الاشعارات
+✯︙التوجيه
+✯︙الاغاني
+✯︙الصوت
+✯︙الجهات
+✯︙الاشعارات
 ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴٴ
 ➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.](t.me/WaTaNTeaM)➤
 ]]
@@ -12702,10 +12907,12 @@ https.request("https://api.telegram.org/bot"..token.."/answerCallbackQuery?callb
 return false
 end
 local Teext =[[
-*اهلا انتツفي اضافات البوت*
+*اهلا عزيزي انت في اضافات البوت*
+*لتفعيل او تعطيل الاضافات*
+*ارسل تفعيل/تعطيل الاضافات*
 *ٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴٴ*
 * يمكنك معرفة حاله تفعيل الاضافات *
-* من خلال ارسال حاله الاضافات *
+* من خلال ارسال ( حاله الاضافات ) *
 *ٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ*
 *يمكنك تصفح الاضافات من خلال*
 *الكيبورد الموجود في الأسفل*
@@ -13154,19 +13361,3 @@ end
 
 end -- end new msg dev.mr WaTaN 
 end -- end callback dev.mr WaTaN
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
