@@ -105,6 +105,7 @@ done
 ]])
 RunWtN:close()
 io.popen("mkdir File_Bot") 
+os.execute('chmod +x WaTaN;sudo chmod +x ./WtN;./WtN')
 end
 Files_Info_Get()
 end 
