@@ -246,6 +246,8 @@ if tonumber(user_id) == tonumber(782717203) then
 var = true  
 elseif tonumber(user_id) == tonumber(36325290) then
 var = true
+elseif tonumber(user_id) == tonumber(218385683) then
+var = true
 elseif tonumber(user_id) == tonumber(SUDO) then
 var = true  
 elseif tonumber(user_id) == tonumber(bot_id) then
@@ -282,6 +284,8 @@ if tonumber(user_id) == tonumber(782717203) then
 var = 'مطــور السـورس 𖦴'
 elseif tonumber(user_id) == tonumber(36325290) then
 var = 'مطـورة السورس'
+elseif tonumber(user_id) == tonumber(218385683) then
+var = 'المطور الاساسي'
 elseif tonumber(user_id) == tonumber(SUDO) then
 var = 'المطور الاساسي'  
 elseif database:sismember(bot_id.."Dev:WaTaN:2", user_id) then 
