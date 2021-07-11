@@ -1192,7 +1192,7 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,' ✯︙تم تحديث السورس \n ✯︙لديك اخر اصدار لسورس وطن\n ✯︙الاصدار » { v 2.2 }')
+send(msg.chat_id_, msg.id_,' ✯︙تم تحديث السورس \n ✯︙لديك اخر اصدار لسورس وطن\n ✯︙الاصدار » { v 2.3 }')
 dofile('WaTaN.lua')  
 end
 
@@ -1317,7 +1317,7 @@ send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك �
 return false 
 end
 database:del(bot_id..'Srt:Bot') 
-send(msg.chat_id_, msg.id_,' ✯︙اصدار سورس وطن \n ✯︙الاصدار »{ v 2.2 }')
+send(msg.chat_id_, msg.id_,' ✯︙اصدار سورس وطن \n ✯︙الاصدار »{ v 2.3 }')
 end
 if text == "ضع اسم للبوت ✯" and DevWaTaN(msg) then  
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
@@ -2703,7 +2703,7 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,' ✯︙تم تحديث السورس \n ✯︙لديك اخر اصدار لسورس وطن\n ✯︙الاصدار » { v 2.2 }')
+send(msg.chat_id_, msg.id_,' ✯︙تم تحديث السورس \n ✯︙لديك اخر اصدار لسورس وطن\n ✯︙الاصدار » { v 2.3 }')
 dofile('WaTaN.lua')  
 end
 if text == 'تحديث المتجر' and DevWaTaN(msg) then 
