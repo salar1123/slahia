@@ -131,8 +131,8 @@ print([[
  ╚╝╚╝ ╚═══╝ ╚══╝ ╚═══╝╚╝ ╚═╝
                                
 > CH › @WaTaNTeaM
-> CH › @WaTaNTeaM
 ~> DEVELOPER › @abbasfadhil
+~~> Source Version 2.5
 ]])
 sudos = dofile("./Info.lua") 
 SUDO = tonumber(sudos.SUDO)
@@ -1242,8 +1242,8 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 2.5 }')
 dofile('WaTaN.lua')  
+send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 2.6 }')
 end
 
 if text == 'مطور السورس ✯' and DevWaTaN(msg) then 
@@ -2902,8 +2902,8 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 2.5 }')
 dofile('WaTaN.lua')  
+send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 2.6 }')
 end
 if text == 'تحديث المتجر' and DevWaTaN(msg) then 
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
