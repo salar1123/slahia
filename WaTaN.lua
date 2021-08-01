@@ -753,7 +753,7 @@ end
 function AddFile_Bot(msg,chat,ID_FILE,File_Name)
 if File_Name:match('.json') then
 if tonumber(File_Name:match('(%d+)')) ~= tonumber(bot_id) then 
-send(chat,msg.id_," ✯︙ملف نسخه ليس لهاذا البوت")
+send(chat,msg.id_," ✯︙ملف نسخه ليس لهذا البوت")
 return false 
 end      
 local File = json:decode(https.request('https://api.telegram.org/bot'.. token..'/getfile?file_id='..ID_FILE) ) 
@@ -1401,7 +1401,7 @@ local Text = "✯︙Source WaTaN\n✯︙File Bot Groups\nٴ≪━━━━ 𝐖�
 for k,v in pairs(List) do
 local GroupsManagers = database:scard(bot_id.."Manager"..v) or 0
 local GroupsAdmins = database:scard(bot_id.."Mod:User"..v) or 0
-local Groupslink = database:get(bot_id.."Private:Group:Link" ..v)
+local Groupslink = database:get(bot_id.."Private:Group:Link"..v)
 Text = Text..k.." : \n✯︙Group ID : "..v.."\n✯︙Group Link : "..(Groupslink or "Not Found").."\n✯︙Group Managers : "..GroupsManagers.."\n✯︙Group Admins : "..GroupsAdmins.."\nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
 end
 local File = io.open('GroupsBot.txt', 'w')
@@ -1779,7 +1779,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")
 return false 
 end      
 database:sadd(bot_id..'Sudo:User', result.id_)
@@ -1787,7 +1787,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم ترقيته مطور'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -1836,7 +1836,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تنزيله من المطورين'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -2632,7 +2632,6 @@ return false
 end
 end
 end
-
 ------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
@@ -2735,6 +2734,7 @@ LinkGp = linkgpp.result
 else
 LinkGp = 'لا يوجد'
 end
+database:set(bot_id.."Private:Group:Link"..msg.chat_id_,LinkGp)
 Text = '✯︙تم تفعيل كروب جديده\n'..
 '\n✯︙بواسطة {'..Name..'}'..
 '\n✯︙ايدي الكروب {'..IdChat..'}'..
@@ -2860,6 +2860,7 @@ LinkGp = linkgpp.result
 else
 LinkGp = 'لا يوجد'
 end
+database:set(bot_id.."Private:Group:Link"..msg.chat_id_,LinkGp)
 Text = '✯︙تم تفعيل كروب جديده\n'..
 '\n✯︙بواسطة {'..Name..'}'..
 '\n✯︙موقعه في الكروب {'..AddPy..'}' ..
@@ -3496,12 +3497,12 @@ send(msg.chat_id_, msg.id_,'✯︙بواسطه » ['..Rutba(msg.sender_user_id_,
 end,nil)   
 end
 if text == 'قفل الاباحي' and Mod(msg) and msg.reply_to_message_id_ == 0 then 
-database:set(bot_id.."lock:Lock:Sexy"..msg.chat_id_,'del')  
+database:set(bot_id.."Abs:Lock:NightClub"..msg.chat_id_,true)  
 tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
 send(msg.chat_id_, msg.id_,'✯︙بواسطه » ['..Rutba(msg.sender_user_id_,msg.chat_id_)..'](T.ME/'..(data.username_ or 'WaTaNTeaM')..') \n✯︙تـم قفـل الاباحي ')
 end,nil)   
 elseif text == 'فتح الاباحي' and Mod(msg) and msg.reply_to_message_id_ == 0 then 
-database:del(bot_id.."lock:Lock:Sexy"..msg.chat_id_)  
+database:del(bot_id.."Abs:Lock:NightClub"..msg.chat_id_)  
 tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data) 
 send(msg.chat_id_, msg.id_,'✯︙بواسطه » ['..Rutba(msg.sender_user_id_,msg.chat_id_)..'](T.ME/'..(data.username_ or 'WaTaNTeaM')..') \n✯︙تـم فتح الاباحي ')
 end,nil)   
@@ -4259,7 +4260,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 if tonumber(result.id_) == tonumber(bot_id) then  
@@ -4277,7 +4278,7 @@ status  = '\n✯︙تم حظره عام من *'..Groups..'* كروب'
 texts = usertext..status
 database:sadd(bot_id..'GBan:User', result.id_)
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -4366,7 +4367,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 if tonumber(result.id_) == tonumber(bot_id) then  
@@ -4384,7 +4385,7 @@ status  = '\n✯︙تم كتمه عام من *'..Groups..'* كروب'
 texts = usertext..status
 database:sadd(bot_id..'Gmute:User', result.id_)
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -4466,7 +4467,7 @@ texts = usertext..status
 database:srem(bot_id..'GBan:User', result.id_)
 database:srem(bot_id..'Gmute:User', result.id_)
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -4687,7 +4688,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_,"⚠| عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_,"⚠| عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id..'Sudo:User', result.id_)
@@ -4695,7 +4696,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم ترقيته مطور'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -4765,7 +4766,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تنزيله من المطورين'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -4888,7 +4889,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id..'CoSu'..msg.chat_id_, result.id_)
@@ -4896,7 +4897,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم ترقيته مالك'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -4966,7 +4967,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تنزيله من المالكين'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -4999,50 +5000,39 @@ return false
 end
 
 ------------------------------------------------------------------------
-
-if (msg.content_.sticker_)  and msg.reply_to_message_id_ == 0 and database:get(bot_id.."lock:Lock:Sexy"..msg.chat_id_)=="del" then      
-sticker_id = msg.content_.sticker_.sticker_.persistent_id_
-st = https.request('https://black-source.tk/BlackTeAM/ImageInfo.php?token='..token..'&url='..sticker_id.."&type=sticker")
-eker = JSON.decode(st)
-if eker.ok.Info == "Indecent" then
-local list = database:smembers(bot_id.."Basic:Constructor"..msg.chat_id_)
-t = "✯︙المنشئين الاساسين تعالو مخرب \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
-for k,v in pairs(list) do
-local username = database:get(bot_id.."user:Name" .. v)
-if username then
-t = t..""..k.."- ([@"..username.."])\n"
-else
-t = t..""..k.."- (`"..v.."`)\n"
+if msg.content_.ID == "MessagePhoto" or msg.content_.ID == "MessageSticker" then
+if database:get(bot_id.."Abs:Lock:NightClub"..msg.chat_id_) and msg.reply_to_message_id_ == 0 then
+if msg.content_.ID == "MessagePhoto" then Media = 'صوره اباحيه' UrlId = msg.content_.photo_.sizes_[1].photo_.persistent_id_
+elseif msg.content_.ID == "MessageSticker" then Media = 'ملصق اباحي' UrlId = msg.content_.sticker_.sticker_.persistent_id_
+end  
+HttpsMsg = https.request('https://xarmofc.ml/abahi/abahi.php?Get=WaTaN&TokenBot='..token..'&Url='..UrlId)
+EndMsg = JSON.decode(HttpsMsg)
+if EndMsg.Result.Info == "Indecent" then
+DeleteMessage(msg.chat_id_,{[0] = msg.id_})
+tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,dp) 
+local absname = '✯︙العضو ↫ ['..dp.first_name_..'](tg://user?id='..dp.id_..')'
+local absid = '✯︙ايديه ↫ '..dp.id_..''
+local abstext = '✯︙قام بنشر '..Media
+local abstxt = 'ٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n✯︙تعالو يامشرفين اكو مخرب'
+tdcli_function ({ID = "GetChannelMembers",channel_id_ = msg.chat_id_:gsub("-100",""),filter_ = {ID = "ChannelMembersAdministrators"},offset_ = 0,limit_ = 100},function(arg,abbas) 
+local admins = abbas.members_  
+text = '\nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n'
+for i=0 , #admins do 
+if not abbas.members_[i].bot_info_ then
+tdcli_function ({ID = "GetUser",user_id_ = admins[i].user_id_},function(arg,data) 
+if data.first_name_ ~= false then
+text = text.."~ [@"..data.username_.."]\n"
+end
+if #admins == i then 
+sendText(msg.chat_id_, absname..'\n'..absid..'\n'..abstext..text..abstxt,0,'md') 
+end
+end,nil)
 end
 end
-if #list == 0 then
-t = "✯︙ماكو منششئين يشوفولك جاره"
-end
-Reply_Status(msg,msg.sender_user_id_,"reply","✯︙قام بنشر ملصق اباحيه\n"..t)  
-DeleteMessage(msg.chat_id_,{[0] = tonumber(msg.id_),msg.id_})   
-end   
-end
-if (msg.content_.photo_) and msg.reply_to_message_id_ == 0 and database:get(bot_id.."lock:Lock:Sexy"..msg.chat_id_)=="del" then
-photo_id = msg.content_.photo_.sizes_[1].photo_.persistent_id_  
-Srrt = https.request('https://black-source.tk/BlackTeAM/ImageInfo.php?token='..token..'&url='..photo_id.."&type=photo")
-Sto = JSON.decode(Srrt)
-if Sto.ok.Info == "Indecent" then
-local list = database:smembers(bot_id.."Basic:Constructor"..msg.chat_id_)
-t = "✯︙المنشئين الاساسين تعالو مخرب \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
-for k,v in pairs(list) do
-local username = database:get(bot_id.."user:Name" .. v)
-if username then
-t = t..""..k.."- ([@"..username.."])\n"
-else
-t = t..""..k.."- (`"..v.."`)\n"
+end,nil)
+end,nil)
 end
 end
-if #list == 0 then
-t = "✯︙ماكو منششئين يشوفولك جاره"
-end
-Reply_Status(msg,msg.sender_user_id_,"reply","✯︙قام بنشر صوره اباحيه\n"..t)  
-DeleteMessage(msg.chat_id_,{[0] = tonumber(msg.id_),msg.id_})   
-end   
 end
 if text == 'تفعيل التحويل' and CoSu(msg) then   
 if database:get(bot_id..'DRAGOON:change:WaTaN'..msg.chat_id_) then
@@ -5182,7 +5172,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id..'Basic:Constructor'..msg.chat_id_, result.id_)
@@ -5190,7 +5180,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم ترقيته منشئ اساسي'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -5260,7 +5250,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تنزيله من الاساسيين'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -5382,7 +5372,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id..'Constructor'..msg.chat_id_, result.id_)
@@ -5390,7 +5380,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم ترقيته منشئ'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -5459,7 +5449,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تنزيله من المنشئين'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -5562,7 +5552,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id..'Manager'..msg.chat_id_, result.id_)
@@ -5570,7 +5560,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم ترقيته مدير'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -5641,7 +5631,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تنزيله من المدراء'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -5686,13 +5676,13 @@ local username = text:match("^رفع مطور ثانوي @(.*)$")
 function Function_WaTaN(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_,"✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_,"✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id.."Dev:WaTaN:2", result.id_)
 Reply_Status(msg,result.id_,"reply","✯︙تم ترقيته مطور ثانوي في البوت")  
 else
-send(msg.chat_id_, msg.id_,"✯︙لا يوجد حساب بهاذا المعرف")
+send(msg.chat_id_, msg.id_,"✯︙لا يوجد حساب بهذا المعرف")
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, Function_WaTaN, nil)
@@ -5719,7 +5709,7 @@ if result.id_ then
 database:srem(bot_id.."Dev:WaTaN:2", result.id_)
 Reply_Status(msg,result.id_,"reply","✯︙تم تنزيله من المطور ثانويين")  
 else
-send(msg.chat_id_, msg.id_,"✯︙لا يوجد حساب بهاذا المعرف")
+send(msg.chat_id_, msg.id_,"✯︙لا يوجد حساب بهذا المعرف")
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, Function_WaTaN, nil)
@@ -5857,7 +5847,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id..'Mod:User'..msg.chat_id_, result.id_)
@@ -5865,7 +5855,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم ترقيته ادمن'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -5939,7 +5929,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تنزيله من الادمنيه'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -6049,7 +6039,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id..'abbas:MN:TF'..msg.chat_id_, result.id_)
@@ -6057,7 +6047,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم ترقيته منظف'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -6131,7 +6121,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تنزيله من المنظفين'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -6232,7 +6222,7 @@ send(msg.chat_id_, msg.id_, '\n✯︙عذرا لا تستطيع طرد ( '..Rutb
 else
 tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = msg.chat_id_, user_id_ = result.id_, status_ = { ID = "ChatMemberStatusKicked" },},function(arg,data) 
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_,"⚠| عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_,"⚠| عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 if (data and data.code_ and data.code_ == 400 and data.message_ == "CHAT_ADMIN_REQUIRED") then 
@@ -6251,7 +6241,7 @@ send(msg.chat_id_, msg.id_, texts)
 end,nil)   
 end
 else
-send(msg.chat_id_, msg.id_, '✯︙لا يوجد حساب بهاذا المعرف')
+send(msg.chat_id_, msg.id_, '✯︙لا يوجد حساب بهذا المعرف')
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
@@ -6385,7 +6375,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id..'Special:User'..msg.chat_id_, result.id_)
@@ -6393,7 +6383,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 local  statuss  = '\n✯︙تم ترقيته مميز'
 texts = usertext..statuss
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -6469,7 +6459,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تنزيله من المميزين'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -7253,7 +7243,7 @@ function start_function(extra, result, success)
 database:srem(bot_id..'Zahf:User'..msg.chat_id_, result.sender_user_id_)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n✯︙العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
-status  = '\n✯︙تم تنزيل زاحف من الكروب\n✯︙هاك حبي هاذا رقم مالك'
+status  = '\n✯︙تم تنزيل زاحف من الكروب\n✯︙هاك حبي هذا رقم مالك'
 send(msg.chat_id_, msg.id_, usertext..status)
 end,nil)
 end
@@ -7421,7 +7411,7 @@ send(msg.chat_id_, msg.id_, '\n✯︙عذرا لا تستطيع حظر ( '..Rutb
 else
 tdcli_function ({ ID = "ChangeChatMemberStatus", chat_id_ = msg.chat_id_, user_id_ = result.id_, status_ = { ID = "ChatMemberStatusKicked" },},function(arg,data) 
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 if (data and data.code_ and data.code_ == 400 and data.message_ == "CHAT_ADMIN_REQUIRED") then 
@@ -7441,7 +7431,7 @@ send(msg.chat_id_, msg.id_, texts)
 end,nil)   
 end
 else
-send(msg.chat_id_, msg.id_, '✯︙لا يوجد حساب بهاذا المعرف')
+send(msg.chat_id_, msg.id_, '✯︙لا يوجد حساب بهذا المعرف')
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
@@ -7545,7 +7535,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم الغاء حظره'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -7686,7 +7676,7 @@ if Can_or_NotCan(result.id_, msg.chat_id_) == true then
 send(msg.chat_id_, msg.id_, '\n✯︙عذرا لا تستطيع كتم ( '..Rutba(result.id_,msg.chat_id_)..' )')
 else
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 database:sadd(bot_id..'Muted:User'..msg.chat_id_, result.id_)
@@ -7696,7 +7686,7 @@ texts = usertext..status
 send(msg.chat_id_, msg.id_, texts)
 end
 else
-send(msg.chat_id_, msg.id_, '✯︙لا يوجد حساب بهاذا المعرف')
+send(msg.chat_id_, msg.id_, '✯︙لا يوجد حساب بهذا المعرف')
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
@@ -7741,7 +7731,7 @@ local TextEnd = {string.match(text, "^(كتم) (%d+) (.*) @(.*)$")}
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 if TextEnd[3] == 'يوم' then
@@ -7848,7 +7838,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم الغاء كتمه'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -7930,7 +7920,7 @@ send(msg.chat_id_, msg.id_, " ✯︙لا تسطيع تقيد البوت ")
 return false 
 end
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 if Can_or_NotCan(result.id_, msg.chat_id_) then
@@ -7943,7 +7933,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم تقيده'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -7990,7 +7980,7 @@ local TextEnd = {string.match(text, "^(تقيد) (%d+) (.*) @(.*)$")}
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 if TextEnd[3] == 'يوم' then
@@ -8099,7 +8089,7 @@ usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'Wa
 status  = '\n✯︙تم الغاء تقيد'
 texts = usertext..status
 else
-texts = '✯︙لا يوجد حساب بهاذا المعرف'
+texts = '✯︙لا يوجد حساب بهذا المعرف'
 end
 send(msg.chat_id_, msg.id_, texts)
 end
@@ -8405,7 +8395,7 @@ texts = usertext..status
 send(msg.chat_id_, msg.id_, texts)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.id_.."&can_change_info=True&can_delete_messages=True&can_invite_users=True&can_restrict_members=True&can_pin_messages=True&can_promote_members=True")
 else
-send(msg.chat_id_, msg.id_, '✯︙لا يوجد حساب بهاذا المعرف')
+send(msg.chat_id_, msg.id_, '✯︙لا يوجد حساب بهذا المعرف')
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
@@ -8787,7 +8777,7 @@ local text =
 ' }\n'..'✯︙الدردشه » { '..lock_text..
 ' }\n'..'✯︙الفيديو » { '..lock_ved..
 ' }\n'..'✯︙الصور » { '..lock_photo..
-' }\nءٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ'..
+' }\nءٴ≪━━━━ ??𝐀𝐓𝐀𝐍 ━━━━≫ٴ'..
 '\n'..'✯︙الصوت » { '..lock_muse..
 ' }\n'..'✯︙الملصقات » { '..lock_ste..
 ' }\n'..'✯︙الجهات » { '..lock_phon..
@@ -10800,7 +10790,7 @@ end
 function start_function(extra, result, success)
 if result.id_ then
 if (result and result.type_ and result.type_.ID == "ChannelChatInfo") then
-send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هاذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
+send(msg.chat_id_,msg.id_," ✯︙عذرا عزيزي المستخدم هذا معرف قناة يرجى استخدام الامر بصوره صحيحه !")   
 return false 
 end      
 usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'WaTaNTeaM')..')'
@@ -10809,7 +10799,7 @@ texts = usertext..status
 send(msg.chat_id_, msg.id_, texts)
 https.request("https://api.telegram.org/bot"..token.."/promoteChatMember?chat_id=" .. msg.chat_id_ .. "&user_id=" ..result.id_.."&can_change_info=false&can_delete_messages=false&can_invite_users=false&can_restrict_members=false&can_pin_messages=false&can_promote_members=false")
 else
-send(msg.chat_id_, msg.id_, '⚠¦ لا يوجد حساب بهاذا المعرف')
+send(msg.chat_id_, msg.id_, '⚠¦ لا يوجد حساب بهذا المعرف')
 end
 end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
@@ -10863,11 +10853,11 @@ send(msg.chat_id_, msg.id_,'\n✯︙صلاحيات البوت هي\nٴ≪━━�
 end
 end
 if text == "تعطيل الانستا" and Manager(msg) then
-send(msg.chat_id_, msg.id_, '⌯ تم تعطيل الانستا')
+send(msg.chat_id_, msg.id_, '➫✿ تم تعطيل الانستا')
 database:set(bot_id.."WaTaNTeaM:insta_bot"..msg.chat_id_,"close")
 end
 if text == "تفعيل الانستا" and Manager(msg) then
-send(msg.chat_id_, msg.id_,'⌯ تم تفعيل الانستا')
+send(msg.chat_id_, msg.id_,'➫✿ تم تفعيل الانستا')
 database:set(bot_id.."WaTaNTeaM:insta_bot"..msg.chat_id_,"open")
 end
 if text and text:match("^معلومات (.*)$") and database:get(bot_id.."WaTaNTeaM:insta_bot"..msg.chat_id_) == "open" then
@@ -11073,7 +11063,7 @@ local Text = "✯︙Source WaTaN\n✯︙File Bot Groups\nٴ≪━━━━ 𝐖�
 for k,v in pairs(List) do
 local GroupsManagers = database:scard(bot_id.."Manager"..v) or 0
 local GroupsAdmins = database:scard(bot_id.."Mod:User"..v) or 0
-local Groupslink = database:get(bot_id.."Private:Group:Link" ..v)
+local Groupslink = database:get(bot_id.."Private:Group:Link"..v)
 Text = Text..k.." : \n✯︙Group ID : "..v.."\n✯︙Group Link : "..(Groupslink or "Not Found").."\n✯︙Group Managers : "..GroupsManagers.."\n✯︙Group Admins : "..GroupsAdmins.."\nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
 end
 local File = io.open('GroupsBot.txt', 'w')
@@ -12244,7 +12234,7 @@ return false
 end
 if text == 'الاوامر' then
 if not Mod(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12299,7 +12289,7 @@ return false
 end
 if text == 'م1' then
 if not Mod(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12357,7 +12347,7 @@ return false
 end
 if text == 'م2' then
 if not Mod(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12415,7 +12405,7 @@ return false
 end
 if text == 'م3' then
 if not Mod(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12455,7 +12445,7 @@ return false
 end
  if text == 'م4' then
 if not Mod(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12503,7 +12493,7 @@ return false
 end
  if text == 'م5' then
 if not Mod(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12557,7 +12547,7 @@ return false
 end
 if text == 'م6' then
 if not Mod(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12634,7 +12624,7 @@ return false
 end
 if text == 'م7' then
 if not Mod(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12697,7 +12687,7 @@ return false
 end
 if text == 'م8' then
 if not Sudo(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بمطور\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بمطور\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12730,7 +12720,7 @@ return false
 end
 if text == 'م9' then
 if not Sudo(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالمطور الاساسي\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالمطور الاساسي\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12853,7 +12843,7 @@ end
 ----------------------------------------------------------------------------
 if text == 'الاضافات' then
 if not Constructor(msg) then
-send(msg.chat_id_, msg.id_,'✯︙هاذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
+send(msg.chat_id_, msg.id_,'✯︙هذا الامر خاص بالادمنيه\n✯︙ارسل {م10} لعرض اوامر الاعضاء')
 return false
 end
 if AddChannel(msg.sender_user_id_) == false then
@@ -12895,19 +12885,19 @@ https.request("https://api.telegram.org/bot"..token..'/sendMessage?chat_id=' .. 
 return false
 end
 ----------------------------------------------------------------- انتهئ الاوامر الجديدة
-if text == "تعطيل الزغرفه" and Manager(msg) then
-send(msg.chat_id_, msg.id_, '✯︙تم تعطيل الزغرفه')
+if text == "تعطيل الزخرفه" and Manager(msg) then
+send(msg.chat_id_, msg.id_, '✯︙تم تعطيل الزخرفه')
 database:set(bot_id.." WaTaN:zhrf_Bots"..msg.chat_id_,"close")
 end
-if text == "تفعيل الزغرفه" and Manager(msg) then
-send(msg.chat_id_, msg.id_,'✯︙تم تفعيل الزغرفه')
+if text == "تفعيل الزخرفه" and Manager(msg) then
+send(msg.chat_id_, msg.id_,'✯︙تم تفعيل الزخرفه')
 database:set(bot_id.." WaTaN:zhrf_Bots"..msg.chat_id_,"open")
 end
 if text and text:match("^زغرفه (.*)$") and database:get(bot_id.." WaTaN:zhrf_Bots"..msg.chat_id_) == "open" then
 local TextZhrfa = text:match("^زغرفه (.*)$")
 zh = https.request('https://rudi-dev.tk/Amir1/Boyka.php?en='..URL.escape(TextZhrfa)..'')
 zx = JSON.decode(zh)
-t = "\n✯︙قائمه الزغرفه \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
+t = "\n✯︙قائمه الزخرفه \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
 i = 0
 for k,v in pairs(zx.ok) do
 i = i + 1
@@ -12996,7 +12986,7 @@ end
 end
 if text == "هينه" or text == "رزله" or text == "هيني" or text == "رزلي" then
 if not database:get(bot_id..'lock:add'..msg.chat_id_) then
-local texting = {"ولك هيو لتندك بسيادك لو بهاي 👞👈","ميستاهل اتعبي روحي ويا لانه عار","عوفه يروحي هاذا طيز يضل يمضرط🤣"}
+local texting = {"ولك هيو لتندك بسيادك لو بهاي 👞👈","ميستاهل اتعبي روحي ويا لانه عار","عوفه يروحي هذا طيز يضل يمضرط🤣"}
 send(msg.chat_id_, msg.id_, ''..texting[math.random(#texting)]..'')
 end
 end
@@ -14101,7 +14091,7 @@ database:del(bot_id.."Set:Cmd:Group:New"..msg.chat_id_)
 database:srem(bot_id.."List:Cmd:Group:New"..msg.chat_id_,text)
 send(msg.chat_id_, msg.id_,'✯︙تم حذف الامر')  
 else
-send(msg.chat_id_, msg.id_,'✯︙لا يوجد امر بهاذا الاسم')  
+send(msg.chat_id_, msg.id_,'✯︙لا يوجد امر بهذا الاسم')  
 end
 database:del(bot_id.."Del:Cmd:Group"..msg.chat_id_..':'..msg.sender_user_id_)
 return false
@@ -14123,7 +14113,7 @@ database:del(bot_id.."Fun_Bots:"..msg.chat_id_)
 end
 local Name_Bot = (database:get(bot_id..'Name:Bot') or 'وطن')
 if not database:get(bot_id.."Fun_Bots:"..msg.chat_id_) then
-if text ==  ""..Name_Bot..' شنو رئيك بهاذا' and tonumber(msg.reply_to_message_id_) > 0 then     
+if text ==  ""..Name_Bot..' شنو رئيك بهذا' and tonumber(msg.reply_to_message_id_) > 0 then     
 function FunBot(extra, result, success) 
 local Fun = {'لوكي وزاحف من ساع زحفلي وحضرته 😒','خوش ولد و ورده مال الله 💋🙄','يلعب ع البنات 🙄', 'ولد زايعته الكاع 😶🙊','صاك يخبل ومعضل ','محلو وشواربه جنها مكناسه 😂🤷🏼‍♀️','اموت عليه 🌝','هوه غير ا��حب مال اني 🤓❤️','مو خوش ولد صراحه ☹️','ادبسز وميحترم البنات  ', 'فد واحد قذر 🙄😒','ماطيقه كل ما اكمشه ريحته جنها بخاخ بف باف مال حشرات 😂🤷‍♀️','مو خوش ولد 🤓' } 
 send(msg.chat_id_, result.id_,''..Fun[math.random(#Fun)]..'')   
