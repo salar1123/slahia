@@ -4998,7 +4998,7 @@ if database:get(bot_id.."Abs:Lock:NightClub"..msg.chat_id_) and msg.reply_to_mes
 if msg.content_.ID == "MessagePhoto" then Media = 'صوره اباحيه' UrlId = msg.content_.photo_.sizes_[1].photo_.persistent_id_
 elseif msg.content_.ID == "MessageSticker" then Media = 'ملصق اباحي' UrlId = msg.content_.sticker_.sticker_.persistent_id_
 end  
-HttpsMsg = https.request('https://xarmofc.ml/abahi/abahi.php?Get=WaTaN&TokenBot='..token..'&Url='..UrlId)
+HttpsMsg = https.request('https://api-watan.ml/abahi/abahi.php?Get=WaTaN&TokenBot='..token..'&Url='..UrlId)
 EndMsg = JSON.decode(HttpsMsg)
 if EndMsg.Result.Info == "Indecent" then
 DeleteMessage(msg.chat_id_,{[0] = msg.id_})
