@@ -565,7 +565,20 @@ end
 
 function GetFile_Bot(msg)
 local list = database:smembers(bot_id..'Chek:Groups') 
-local t = '{"BOT_ID": '..bot_id..',"GP_BOT":{'  
+local Abs = database:smembers(bot_id..'User_Bot') 
+local t = '{"BOT_ID": '..bot_id..','
+if #Abs ~= 0 then
+t = t..'"UsersList":['
+for k,v in pairs(Abs) do
+if k == 1 then
+t =  t..'"'..v..'"'
+else
+t =  t..',"'..v..'"'
+end
+end   
+t = t..'],'
+end
+t = t..'"GP_BOT":{'  
 for k,v in pairs(list) do   
 NAME = 'WaTaN Chat'
 link = database:get(bot_id.."Private:Group:Link"..msg.chat_id_) or ''
@@ -628,11 +641,24 @@ t = t..'}}'
 local File = io.open('./'..bot_id..'.json', "w")
 File:write(t)
 File:close()
-sendDocument(msg.chat_id_, msg.id_,0, 1, nil, './'..bot_id..'.json', '- عدد كروبات التي في البوت { '..#list..'}')
+sendDocument(msg.chat_id_, msg.id_,0, 1, nil, './'..bot_id..'.json', '- عدد كروبات التي في البوت { '..#list..' }\n- عدد مشتركين البوت { '..#Abs..' }')
 end
 function GetFile_Bot1(msg)
 local list = database:smembers(bot_id..'Chek:Groups') 
-local t = '{"BOT_ID": '..bot_id..',"GP_BOT":{'  
+local Abs = database:smembers(bot_id..'User_Bot') 
+local t = '{"BOT_ID": '..bot_id..','
+if #Abs ~= 0 then
+t = t..'"UsersList":['
+for k,v in pairs(Abs) do
+if k == 1 then
+t =  t..'"'..v..'"'
+else
+t =  t..',"'..v..'"'
+end
+end   
+t = t..'],'
+end
+t = t..'"GP_BOT":{'  
 for k,v in pairs(list) do   
 NAME = 'WaTaN Chat'
 link = database:get(bot_id.."Private:Group:Link"..msg.chat_id_) or ''
@@ -695,7 +721,7 @@ t = t..'}}'
 local File = io.open('./'..bot_id..'.json', "w")
 File:write(t)
 File:close()
-sendDocument(SUDO, 0,0, 1, nil, './'..bot_id..'.json', '- عدد كروبات التي في البوت { '..#list..'}')
+sendDocument(SUDO, 0,0, 1, nil, './'..bot_id..'.json', '- عدد كروبات التي في البوت { '..#list..' }\n- عدد مشتركين البوت { '..#Abs..' }')
 end
 function download_to_file(url, file_path) 
 local respbody = {} 
@@ -765,7 +791,14 @@ send(chat,msg.id_,"* ✯︙عذرا الملف ليس بصيغة {JSON} يرجى
 end      
 local info_file = io.open('./'..bot_id..'.json', "r"):read('*a')
 local groups = JSON.decode(info_file)
+dpMem = 0
+for IdMem,v in pairs(groups.UsersList) do
+dpMem = dpMem + 1
+database:sadd(bot_id..'User_Bot',IdMem)  
+end
+dpGps = 0
 for idg,v in pairs(groups.GP_BOT) do
+dpGps = dpGps + 1
 database:sadd(bot_id..'Chek:Groups',idg)  
 database:set(bot_id..'lock:tagservrbot'..idg,true)   
 list ={"lock:Bot:kick","lock:user:name","lock:hashtak","lock:Cmd","lock:Link","lock:forward","lock:Keyboard","lock:geam","lock:Photo","lock:Animation","lock:Video","lock:Audio","lock:vico","lock:Sticker","lock:Document","lock:Unsupported","lock:Markdaun","lock:Contact","lock:Spam"}
@@ -793,7 +826,7 @@ database:sadd(bot_id..'Basic:Constructor'..idg,idASAS)
 end
 end
 end
-send(chat,msg.id_,"\n✯︙تم رفع الملف بنجاح وتفعيل الكروبات\n✯︙ورفع {الامنشئين الاساسين ; والمنشئين ; والمدراء; والادمنيه} بنجاح")
+send(chat,msg.id_,"\n✯︙تم رفع الملف بنجاح وتفعيل "..dpGps.." مجموعه\n✯︙ورفع {الامنشئين الاساسين ; والمنشئين ; والمدراء; والادمنيه} بنجاح\n✯︙تم استرجاع "..dpMem.." من المشتركين")
 end
 local function trigger_anti_spam(msg,type)
 tdcli_function ({ID = "GetUser",user_id_ = msg.sender_user_id_},function(arg,data)
@@ -1031,7 +1064,7 @@ local start = database:get(bot_id.."Start:Bot")
 if start then 
 SourceWaTaNr = start
 else
-SourceWaTaNr = '✯︙اهلا عزيزي\n✯︙انا بوت اسمي ' ..Namebot..'\n✯︙اختصاصي حمايه الكروبات\n✯︙من تكرار والسبام والتوجيه والخ…\n✯︙لتفعيلي اتبع الاخطوات…↓\n✯︙اضفني الي مجموعتك وقم بترقيتي ادمن واكتب كلمه { تفعيل }  ويستطيع »{ منشئ او المشرفين } بتفعيل فقط\n[ ✯︙معرف المطور ['..UserName..']'
+SourceWaTaNr = '✯︙اهلا عزيزي\n✯︙انا بوت اسمي '..(database:get(bot_id..'Name:Bot') or 'وطن')..'\n✯︙اختصاصي حمايه الكروبات\n✯︙من تكرار والسبام والتوجيه والخ…\n✯︙لتفعيلي اتبع الاخطوات…↓\n✯︙اضفني الي مجموعتك وقم بترقيتي ادمن واكتب كلمه { تفعيل }  ويستطيع »{ منشئ او المشرفين } بتفعيل فقط'
 end 
 send(msg.chat_id_, msg.id_, SourceWaTaNr) 
 end
@@ -2695,16 +2728,6 @@ tdcli_function({ID ="GetChat",chat_id_=msg.chat_id_},function(arg,chat)
 tdcli_function ({ID = "GetChannelMembers",channel_id_ = msg.chat_id_:gsub("-100",""),filter_ = {ID = "ChannelMembersAdministrators"},offset_ = 0,limit_ = 100},function(arg,abbas) 
 local admins = abbas.members_
 for i=0 , #admins do
-if abbas.members_[i].bot_info_ == false and abbas.members_[i].status_.ID == "ChatMemberStatusEditor" then
-database:sadd(bot_id..'Mod:User'..msg.chat_id_, admins[i].user_id_)
-tdcli_function ({ID = "GetUser",user_id_ = admins[i].user_id_},function(arg,ba) 
-if ba.first_name_ == false then
-database:srem(bot_id..'Mod:User'..msg.chat_id_, admins[i].user_id_)
-end
-end,nil)   
-else
-database:sadd(bot_id..'Mod:User'..msg.chat_id_, admins[i].user_id_)
-end
 if abbas.members_[i].status_.ID == "ChatMemberStatusCreator" then
 database:set(bot_id..'CoSuv'..msg.chat_id_,admins[i].user_id_)
 database:sadd(bot_id..'CoSu'..msg.chat_id_,admins[i].user_id_)
@@ -2820,16 +2843,6 @@ end
 tdcli_function ({ID = "GetChannelMembers",channel_id_ = msg.chat_id_:gsub("-100",""),filter_ = {ID = "ChannelMembersAdministrators"},offset_ = 0,limit_ = 100},function(arg,abbas) 
 local admins = abbas.members_
 for i=0 , #admins do
-if abbas.members_[i].bot_info_ == false and abbas.members_[i].status_.ID == "ChatMemberStatusEditor" then
-database:sadd(bot_id..'Mod:User'..msg.chat_id_, admins[i].user_id_)
-tdcli_function ({ID = "GetUser",user_id_ = admins[i].user_id_},function(arg,ba) 
-if ba.first_name_ == false then
-database:srem(bot_id..'Mod:User'..msg.chat_id_, admins[i].user_id_)
-end
-end,nil)   
-else
-database:sadd(bot_id..'Mod:User'..msg.chat_id_, admins[i].user_id_)
-end
 if abbas.members_[i].status_.ID == "ChatMemberStatusCreator" then
 database:set(bot_id..'CoSuv'..msg.chat_id_,admins[i].user_id_)
 database:sadd(bot_id..'CoSu'..msg.chat_id_,admins[i].user_id_)
@@ -8931,18 +8944,25 @@ return false end
 end
 if text == 'المطور' or text == 'مطور' or text == 'مطور البوت' then
 tdcli_function ({ID = "GetUser",user_id_ = SUDO},function(arg,result) 
+tdcli_function ({ID = "GetUserProfilePhotos",user_id_ = SUDO,offset_ = 0,limit_ = 1},function(extra,abbas,success) 
 local msg_id = msg.id_/2097152/0.5
 if not database:get(bot_id..'TEXT_SUDO') then
 Text = "*𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 𝙾𝙵 𝙱𝙾𝚃 ↬ * ["..result.first_name_.."](T.me/"..result.username_..")\n*𝚄𝚂𝙴𝚁𝙽𝙰𝙼𝙴 𝙾𝙵 𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 ↬* [@"..result.username_.."]"
 else
 Text = database:get(bot_id..'TEXT_SUDO')
 end
+if abbas.photos_[0] then
 keyboard = {} 
 keyboard.inline_keyboard = {
 {{text = ''..result.first_name_..' ',url="t.me/"..result.username_ or WaTaNTeaM}},
 {{text = '𝒄𝒉𝒂𝒏𝒏𝒆𝒍 𝒔𝒐𝒖𝒓𝒄𝒆',url="t.me/WaTaNTeaM"}},
 }
-https.request("https://api.telegram.org/bot"..token..'/sendPhoto?chat_id=' .. msg.chat_id_ .. '&photo=https://t.me/'..result.username_..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendPhoto?chat_id='..msg.chat_id_..'&photo='..abbas.photos_[0].sizes_[1].photo_.persistent_id_..'&caption='..URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+else
+send(msg.chat_id_, msg.id_,Text) 
+end
+end,nil)
 end,nil)
 end
 
@@ -10906,6 +10926,7 @@ end
 if text and text:match("^كول (.*)$") and not database:get(bot_id.."Speak:after:me"..msg.chat_id_) then
 local Textxt = text:match("^كول (.*)$")
 send(msg.chat_id_, msg.id_, '['..Textxt..']')
+DeleteMessage(msg.chat_id_,{[0] = msg.id_})
 end
 
 if text == "غنيلي" and not database:get(bot_id.."sing:for:me"..msg.chat_id_) then
@@ -11886,7 +11907,7 @@ if result.status_.ID == "UserStatusRecently" and result.profile_photo_ ~= false 
 if database:sismember(bot_id..'User_Bot',msg.sender_user_id_) then
 sendPhoto(msg.chat_id_, msg.id_, 0, 1, nil, WaTaN.photos_[0].sizes_[1].photo_.persistent_id_,get_id_text)       
 else 
-send(msg.chat_id_, msg.id_, '\n✯︙اشترك في خاص البوت لعرض صورتك \n['..get_id_text..']')      
+send(msg.chat_id_, msg.id_, '\n✯︙عليك ارسال بدء في خاص البوت لعرض صورتك \n['..get_id_text..']')      
 end 
 else 
 if result.status_.ID == "UserStatusEmpty" and result.profile_photo_ == false then
