@@ -994,8 +994,8 @@ if DevWaTaN(msg) then
 local bl = '✯︙اهلا بك عزيزي المطور\n✯︙اليك قسم التعطيل والتفعيل\n✯︙اختر من الازرار في الاسفل\n✯︙قناة سورس البوت [اضغط هنا](t.me/WaTaNTeaM)'
 local keyboard = {
 {'تعطيل التواصل ✯','تفعيل التواصل ✯'},
-{'تعطيل البوت الخدمي ✯','تفعيل البوت الخدمي ✯'},
-{'تعطيل الاذاعه ✯','تفعيل الاذاعه'},
+{'تفعيل البوت الخدمي ✯','تعطيل البوت الخدمي ✯'},
+{'تفعيل الاذاعه ✯','تعطيل الاذاعه'},
 {'رجوع ✯'},
 }
 send_inline_key(msg.chat_id_,bl,keyboard)
@@ -1032,7 +1032,7 @@ local bl = '✯︙اهلا بك عزيزي المطور\n✯︙اليك قسم �
 local keyboard = {
 {'الاحصائيات ✯'},
 {'المشتركين ✯','الكروبات ✯'},
-{'تنظيف المشتركين ✯','تنظيف الكروبات ✯'},
+{'تنظيف الكروبات ✯','تنظيف المشتركين ✯'},
 {'المجموعات المدفوعه ✯'},
 {'المطورين ✯','الثانويين ✯'},
 {'رجوع ✯'},
@@ -13145,9 +13145,9 @@ if text == "تفعيل الزخرفه" and Manager(msg) then
 send(msg.chat_id_, msg.id_,'✯︙تم تفعيل الزخرفه')
 database:set(bot_id.." WaTaN:zhrf_Bots"..msg.chat_id_,"open")
 end
-if text and text:match("^زخرفه (.*)$") or text:match("^زغرفه (.*)$") and database:get(bot_id.." WaTaN:zhrf_Bots"..msg.chat_id_) == "open" then
-local TextZhrfa = text:match("^زخرفه (.*)$") or text:match("^زغرفه (.*)$")
-zh = https.request('https://apiabs.ml/zrf.php?abs='..URL.escape(TextZhrfa)..'')
+if text and text:match("^زغرفه (.*)$") and database:get(bot_id.." WaTaN:zhrf_Bots"..msg.chat_id_) == "open" then
+local TextZhrfa = text:match("^زغرفه (.*)$")
+zh = https.request('https://rudi-dev.tk/Amir1/Boyka.php?en='..URL.escape(TextZhrfa)..'')
 zx = JSON.decode(zh)
 t = "\n✯︙قائمه الزخرفه \nٴ≪━━━━ 𝐖𝐀𝐓𝐀𝐍 ━━━━≫ٴ\n"
 i = 0
@@ -13167,7 +13167,7 @@ database:set(bot_id.." WaTaN:brj_Bots"..msg.chat_id_,"open")
 end
 if text and text:match("^برج (.*)$") and database:get(bot_id.." WaTaN:brj_Bots"..msg.chat_id_) == "open" then
 local Textbrj = text:match("^برج (.*)$")
-gk = https.request('https://apiabs.ml/brg.php?brg='..URL.escape(Textbrj)..'')
+gk = https.request('https://rudi-dev.tk/Amir2/Boyka.php?br='..URL.escape(Textbrj)..'')
 br = JSON.decode(gk)
 i = 0
 for k,v in pairs(br.ok) do
@@ -13190,7 +13190,7 @@ database:set(bot_id.." WaTaN:age_Bots"..msg.chat_id_,"open")
 end
 if text and text:match("^احسب (.*)$") and database:get(bot_id.." WaTaN:age_Bots"..msg.chat_id_) == "open" then
 local Textage = text:match("^احسب (.*)$")
-ge = https.request('https://apiabs.ml/age.php?age='..URL.escape(Textage)..'')
+ge = https.request('https://rudi-dev.tk/Amir3/Boyka.php?age='..URL.escape(Textage)..'')
 ag = JSON.decode(ge)
 i = 0
 for k,v in pairs(ag.ok) do
@@ -13198,6 +13198,31 @@ i = i + 1
 t = v.."\n"
 end
 send(msg.chat_id_, msg.id_, t)
+end
+if text == "تعطيل الافلام" and Mod(msg) then
+send(msg.chat_id_, msg.id_, '✯︙تم تعطيل الافلام')
+database:set(bot_id.."WaTaN:movie_bot"..msg.chat_id_,"close")
+end
+if text == "تفعيل الافلام" and Mod(msg) then
+send(msg.chat_id_, msg.id_,'✯︙تم تفعيل الافلام')
+database:set(bot_id.."WaTaN:movie_bot"..msg.chat_id_,"open")
+end
+if text and text:match("^فلم (.*)$") and database:get(bot_id.."WaTaN:movie_bot"..msg.chat_id_) == "open" then
+local Textm = text:match("^فلم (.*)$")
+data,res = https.request('https://forhassan.ml/Black/movie.php?serch='..URL.escape(Textm)..'')
+if res == 200 then
+getmo = json:decode(data)
+if getmo.Info == true then
+local Text ='قصه الفلم'..getmo.info
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = 'مشاهده الفلم بجوده 240',url=getmo.sd}},
+{{text = 'مشاهده الفلم بجوده 480', url=getmo.Web},{text = 'مشاهده الفلم بجوده 1080', url=getmo.hd}},
+}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendMessage?chat_id=' .. msg.chat_id_ .. '&text=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
+end
+end
 end
 if text == "شنو رئيك بهذا" or text == "شنو رئيك بهذ" or text == "شنو رئيج بهذ" or text == "شنو رئيج بهذا" or text == "شنو رايك بهذا" or text == "شنو رايك بهذ" then
 if not database:get(bot_id..'lock:add'..msg.chat_id_) then
@@ -13211,13 +13236,13 @@ local texting = {"دور حلوين 🤕😹","جكمه وصخه عوفها ☹�
 send(msg.chat_id_, msg.id_, ''..texting[math.random(#texting)]..'')
 end
 end
-if text == "هينه" or text == "رزله" or text == "هيني" or text == "رزلي" or text "رزلها" then
+if text == "هينه" or text == "رزله" or text == "هيني" or text == "رزلي" then
 if not database:get(bot_id..'lock:add'..msg.chat_id_) then
 local texting = {"ولك هيو لتندك بسيادك لو بهاي 👞👈","ميستاهل اتعبي روحي ويا لانه عار","عوفه يروحي هذا طيز يضل يمضرط🤣"}
 send(msg.chat_id_, msg.id_, ''..texting[math.random(#texting)]..'')
 end
 end
-if text == "مصه" or text == "بوسه" or text == "بوسي" or text == "مصي" or text "بوسها" then
+if text == "مصه" or text == "بوسه" or text == "بوسي" or text == "مصي" then
 if not database:get(bot_id..'lock:add'..msg.chat_id_) then
 local texting = {"مووووووووواححح💋","مابوس ولي😌😹","خدك/ج نضيف 😂","البوسه بالف حمبي 🌝💋","خلي يزحفلي وابوسه 🙊😻","كل شويه ابوسه كافي 😏","ماابوسه والله هذا زاحف🦎","محح هاي لحاته صاكه💋"}send(msg.chat_id_, msg.id_, ''..texting[math.random(#texting)]..'')
 end
