@@ -3029,7 +3029,7 @@ send(msg.chat_id_, msg.id_, '✯︙تم تعطيل التوحيد')
 database:set(bot_id.."kt:twh:stats"..msg.chat_id_,"close")
 end
 if not Constructor(msg) then
-if database:get(bot_id.."kt:twh:stats"..msg.chat_id_) == "open"  and database:get(bot_id.."WaTaN:teh"..msg.chat_id_) then 
+if database:get(bot_id.."kt:twh:stats"..msg.chat_id_) == "open" and database:get(bot_id.."WaTaN:teh"..msg.chat_id_) then 
 id = msg.sender_user_id_
 function WaTaN_mrWaTaN_new(mrWaTaN1,mrWaTaN2)
 if mrWaTaN2 and mrWaTaN2.first_name_ then 
@@ -7987,7 +7987,7 @@ send(msg.chat_id_, msg.id_," ✯︙تم تعطيل الصوره")
 return false end
 end
 
-if text == "تفعيل بايو"  and ChanSub(msg)or text == 'تفعيل البايو' and ChanSub(msg) then
+if text == "تفعيل بايو" and ChanSub(msg) or text == 'تفعيل البايو' and ChanSub(msg) then
 if Constructor(msg) then  
 database:set(bot_id.."Absbio:status"..msg.chat_id_,true) 
 send(msg.chat_id_, msg.id_," ✯︙تم تفعيل البايو") 
