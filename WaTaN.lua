@@ -357,9 +357,8 @@ end
 
 function ChanSub(msg)
 local var = true 
-if database:get(bot_id.."add:ch:id") then
-if database:sismember(bot_id..'WaTaN:ProGroups',msg.chat_id_) then
-local url , res = https.request('https://api.telegram.org/bot'..token..'/getchatmember?chat_id='..database:get(bot_id..'add:ch:id')..'&user_id='..msg.sender_user_id_)
+if database:get(bot_id.."Abs:ChId") then
+local url , res = https.request('https://api.telegram.org/bot'..token..'/getchatmember?chat_id='..database:get(bot_id..'Abs:ChId')..'&user_id='..msg.sender_user_id_)
 local data = json:decode(url)
 if res ~= 200 or data.result.status == "left" or data.result.status == "kicked" then
 var = false 
@@ -367,14 +366,14 @@ if database:get(bot_id..'Abs:ChText') then
 local ChText = database:get(bot_id..'Abs:ChText')
 send(msg.chat_id_,msg.id_,'['..ChText..']')
 else
-local Check = https.request('https://api.telegram.org/bot'..token..'/getChat?chat_id='..database:get(bot_id.."add:ch:id"))
+local Check = https.request('https://api.telegram.org/bot'..token..'/getChat?chat_id='..database:get(bot_id.."Abs:ChId"))
 local GetInfo = JSON.decode(Check)
 if GetInfo.result.username then
 User = "https://t.me/"..GetInfo.result.username
 else
 User = GetInfo.result.invite_link
 end
-Text = "*✯︙عذرا لاتستطيع استخدام البوت !\n✯︙عليك الاشتراك في القناة اولا :*"
+Text = "*᥀︙عذرا لاتستطيع استخدام البوت !\n᥀︙عليك الاشتراك في القناة اولا :*"
 keyboard = {} 
 keyboard.inline_keyboard = {{{text=GetInfo.result.title,url=User}}} 
 Msg_id = msg.id_/2097152/0.5
@@ -385,7 +384,6 @@ return var
 end
 else
 return var
-end
 end
 end
 
@@ -1084,12 +1082,6 @@ send_inline_key(msg.chat_id_,bl,keyboard)
 return false
 end end
 if text == '/start' then
-local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
-data = JSON.decode(url)
-if data.Ch_Member.Info_WaTaNTeaM ~= true then
-send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙قناة السورس @WaTaNTeaM')   
-return false 
-end
 tdcli_function ({ID = "GetUser",user_id_ = SUDO},function(arg,result) 
 tdcli_function ({ID = "GetUserProfilePhotos",user_id_ = SUDO,offset_ = 0,limit_ = 1},function(extra,abbas,success) 
 local msg_id = msg.id_/2097152/0.5
@@ -10266,7 +10258,7 @@ tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(extr
 local rtp = Rutba(result.sender_user_id_,msg.chat_id_)
 local username = ' ['..data.first_name_..'](t.me/'..(data.username_ or 'watanteam')..')'
 local iduser = result.sender_user_id_
-send(msg.chat_id_, msg.id_,'*✯︙الاسم » *('..username..')\n*✯︙الايدي » ('..iduser..')*\n*✯︙الرتبه » ('..rtp..')*\n*✯︙نوع الكشف » بالرد*')
+send(msg.chat_id_, msg.id_,'*✯︙الايدي » ('..iduser..')*\n*✯︙الاسم » ('..username..')\n*✯︙الرتبه » ('..rtp..')*\n*✯︙نوع الكشف » بالرد*')
 end,nil)
 end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
@@ -10283,7 +10275,7 @@ UserName_User = 'لا يوجد'
 end
 local Id = data.id_
 local frLsn = data.first_name_..' '..(data.last_name_ or "")
-local Status_Gps = Rutba(Id,msg.chat_id_)
+ local Status_Gps = Rutba(Id,msg.chat_id_)
 send(msg.chat_id_, msg.id_, '\n*✯︙الاسم » ('..frLsn..')\n✯︙الايدي » '..Id..'\n✯︙المعرف » *['..UserName_User..']*\n✯︙الرتبة » '..Status_Gps..'\n✯︙نوع الكشف - بالمعرف*')
 end, nil)
 else
