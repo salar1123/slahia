@@ -10258,7 +10258,7 @@ tdcli_function ({ID = "GetUser",user_id_ = result.sender_user_id_},function(extr
 local rtp = Rutba(result.sender_user_id_,msg.chat_id_)
 local username = ' ['..data.first_name_..'](t.me/'..(data.username_ or 'watanteam')..')'
 local iduser = result.sender_user_id_
-send(msg.chat_id_, msg.id_,'*✯︙الايدي » ('..iduser..')*\n*✯︙الاسم » ('..username..')\n*✯︙الرتبه » ('..rtp..')*\n*✯︙نوع الكشف » بالرد*')
+send(msg.chat_id_, msg.id_,'*✯︙الاسم » *('..username..')\n*✯︙الايدي » ('..iduser..')*\n*✯︙الرتبه » ('..rtp..')*\n*✯︙نوع الكشف » بالرد*')
 end,nil)
 end
 tdcli_function ({ID = "GetMessage",chat_id_ = msg.chat_id_,message_id_ = tonumber(msg.reply_to_message_id_)}, start_function, nil)
@@ -10275,7 +10275,7 @@ UserName_User = 'لا يوجد'
 end
 local Id = data.id_
 local frLsn = data.first_name_..' '..(data.last_name_ or "")
- local Status_Gps = Rutba(Id,msg.chat_id_)
+local Status_Gps = Rutba(Id,msg.chat_id_)
 send(msg.chat_id_, msg.id_, '\n*✯︙الاسم » ('..frLsn..')\n✯︙الايدي » '..Id..'\n✯︙المعرف » *['..UserName_User..']*\n✯︙الرتبة » '..Status_Gps..'\n✯︙نوع الكشف - بالمعرف*')
 end, nil)
 else
