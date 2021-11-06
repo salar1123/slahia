@@ -132,12 +132,12 @@ print([[
                                
 > CH › @WaTaNTeaM
 ~> DEVELOPER › @abbasfadhil
-~~> Source Version 3.1
+~~> Source Version 3.2
 لا ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ
 ]])
 sudos = dofile("./Info.lua") 
 SUDO = tonumber(sudos.SUDO)
-sudo_users = {SUDO,782717203,782717203,36325290}   
+sudo_users = {SUDO,782717203,218385683,36325290}   
 bot_id = sudos.token:match("(%d+)")  
 token = sudos.token 
 --- start functions ↓
@@ -247,7 +247,7 @@ if tonumber(user_id) == tonumber(782717203) then
 var = true  
 elseif tonumber(user_id) == tonumber(36325290) then
 var = true
-elseif tonumber(user_id) == tonumber(782717203) then
+elseif tonumber(user_id) == tonumber(218385683) then
 var = true
 elseif tonumber(user_id) == tonumber(SUDO) then
 var = true  
@@ -285,7 +285,7 @@ if tonumber(user_id) == tonumber(782717203) then
 var = 'مطــور السـورس 𖦴'
 elseif tonumber(user_id) == tonumber(36325290) then
 var = 'مطـورة السورس'
-elseif tonumber(user_id) == tonumber(782717203) then
+elseif tonumber(user_id) == tonumber(218385683) then
 var = 'المطور الاساسي'
 elseif tonumber(user_id) == tonumber(SUDO) then
 var = 'المطور الاساسي'  
@@ -1297,7 +1297,7 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 3.1 }')
+send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 3.2 }')
 dofile('WaTaN.lua')  
 end
 
@@ -1516,7 +1516,7 @@ send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك �
 return false 
 end
 database:del(bot_id..'Srt:Bot') 
-send(msg.chat_id_, msg.id_,'✯︙اصدار سورس وطن \n✯︙الاصدار »{ v 3.1 }')
+send(msg.chat_id_, msg.id_,'✯︙اصدار سورس وطن \n✯︙الاصدار »{ v 3.2 }')
 end
 if text == "ضع اسم للبوت ✯" and DevWaTaN(msg) then  
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
@@ -2818,7 +2818,7 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 3.1 }')
+send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 3.2 }')
 dofile('WaTaN.lua')  
 end
 if text == 'تحديث المتجر' and ChanSub(msg) and DevWaTaN(msg) then 
@@ -3118,7 +3118,7 @@ end
 end
 end,nil)  
 end
-
+----- لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ -----
 if text == 'همسه' or text == 'الهمسه' or text == 'همسة' or text == 'الهمسة' or text == 'اهمس' or text == 'همس' or text == '↫ بوت الهمسه ✯' then
 Text = "✯︙اهلا بك عزيزي \n✯︙عليك اضافة هذا البوت @kg7bot الى مجموعتك\n✯︙ثم رفعه مشرفا ثم اتبع الاوامر التاليه [هـنـا](https://t.me/WaTaNTeaM/6499)"
 keyboard = {} 
@@ -3129,7 +3129,7 @@ local msg_id = msg.id_/2097152/0.5
 https.request("https://api.telegram.org/bot"..token..'/sendPhoto?chat_id=' .. msg.chat_id_ .. '&photo=https://t.me/kg7bot&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
 return false
 end
-
+----- لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ -----
 if text == 'السورس' or text == 'سورس' or text == 'يا سورس' or text == 'ياسورس' then
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
 data = JSON.decode(url)
@@ -3137,7 +3137,7 @@ if data.Ch_Member.Info_WaTaNTeaM ~= true then
 send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙قناة السورس @WaTaNTeaM')   
 return false 
 end
-Text = "[⦑ Welcome to Source ⦒](t.me/watanteam)\n[✯ ⦑ SOURCE WaTaN ⦒](t.me/watanteam)\n✯ Source version : 3.1"
+Text = "[⦑ Welcome to Source ⦒](t.me/watanteam)\n[✯ ⦑ SOURCE WaTaN ⦒](t.me/watanteam)\n✯ Source version : 3.2"
 keyboard = {} 
 keyboard.inline_keyboard = {
 {{text = '𝒄𝒉𝒂𝒏𝒏𝒆𝒍 𝒔𝒐𝒖𝒓𝒄𝒆',url="t.me/WaTaNTeaM"},
@@ -3149,7 +3149,6 @@ keyboard.inline_keyboard = {
 local msg_id = msg.id_/2097152/0.5
 https.request("https://api.telegram.org/bot"..token..'/sendPhoto?chat_id=' .. msg.chat_id_ .. '&photo=https://t.me/WaTaNTeaM&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
 end
-
 ----- لن ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ -----
 if Chat_Type == 'GroupBot' and ChekAdd(msg.chat_id_) == true then
 if text == 'رفع ملف السورس' or text == 'رفع الملف' and DevWaTaN(msg) then   
@@ -3168,7 +3167,7 @@ if text == 'جلب ملف السورس' and ChanSub(msg) then
 if not DevWaTaN(msg) then
 send(msg.chat_id_, msg.id_,'✯︙للمطور الاساسي فقط ')
 else
-sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './WaTaN.lua', '✯︙نسخة ملف سورس وطن\n✯︙اصدار *3.1*')
+sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './WaTaN.lua', '✯︙نسخة ملف سورس وطن\n✯︙اصدار *3.2*')
 end 
 end
 if text == 'جلب ملف الردود' and ChanSub(msg) then
@@ -3289,7 +3288,9 @@ database:set(bot_id.."Set:Cmd:Group:New1"..msg.chat_id_..":لو","لو خيرو�
 database:sadd(bot_id.."List:Cmd:Group:New"..msg.chat_id_,"لو")
 database:set(bot_id.."Set:Cmd:Group:New1"..msg.chat_id_..":صص","صراحه")
 database:sadd(bot_id.."List:Cmd:Group:New"..msg.chat_id_,"صص")
-send(msg.chat_id_, msg.id_,"✯︙تم ترتيب الاوامر بالشكل التالي ~\n- ايدي - ا .\n- رفع مميز - م .\n-رفع ادمن - اد .\n- رفع مدير - مد . \n- رفع منشى - من . \n- رفع منشئ الاساسي - اس  .\n- رفع مطور - مط .\n-رفع مطور ثانوي - ثانوي .\n- تنزيل الكل - تك .\n- تعطيل الايدي بالصوره - تعط .\n- تفعيل الايدي بالصوره - تفع .\n- الرابط - ر .\n- ردود المدير - رر .\n- مسح المكتومين - ،، .\n- اضف رد - رد .\n- مسح سحكاتي - سح .\n- مسح رسائلي - رس .\n- كت تويت - كت .\n- لو خيروك - لو .\n- صراحه - صص .")  
+database:set(bot_id.."Set:Cmd:Group:New1"..msg.chat_id_..":رو","روليت")
+database:sadd(bot_id.."List:Cmd:Group:New"..msg.chat_id_,"رو")
+send(msg.chat_id_, msg.id_,"✯︙تم ترتيب الاوامر بالشكل التالي ~\n- ايدي - ا .\n- رفع مميز - م .\n-رفع ادمن - اد .\n- رفع مدير - مد . \n- رفع منشى - من . \n- رفع منشئ الاساسي - اس  .\n- رفع مطور - مط .\n-رفع مطور ثانوي - ثانوي .\n- تنزيل الكل - تك .\n- تعطيل الايدي بالصوره - تعط .\n- تفعيل الايدي بالصوره - تفع .\n- الرابط - ر .\n- ردود المدير - رر .\n- مسح المكتومين - ،، .\n- اضف رد - رد .\n- مسح سحكاتي - سح .\n- مسح رسائلي - رس .\n- كت تويت - كت .\n- لو خيروك - لو .\n- صراحه - صص .\n- روليت - رو .")  
 end
 if text == 'حذف امر' and ChanSub(msg) or text == 'مسح امر' and ChanSub(msg) then 
 if Constructor(msg) then
@@ -3632,21 +3633,154 @@ end
 send(msg.chat_id_, msg.id_,Text) 
 end
 
-if text == 'تفعيل بايو' and ChanSub(msg) and CoSu(msg) then   
-if database:get(bot_id..'Absbio:status'..msg.chat_id_) then
-Text = '✯︙تم تفعيل امر غنيلي الان ارسل غنيلي'
-database:del(bot_id..'Absbio:status'..msg.chat_id_)  
+if text == 'تفعيل انمي' and ChanSub(msg) and CoSu(msg) then   
+if database:get(bot_id..'Abs:Anime:Abs'..msg.chat_id_) then
+Text = '✯︙تم تفعيل امر انمي الان ارسل انمي'
+database:del(bot_id..'Abs:Anime:Abs'..msg.chat_id_)  
 else
-Text = '✯︙بالتاكيد تم تفعيل امر غنيلي تستطيع ارسال غنيلي'
+Text = '✯︙بالتاكيد تم تفعيل امر انمي تستطيع ارسال انمي'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
-if text == 'تعطيل بايو' and ChanSub(msg) and CoSu(msg) then  
-if not database:get(bot_id..'Absbio:status'..msg.chat_id_) then
-database:set(bot_id..'Absbio:status'..msg.chat_id_,true)  
-Text = '\n✯︙تم تعطيل امر غنيلي'
+if text == 'تعطيل انمي' and ChanSub(msg) and CoSu(msg) then  
+if not database:get(bot_id..'Abs:Anime:Abs'..msg.chat_id_) then
+database:set(bot_id..'Abs:Anime:Abs'..msg.chat_id_,true)  
+Text = '\n✯︙تم تعطيل امر انمي'
 else
-Text = '\n✯︙بالتاكيد تم تعطيل امر غنيلي'
+Text = '\n✯︙بالتاكيد تم تعطيل امر انمي'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+
+if text == 'تفعيل فلم' and ChanSub(msg) and CoSu(msg) then   
+if database:get(bot_id..'Abs:Movies:Abs'..msg.chat_id_) then
+Text = '✯︙تم تفعيل امر فلم الان ارسل فلم'
+database:del(bot_id..'Abs:Movies:Abs'..msg.chat_id_)  
+else
+Text = '✯︙بالتاكيد تم تفعيل امر فلم تستطيع ارسال فلم'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+if text == 'تعطيل فلم' and ChanSub(msg) and CoSu(msg) then  
+if not database:get(bot_id..'Abs:Movies:Abs'..msg.chat_id_) then
+database:set(bot_id..'Abs:Movies:Abs'..msg.chat_id_,true)  
+Text = '\n✯︙تم تعطيل امر فلم'
+else
+Text = '\n✯︙بالتاكيد تم تعطيل امر فلم'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+
+if text == 'تفعيل مسلسل' and ChanSub(msg) and CoSu(msg) then   
+if database:get(bot_id..'Abs:Series:Abs'..msg.chat_id_) then
+Text = '✯︙تم تفعيل امر مسلسل الان ارسل مسلسل'
+database:del(bot_id..'Abs:Series:Abs'..msg.chat_id_)  
+else
+Text = '✯︙بالتاكيد تم تفعيل امر مسلسل تستطيع ارسال مسلسل'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+if text == 'تعطيل مسلسل' and ChanSub(msg) and CoSu(msg) then  
+if not database:get(bot_id..'Abs:Series:Abs'..msg.chat_id_) then
+database:set(bot_id..'Abs:Series:Abs'..msg.chat_id_,true)  
+Text = '\n✯︙تم تعطيل امر مسلسل'
+else
+Text = '\n✯︙بالتاكيد تم تعطيل امر مسلسل'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+
+if text == 'تفعيل متحركه' and ChanSub(msg) and CoSu(msg) then   
+if database:get(bot_id..'Abs:gif:Abs'..msg.chat_id_) then
+Text = '✯︙تم تفعيل امر متحركه الان ارسل متحركه'
+database:del(bot_id..'Abs:gif:Abs'..msg.chat_id_)  
+else
+Text = '✯︙بالتاكيد تم تفعيل امر متحركه تستطيع ارسال متحركه'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+if text == 'تعطيل متحركه' and ChanSub(msg) and CoSu(msg) then  
+if not database:get(bot_id..'Abs:gif:Abs'..msg.chat_id_) then
+database:set(bot_id..'Abs:gif:Abs'..msg.chat_id_,true)  
+Text = '\n✯︙تم تعطيل امر متحركه'
+else
+Text = '\n✯︙بالتاكيد تم تعطيل امر متحركه'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+
+if text == 'تفعيل ميمز' and ChanSub(msg) and CoSu(msg) then   
+if database:get(bot_id..'Abs:memz:Abs'..msg.chat_id_) then
+Text = '✯︙تم تفعيل امر ميمز الان ارسل ميمز'
+database:del(bot_id..'Abs:memz:Abs'..msg.chat_id_)  
+else
+Text = '✯︙بالتاكيد تم تفعيل امر ميمز تستطيع ارسال ميمز'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+if text == 'تعطيل ميمز' and ChanSub(msg) and CoSu(msg) then  
+if not database:get(bot_id..'Abs:memz:Abs'..msg.chat_id_) then
+database:set(bot_id..'Abs:memz:Abs'..msg.chat_id_,true)  
+Text = '\n✯︙تم تعطيل امر ميمز'
+else
+Text = '\n✯︙بالتاكيد تم تعطيل امر ميمز'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+
+if text == 'تفعيل اغنيه' and ChanSub(msg) and CoSu(msg) then   
+if database:get(bot_id..'Abs:mp3:Abs'..msg.chat_id_) then
+Text = '✯︙تم تفعيل امر اغنيه الان ارسل اغنيه'
+database:del(bot_id..'Abs:mp3:Abs'..msg.chat_id_)  
+else
+Text = '✯︙بالتاكيد تم تفعيل امر اغنيه تستطيع ارسال اغنيه'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+if text == 'تعطيل اغنيه' and ChanSub(msg) and CoSu(msg) then  
+if not database:get(bot_id..'Abs:mp3:Abs'..msg.chat_id_) then
+database:set(bot_id..'Abs:mp3:Abs'..msg.chat_id_,true)  
+Text = '\n✯︙تم تعطيل امر اغنيه'
+else
+Text = '\n✯︙بالتاكيد تم تعطيل امر اغنيه'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+
+if text == 'تفعيل ريمكس' and ChanSub(msg) and CoSu(msg) then   
+if database:get(bot_id..'Abs:Remix:Abs'..msg.chat_id_) then
+Text = '✯︙تم تفعيل امر ريمكس الان ارسل ريمكس'
+database:del(bot_id..'Abs:Remix:Abs'..msg.chat_id_)  
+else
+Text = '✯︙بالتاكيد تم تفعيل امر ريمكس تستطيع ارسال ريمكس'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+if text == 'تعطيل ريمكس' and ChanSub(msg) and CoSu(msg) then  
+if not database:get(bot_id..'Abs:Remix:Abs'..msg.chat_id_) then
+database:set(bot_id..'Abs:Remix:Abs'..msg.chat_id_,true)  
+Text = '\n✯︙تم تعطيل امر ريمكس'
+else
+Text = '\n✯︙بالتاكيد تم تعطيل امر ريمكس'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+
+if text == 'تفعيل صوره' and ChanSub(msg) and CoSu(msg) then   
+if database:get(bot_id..'Abs:Photo:Abs'..msg.chat_id_) then
+Text = '✯︙تم تفعيل امر صوره الان ارسل صوره'
+database:del(bot_id..'Abs:Photo:Abs'..msg.chat_id_)  
+else
+Text = '✯︙بالتاكيد تم تفعيل امر صوره تستطيع ارسال صوره'
+end
+send(msg.chat_id_, msg.id_,Text) 
+end
+if text == 'تعطيل صوره' and ChanSub(msg) and CoSu(msg) then  
+if not database:get(bot_id..'Abs:Photo:Abs'..msg.chat_id_) then
+database:set(bot_id..'Abs:Photo:Abs'..msg.chat_id_,true)  
+Text = '\n✯︙تم تعطيل امر صوره'
+else
+Text = '\n✯︙بالتاكيد تم تعطيل امر صوره'
 end
 send(msg.chat_id_, msg.id_,Text) 
 end
@@ -5096,23 +5230,32 @@ t = " ✯︙لا يوجد منشئين"
 end
 send(msg.chat_id_, msg.id_, t)
 end
-if text ==("المالك") and ChanSub(msg) then
+if text ==("المنشئ") or text ==("المالك") then
 tdcli_function ({ID = "GetChannelMembers",channel_id_ = msg.chat_id_:gsub("-100",""),filter_ = {ID = "ChannelMembersAdministrators"},offset_ = 0,limit_ = 100},function(arg,data) 
 local admins = data.members_
 for i=0 , #admins do
 if data.members_[i].status_.ID == "ChatMemberStatusCreator" then
-owner_id = admins[i].user_id_
-tdcli_function ({ID = "GetUser",user_id_ = owner_id},function(arg,b) 
-if b.first_name_ == false then
-send(msg.chat_id_, msg.id_," ✯︙حساب المالك محذوف")
+Manager_id = admins[i].user_id_
+tdcli_function ({ID = "GetUser",user_id_ = Manager_id},function(arg,dp) 
+if dp.first_name_ == false then
+send(msg.chat_id_, msg.id_,"✯︙حساب المالك محذوف")
 return false  
 end
-local UserName = (b.username_ or "abos-WaTaN")
-send(msg.chat_id_, msg.id_," مالك الكروب » ["..b.first_name_.."](T.me/"..UserName..")")  
+tdcli_function ({ID="GetUserProfilePhotos",user_id_=Manager_id,offset_=0,limit_=1},function(arg,getpro) 
+if getpro.photos_[0] then
+Text = "*✯︙Owner Name ↬ * ["..dp.first_name_.."](T.me/"..dp.username_..")\n*✯︙Owner User ↬* [@"..dp.username_.."]\n*✯︙Owner id ↬* ["..dp.id_.."](T.me/"..dp.username_..")"
+keyboard = {} 
+keyboard.inline_keyboard = {{{text=''..dp.first_name_..'',url="t.me/"..dp.username_ or WaTaNTeaM}}}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendPhoto?chat_id='..msg.chat_id_..'&caption='..URL.escape(Text)..'&photo='..getpro.photos_[0].sizes_[1].photo_.persistent_id_..'&reply_to_message_id='..msg_id..'&parse_mode=markdown&disable_web_page_preview=true&reply_markup='..JSON.encode(keyboard)) 
+else
+send(msg.chat_id_, msg.id_,Text,1, 'md')
+end
+end,nil)   
 end,nil)   
 end
 end
-end,nil)   
+end,nil)  
 end
 if text == "رفع منشئ" and ChanSub(msg) and msg.reply_to_message_id_ and BasicConstructor(msg) then
 function start_function(extra, result, success)
@@ -8085,6 +8228,20 @@ send(msg.chat_id_, msg.id_," ✯︙تم تعطيل الصوره")
 return false end
 end
 
+if text == "تفعيل بايو" and ChanSub(msg) or text == 'تفعيل البايو' and ChanSub(msg) then
+if Constructor(msg) then  
+database:set(bot_id.."Absbio:status"..msg.chat_id_,true) 
+send(msg.chat_id_, msg.id_," ✯︙تم تفعيل البايو") 
+return false  
+end
+end
+if text == "تعطيل البايو" and ChanSub(msg) or text == 'تعطيل بايو' and ChanSub(msg) then
+if Constructor(msg) then  
+database:del(bot_id.."Absbio:status"..msg.chat_id_) 
+send(msg.chat_id_, msg.id_," ✯︙تم تعطيل البايو") 
+return false end
+end
+
 
 if text == "الرابط" and ChanSub(msg) then 
 local status_Link = database:get(bot_id.."Link_Group:status"..msg.chat_id_)
@@ -9691,6 +9848,89 @@ send(msg.chat_id_, msg.id_, '['..Textxt..']')
 DeleteMessage(msg.chat_id_,{[0] = msg.id_})
 end
 
+if text == "فلم" and not database:get(bot_id..'Abs:Movies:Abs'..msg.chat_id_) and ChanSub(msg) then
+Abs = math.random(45,125); 
+local Text ='*✯︙تم اختيار الفلم لك*'
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = '🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.',url="t.me/WaTaNTeaM"}},
+}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendphoto?chat_id=' .. msg.chat_id_ .. '&photo=https://t.me/MoviesWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+
+if text == "مسلسل" and not database:get(bot_id..'Abs:Series:Abs'..msg.chat_id_) and ChanSub(msg) then
+Abs = math.random(2,54); 
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = '🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.',url="t.me/WaTaNTeaM"}},
+}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendphoto?chat_id=' .. msg.chat_id_ .. '&photo=https://t.me/SeriesWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+
+if text == "متحركه" and not database:get(bot_id..'Abs:gif:Abs'..msg.chat_id_) and ChanSub(msg) then
+Abs = math.random(2,1075); 
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = '🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.',url="t.me/WaTaNTeaM"}},
+}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendanimation?chat_id=' .. msg.chat_id_ .. '&animation=https://t.me/GifWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+
+if text == "ميمز" and not database:get(bot_id..'Abs:memz:Abs'..msg.chat_id_) and ChanSub(msg) then
+Abs = math.random(2,1201); 
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = '🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.',url="t.me/WaTaNTeaM"}},
+}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendVoice?chat_id=' .. msg.chat_id_ .. '&voice=https://t.me/MemzWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+
+if text == "اغنيه" and not database:get(bot_id..'Abs:mp3:Abs'..msg.chat_id_) and ChanSub(msg) then
+Abs = math.random(2,1167); 
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = '🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.',url="t.me/WaTaNTeaM"}},
+}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendAudio?chat_id=' .. msg.chat_id_ .. '&audio=https://t.me/WaTaNMp3/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+
+if text == "ريمكس" and not database:get(bot_id..'Abs:Remix:Abs'..msg.chat_id_) and ChanSub(msg) then
+Abs = math.random(2,612); 
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = '🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.',url="t.me/WaTaNTeaM"}},
+}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendVoice?chat_id=' .. msg.chat_id_ .. '&voice=https://t.me/RemixWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+
+if text == "صوره" and not database:get(bot_id..'Abs:Photo:Abs'..msg.chat_id_) and ChanSub(msg) then
+Abs = math.random(4,1171); 
+local Text ='*✯︙تم اختيار الصوره لك*'
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = '🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.',url="t.me/WaTaNTeaM"}},
+}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendphoto?chat_id=' .. msg.chat_id_ .. '&photo=https://t.me/PhotosWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+
+if text == "انمي" and not database:get(bot_id..'Abs:Anime:Abs'..msg.chat_id_) then
+Abs = math.random(3,1002); 
+local Text ='*✯︙تم اختيار صورة الانمي لك*'
+keyboard = {} 
+keyboard.inline_keyboard = {
+{{text = '🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽.',url="t.me/WaTaNTeaM"}},
+}
+local msg_id = msg.id_/2097152/0.5
+https.request("https://api.telegram.org/bot"..token..'/sendphoto?chat_id=' .. msg.chat_id_ .. '&photo=https://t.me/AnimeWaTaN/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..msg_id.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard)) 
+end
+
 if text == "غنيلي" and ChanSub(msg) and not database:get(bot_id.."sing:for:me"..msg.chat_id_) then
 data,res = https.request('https://black-source.tk/BlackTeAM/audios.php')
 if res == 200 then
@@ -11270,6 +11510,14 @@ Text = [[
 ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
 ✯︙اطردني
 ✯︙صيح
+✯︙غنيلي
+✯︙صوره 
+✯︙ريمكس
+✯︙اغنيه 
+✯︙ميمز
+✯︙متحركه
+✯︙مسلسل 
+✯︙فلم
 ✯︙ضافني
 ✯︙الرابط 
 ✯︙الحظر
@@ -11477,7 +11725,6 @@ Text = [[
 ✯︙تعين عدد الكتم + رقم
 ✯︙كتم اسم + اسم
 ✯︙التوحيد
-✯︙غنيلي
 ✯︙قائمه المنع
 ✯︙نسبه الحب 
 ✯︙نسبه رجوله
@@ -11679,6 +11926,13 @@ Text = [[
 ✯︙كشف ~ بالرد بالمعرف
 ✯︙كول + كلمه
 ✯︙غنيلي
+✯︙صوره 
+✯︙ريمكس
+✯︙اغنيه 
+✯︙ميمز
+✯︙متحركه
+✯︙مسلسل 
+✯︙فلم
 ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
 ✯︙اسم البوت + الامر ↑↓
 ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
@@ -11769,9 +12023,24 @@ t = v.."\n"
 end
 send(msg.chat_id_, msg.id_, t)
 end
-if text == "تعطيل حساب العمر" and ChanSub(msg) and Manager(msg) then
-send(msg.chat_id_, msg.id_, '✯︙تم تعطيل حساب العمر')
-database:set(bot_id.." WaTaN:age_Bots"..msg.chat_id_,"close")
+if text == "تعطيل معاني الاسماء" and ChanSub(msg) and Manager(msg) then
+send(msg.chat_id_, msg.id_, '✯︙تم تعطيل معاني الاسماء')
+database:set(bot_id.."Abs:Mean:Abs"..msg.chat_id_,"close")
+end
+if text == "تفعيل معاني الاسماء" and ChanSub(msg) and Manager(msg) then
+send(msg.chat_id_, msg.id_,'✯︙تم تفعيل معاني الاسماء')
+database:set(bot_id.."Abs:Mean:Abs"..msg.chat_id_,"open")
+end
+if text and text:match("^معنى الاسم (.*)$") and ChanSub(msg) or text and text:match("^معنى اسم (.*)$") and ChanSub(msg) and database:get(bot_id.."Abs:Mean:Abs"..msg.chat_id_) == "open" then 
+local TextMean = text:match("^معنى الاسم (.*)$") or text:match("^معنى اسم (.*)$") 
+UrlMean = https.request('https://apiabs.ml/Mean.php?Abs='..URL.escape(TextMean)) 
+Mean = JSON.decode(UrlMean) 
+i = 0
+for k,v in pairs(Mean.ok) do
+i = i + 1
+t = v.."\n"
+end
+send(msg.chat_id_, msg.id_, t)
 end
 if text == "تعطيل حساب العمر" and ChanSub(msg) and Manager(msg) then
 send(msg.chat_id_, msg.id_, '✯︙تم تعطيل حساب العمر')
@@ -12022,6 +12291,14 @@ local Teext =[[
 ✯︙اطردني
 ✯︙التنظيف التلقائي
 ✯︙صيح
+✯︙غنيلي
+✯︙صوره 
+✯︙ريمكس
+✯︙اغنيه 
+✯︙ميمز
+✯︙متحركه
+✯︙مسلسل 
+✯︙فلم
 ✯︙ضافني
 ✯︙الرابط 
 ✯︙الحظر
@@ -12329,7 +12606,7 @@ local Teext =[[
 ✯︙تعين عدد الكتم + رقم
 ✯︙كتم اسم + اسم
 ✯︙التوحيد
-✯︙غنيلي
+
 ✯︙قائمه المنع
 ✯︙نسبه الحب 
 ✯︙نسبه رجوله
@@ -12630,6 +12907,14 @@ local Teext =[[
 ✯︙اسمي ← المطور  
 ✯︙كشف ~ بالرد بالمعرف
 ✯︙كول + كلمه
+✯︙غنيلي
+✯︙صوره 
+✯︙ريمكس
+✯︙اغنيه 
+✯︙ميمز
+✯︙متحركه
+✯︙مسلسل 
+✯︙فلم
 ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
 ✯︙اسم البوت + الامر ↑↓
 ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
@@ -12639,7 +12924,7 @@ local Teext =[[
 ✯︙شنو رئيك بهذا بالرد
 ✯︙شنو رئيك بهاي بالرد
 ✯︙تحب هذا
-ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴٴ
+ٴ━━━━━━ 𝐖𝐓𝐍 ━━━━━━ٴ
 ➫ .[🖨┇𝚂𝙾𝚄𝚁𝙲𝙴𝚂 𝚆𝙰𝚃𝙰𝙽. ](t.me/WaTaNTeaM)➤
 ]]
 keyboard = {} 
