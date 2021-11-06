@@ -1,4 +1,4 @@
-# <p align="center" style="color:#cb3349" >لن ابرء الذمة لأي شخص ياخذ حرفا او ملفا او اي شي من ملفاتي جميعها
+# <p align="center" style="color:#cb3349" >لن ابرء الذمة لأي شخص ياخذ حرفا او ملفا او اي شي من جميع ملفاتي
 # <p align="center" style="color:#cb3349" >سورس وطن على تلكرام ⌯︙
 
 # <p align="center" style="color:#cb3349" > [اصـــغـــط هــنـــا لــلــدخــول الــى الــقــنــاة](https://telegram.me/WaTaNTeaM) <br>
