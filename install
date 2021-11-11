@@ -13,7 +13,7 @@ echo -e "|        ╚╝╚╝ ╚═══╝ ╚══╝ ╚═══╝╚�
 echo -e "|                                          |"
 echo -e "|           > CH › @WaTaNTeaM              |"
 echo -e "|        ~> DEVELOPER › @abbasfadhil       |"
-echo -e "|               - WaTaN2 -                 |"
+echo -e "|                  - WaTaN -               |"
 echo -e "--------------------------------------------"
 echo -e "     ~ { Start downloading offices - بدء تنزيل المكاتب } ~"
 echo -e "\033[0m"
@@ -61,7 +61,20 @@ sudo luarocks install dkjson
 sudo luarocks install Lua-cURL
 sudo luarocks install luautf8
 echo -e "\033[0;36m"
-echo -e "Office download and installation completed - تم اكتمال تنزيل وتثبيت المكاتب"
+echo -e "~ Welcome To Source WaTaN - اهلا بك في سورس وطن ~"
+echo -e "--------------------------------------------"
+echo -e "|       ╔╗╔╗╔╗     ╔════╗     ╔═╗ ╔╗       |"
+echo -e "|       ║║║║║║     ║╔╗╔╗║     ║║╚╗║║       |"
+echo -e "|       ║║║║║║╔══╗ ╚╝║║╚╝╔══╗ ║╔╗╚╝║       |"
+echo -e "|       ║╚╝╚╝║╚ ╗║   ║║  ╚ ╗║ ║║╚╗║║       |"
+echo -e "|       ╚╗╔╗╔╝║╚╝╚╗ ╔╝╚╗ ║╚╝╚╗║║ ║║║       |"
+echo -e "|        ╚╝╚╝ ╚═══╝ ╚══╝ ╚═══╝╚╝ ╚═╝       |"
+echo -e "|                                          |"
+echo -e "|           > CH › @WaTaNTeaM              |"
+echo -e "|        ~> DEVELOPER › @abbasfadhil       |"
+echo -e "|                  - WaTaN -               |"
+echo -e "--------------------------------------------"
+echo -e "~ { Office download and installation completed - تم اكتمال تنزيل وتثبيت المكاتب } ~"
 echo -e "\033[0m"
 cd .. ;sudo rm -rf luarocks*
 sudo timedatectl set-timezone Asia/Baghdad
