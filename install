@@ -15,7 +15,7 @@ echo -e "|           > CH › @WaTaNTeaM              |"
 echo -e "|        ~> DEVELOPER › @abbasfadhil       |"
 echo -e "|               - WaTaN2 -                 |"
 echo -e "--------------------------------------------"
-echo -e "     ~ { Start downloading and installing offices - بدء تنزيل وتثبيت المكاتب } ~"
+echo -e "     ~ { Start downloading offices - بدء تنزيل المكاتب } ~"
 echo -e "\033[0m"
 sudo apt-get update -y
 sudo apt-get upgrade -y
@@ -26,7 +26,7 @@ sudo apt-get install dnsutils -y
 sudo apt-get install software-properties-common -y
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 echo -e "\033[0;36m"
-echo -e " 25% of offices have been downloaded and installed - تم تنزيل وتثبيت 25% من المكاتب"
+echo -e " 25% of offices have been downloaded - تم تنزيل 25% من المكاتب"
 echo -e "\033[0m"
 if [ "$Version" == "18" ]; then
 cd /lib/x86_64-linux-gnu/ && sudo ln -s libreadline.so.7.0 libreadline.so.6
@@ -43,7 +43,7 @@ sudo apt-get install libnotify-dev -y
 sudo apt-get install lua-space -y
 sudo service redis-server start
 echo -e "\033[0;36m"
-echo -e " 50% of offices have been downloaded and installed - تم تنزيل وتثبيت 50% من المكاتب"
+echo -e " 50% of offices have been downloaded - تم تنزيل 50% من المكاتب"
 echo -e "\033[0m"
 sudo apt-get update -y
 sudo apt-get install g++-4.7 -y c++-4.7
@@ -51,7 +51,7 @@ sudo apt-get install luarocks -y
 wget http://luarocks.org/releases/luarocks-2.2.2.tar.gz;tar zxpf luarocks-2.2.2.tar.gz;cd luarocks-2.2.2 && ./configure && make && sudo make install
 sudo luarocks install luasocket
 echo -e "\033[0;36m"
-echo -e " 75% of offices have been downloaded and installed - تم تنزيل وتثبيت 75% من المكاتب"
+echo -e " 75% of offices have been downloaded - تم تنزيل 75% من المكاتب"
 echo -e "\033[0m"
 sudo luarocks install luasec
 sudo luarocks install redis-lua
