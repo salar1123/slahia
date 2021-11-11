@@ -132,7 +132,7 @@ print([[
                                
 > CH › @WaTaNTeaM
 ~> DEVELOPER › @abbasfadhil
-~~> Source Version 3.2.1
+~~> Source Version 3.2
 لا ابرئ الذمة لأي شخص يأخذ حرفاً او رقما من ملفي ، ايٍ كان الشخص لن ابرئ الذمة لهُ
 ]])
 sudos = dofile("./Info.lua") 
@@ -1303,7 +1303,7 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 3.2.1 }')
+send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 3.2 }')
 dofile('WaTaN.lua')  
 end
 
@@ -1522,7 +1522,7 @@ send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك �
 return false 
 end
 database:del(bot_id..'Srt:Bot') 
-send(msg.chat_id_, msg.id_,'✯︙اصدار سورس وطن \n✯︙الاصدار »{ v 3.2.1 }')
+send(msg.chat_id_, msg.id_,'✯︙اصدار سورس وطن \n✯︙الاصدار »{ v 3.2 }')
 end
 if text == "ضع اسم للبوت ✯" and DevWaTaN(msg) then  
 local url,res = https.request('https://abbas.watanteam.tk/ch/joinch.php?id='..msg.sender_user_id_)
@@ -2824,7 +2824,7 @@ end
 send(msg.chat_id_, msg.id_,'✯︙جارٍ الان تحديث السورس الى اخر اصدار')
 os.execute('rm -rf WaTaN.lua')
 os.execute('wget https://raw.githubusercontent.com/WaTaNtEaM/WaTaN/main/WaTaN.lua')
-send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 3.2.1 }')
+send(msg.chat_id_, msg.id_,'✯︙تم تحديث السورس \n✯︙لديك اخر اصدار لسورس وطن\n✯︙الاصدار » { v 3.2 }')
 dofile('WaTaN.lua')  
 end
 if text == 'تحديث المتجر' and ChanSub(msg) and DevWaTaN(msg) then 
@@ -3143,7 +3143,7 @@ if data.Ch_Member.Info_WaTaNTeaM ~= true then
 send(msg.chat_id_,msg.id_,'✯︙اهلا بك عزيزي ،\n✯︙اشترك في قناة السورس\n✯︙ثم ارسل الامر مره اخرى\n✯︙قناة السورس @WaTaNTeaM')   
 return false 
 end
-Text = "[⦑ Welcome to Source ⦒](t.me/watanteam)\n[✯ ⦑ SOURCE WaTaN ⦒](t.me/watanteam)\n✯ Source version : 3.2.1"
+Text = "[⦑ Welcome to Source ⦒](t.me/watanteam)\n[✯ ⦑ SOURCE WaTaN ⦒](t.me/watanteam)\n✯ Source version : 3.2"
 keyboard = {} 
 keyboard.inline_keyboard = {
 {{text = '𝒄𝒉𝒂𝒏𝒏𝒆𝒍 𝒔𝒐𝒖𝒓𝒄𝒆',url="t.me/WaTaNTeaM"},
@@ -3173,7 +3173,7 @@ if text == 'جلب ملف السورس' and ChanSub(msg) then
 if not DevWaTaN(msg) then
 send(msg.chat_id_, msg.id_,'✯︙للمطور الاساسي فقط ')
 else
-sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './WaTaN.lua', '✯︙نسخة ملف سورس وطن\n✯︙اصدار *3.2.1*')
+sendDocument(msg.chat_id_, msg.id_, 0, 1, nil, './WaTaN.lua', '✯︙نسخة ملف سورس وطن\n✯︙اصدار *3.2*')
 end 
 end
 if text == 'جلب ملف الردود' and ChanSub(msg) then
@@ -12304,6 +12304,7 @@ local notText = '🚫 عذرا الاوامر هذه لا تخصك'
 https.request("https://api.telegram.org/bot"..token.."/answerCallbackQuery?callback_query_id="..data.id_.."&text="..URL.escape(notText).."&show_alert=true")
 return false
 end
+local help_text = database:get(bot_id..'help6_text')
 local Teext =[[
 🎫┇𝙶𝚁𝙾𝚄𝙿 𝙾𝚁𝙳𝙴𝚁𝚂 .
 ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
@@ -12401,6 +12402,7 @@ local notText = '🚫 عذرا الاوامر هذه لا تخصك'
 https.request("https://api.telegram.org/bot"..token.."/answerCallbackQuery?callback_query_id="..data.id_.."&text="..URL.escape(notText).."&show_alert=true")
 return false
 end
+local help_text = database:get(bot_id..'help7_text')
 local Teext =[[
 🤹🏻┇𝙵𝚄𝙽𝙽𝚈 𝙾𝚁𝙳𝙴𝚁𝚂 .
 ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
@@ -12480,6 +12482,7 @@ local notText = '🚫 عذرا الاوامر هذه لا تخصك'
 https.request("https://api.telegram.org/bot"..token.."/answerCallbackQuery?callback_query_id="..data.id_.."&text="..URL.escape(notText).."&show_alert=true")
 return false
 end
+local help_text = database:get(bot_id..'help8_text')
 local Teext =[[
 🏅┇𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁𝚂' 𝙾𝚁𝙳𝙴𝚁𝚂 .
 ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
@@ -12530,6 +12533,7 @@ local notText = '🚫 عذرا الاوامر هذه لا تخصك'
 https.request("https://api.telegram.org/bot"..token.."/answerCallbackQuery?callback_query_id="..data.id_.."&text="..URL.escape(notText).."&show_alert=true")
 return false
 end
+local help_text = database:get(bot_id..'help9_text')
 local Teext =[[
 🎖┇ 𝙱𝙰𝚂𝙸𝙲 𝙳𝙴𝚅𝙴𝙻𝙾𝙿𝙴𝚁 𝙲𝙾𝙼𝙼𝙰𝙽𝙳𝚂 .
 ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ 
@@ -12704,6 +12708,7 @@ local notText = '🚫 عذرا الاوامر هذه لا تخصك'
 https.request("https://api.telegram.org/bot"..token.."/answerCallbackQuery?callback_query_id="..data.id_.."&text="..URL.escape(notText).."&show_alert=true")
 return false
 end
+local help_text = database:get(bot_id..'help_text')
 local Teext =[[
 *🖥┇𝚂𝙾𝚄𝚁𝙲𝙴 𝚆𝙰𝚃𝙰𝙽 𝙲𝙾𝙼𝙼𝙰𝙽𝙳𝚂 .*
 *┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ ┉ *
