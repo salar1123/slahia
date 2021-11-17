@@ -1,3 +1,10 @@
+----- لم ولن ابرئ الذمة لأي شخص ينسخ الملفات والسورس والاكواد الخاصه بي حتى لو كان قريبا مني لن ابرئ الذمة له -----
+-----------------------------------------------------
+-- This Source Was Developed By (Abs) @abbasfadhil. --
+--     This Is The Source Channel @WaTaNTeaM .      --
+--                     - WaTaN -                    --
+--           -- https://t.me/WaTaNTeaM --           --
+------------------------------------------------------
 redis    = require('redis') 
 https    = require ("ssl.https") 
 serpent  = dofile("./library/serpent.lua") 
@@ -13396,3 +13403,10 @@ end
 
 end -- end new msg dev.mr WaTaN 
 end -- end callback dev.mr WaTaN
+-----------------------------------------------------
+-- This Source Was Developed By (Abs) @abbasfadhil. --
+--     This Is The Source Channel @WaTaNTeaM .      --
+--                     - WaTaN -                    --
+--           -- https://t.me/WaTaNTeaM --           --
+------------------------------------------------------
+----- لم ولن ابرئ الذمة لأي شخص ينسخ الملفات والسورس والاكواد الخاصه بي حتى لو كان قريبا مني لن ابرئ الذمة له -----
